@@ -1,0 +1,148 @@
+name: CI - TaskFlow API
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Qualidade e testes
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Obter codigo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Configurar Python 3.12
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
+
+      - name: Instalar dependencias fixadas
+        run: python -m pip install -r requirements-dev.txt
+
+      - name: Verificar lint
+        run: python -m ruff check .
+
+      - name: Verificar formatacao
+        run: python -m ruff format --check .
+
+      - name: Testar com cobertura minima de 80 por cento
+        run: python -m pytest
+
+      - name: Publicar relatorios de testes e cobertura
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: testes-e-cobertura-${{ github.sha }}
+          path: reports/
+          if-no-files-found: warn
+          retention-days: 14
+
+  terraform:
+    name: Terraform
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: infra
+    steps:
+      - name: Obter codigo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Configurar Terraform
+        uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e # v4.0.1
+        with:
+          terraform_version: "1.17.1"
+          terraform_wrapper: false
+
+      - name: Verificar formatacao
+        run: terraform fmt -check -recursive
+
+      - name: Inicializar sem backend
+        run: terraform init -backend=false -lockfile=readonly -input=false -no-color
+
+      - name: Validar configuracao
+        run: terraform validate -no-color
+
+  infra-smoke:
+    name: Provisionamento efemero
+    needs: [quality, terraform]
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      TF_IN_AUTOMATION: "true"
+      TF_VAR_resource_prefix: taskflow-ci-${{ github.run_id }}-${{ github.run_attempt }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: infra
+    steps:
+      - name: Obter codigo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Configurar Terraform
+        uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e # v4.0.1
+        with:
+          terraform_version: "1.17.1"
+          terraform_wrapper: false
+
+      - name: Verificar daemon Docker do runner
+        run: |
+          mkdir -p ../reports/infra
+          docker version | tee ../reports/infra/docker-version.log
+
+      - name: Inicializar infraestrutura efemera
+        id: init
+        run: terraform init -backend=false -lockfile=readonly -input=false -no-color | tee ../reports/infra/init.log
+
+      - name: Planejar criacao da rede e do volume
+        run: terraform plan -input=false -no-color -out="$RUNNER_TEMP/taskflow.tfplan" | tee ../reports/infra/plan.log
+
+      - name: Provisionar somente os recursos efemeros
+        run: terraform apply -input=false -no-color "$RUNNER_TEMP/taskflow.tfplan" | tee ../reports/infra/apply.log
+
+      - name: Inspecionar recursos reais
+        run: |
+          terraform output -json > ../reports/infra/outputs.json
+          docker network inspect "${TF_VAR_resource_prefix}-net" | tee ../reports/infra/network.json
+          docker volume inspect "${TF_VAR_resource_prefix}-data" | tee ../reports/infra/volume.json
+
+      - name: Confirmar plano sem alteracoes
+        run: terraform plan -detailed-exitcode -input=false -no-color | tee ../reports/infra/replan.log
+
+      - name: Remover apenas recursos deste runner efemero
+        if: always() && steps.init.outcome == 'success'
+        run: |
+          [[ "$TF_VAR_resource_prefix" == "taskflow-ci-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" ]]
+          terraform destroy -auto-approve -input=false -no-color | tee ../reports/infra/destroy.log
+
+      - name: Publicar evidencias do provisionamento
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: infraestrutura-efemera-${{ github.sha }}
+          path: reports/infra/
+          if-no-files-found: warn
+          retention-days: 14

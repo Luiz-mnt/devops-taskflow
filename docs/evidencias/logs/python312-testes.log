@@ -1,0 +1,51 @@
+UTC: 2026-11-07T00:46:26.030950+00:00
+$ C:\Users\luizs\OneDrive\Documentos\Análise e Desenvolvimento de Sistemas PUCRS\Ano 3\10º trimestre\DevOps na Prática\Fase 1\devops-taskflow\.venv\Scripts\python.exe --version
+Python 3.12.16
+
+exit_code=0
+$ C:\Users\luizs\OneDrive\Documentos\Análise e Desenvolvimento de Sistemas PUCRS\Ano 3\10º trimestre\DevOps na Prática\Fase 1\devops-taskflow\.venv\Scripts\python.exe -m ruff check .
+All checks passed!
+
+exit_code=0
+$ C:\Users\luizs\OneDrive\Documentos\Análise e Desenvolvimento de Sistemas PUCRS\Ano 3\10º trimestre\DevOps na Prática\Fase 1\devops-taskflow\.venv\Scripts\python.exe -m ruff format --check .
+13 files already formatted
+
+exit_code=0
+$ C:\Users\luizs\OneDrive\Documentos\Análise e Desenvolvimento de Sistemas PUCRS\Ano 3\10º trimestre\DevOps na Prática\Fase 1\devops-taskflow\.venv\Scripts\python.exe -m pytest --basetemp=C:\Users\luizs\OneDrive\Documentos\Análise e Desenvolvimento de Sistemas PUCRS\Ano 3\10º trimestre\DevOps na Prática\Fase 1\.tmp\338f741e -o cache_dir=C:\Users\luizs\OneDrive\Documentos\Análise e Desenvolvimento de Sistemas PUCRS\Ano 3\10º trimestre\DevOps na Prática\Fase 1\.tmp\cache338f741e --tb=short
+============================= test session starts =============================
+platform win32 -- Python 3.12.16, pytest-9.2.0, pluggy-1.7.0
+cachedir: C:\Users\luizs\OneDrive\Documentos\Análise e Desenvolvimento de Sistemas PUCRS\Ano 3\10º trimestre\DevOps na Prática\Fase 1\.tmp\cache338f741e
+rootdir: C:\Users\luizs\OneDrive\Documentos\Análise e Desenvolvimento de Sistemas PUCRS\Ano 3\10º trimestre\DevOps na Prática\Fase 1\devops-taskflow
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.16.0, cov-7.1.0
+collected 32 items
+
+tests\test_health.py .....                                               [ 15%]
+tests\test_tasks.py ...........................                          [100%]
+
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\luizs\OneDrive\Documentos\Análise e Desenvolvimento de Sistemas PUCRS\Ano 3\10º trimestre\DevOps na Prática\Fase 1\devops-taskflow\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: C:\Users\luizs\OneDrive\Documentos\Análise e Desenvolvimento de Sistemas PUCRS\Ano 3\10º trimestre\DevOps na Prática\Fase 1\devops-taskflow\reports\junit.xml -
+=============================== tests coverage ================================
+______________ coverage: platform win32, python 3.12.16-final-0 _______________
+
+Name              Stmts   Miss Branch BrPart    Cover   Missing
+---------------------------------------------------------------
+app\database.py      33      0      2      0  100.00%
+app\main.py          40      0      2      0  100.00%
+app\models.py        16      0      0      0  100.00%
+---------------------------------------------------------------
+TOTAL                89      0      4      0  100.00%
+
+1 empty file skipped.
+Coverage HTML written to dir reports/htmlcov
+Coverage XML written to file reports/coverage.xml
+Required test coverage of 80% reached. Total coverage: 100.00%
+======================== 32 passed, 1 warning in 2.86s ========================
+
+exit_code=0

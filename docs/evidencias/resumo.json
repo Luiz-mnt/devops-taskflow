@@ -1,0 +1,33 @@
+{
+  "timestamp": "2026-11-06T21:46:26-03:00",
+  "repository_url": "https://github.com/Luiz-mnt/devops-taskflow",
+  "workflow_url": "https://github.com/Luiz-mnt/devops-taskflow/blob/main/.github/workflows/ci.yml",
+  "phase1_commit": null,
+  "phase2_commit": null,
+  "ci_run_url": null,
+  "cd_run_url": null,
+  "image_digest": null,
+  "ci_conclusion": null,
+  "test_count": 32,
+  "tests_passed": 32,
+  "coverage_percent": 100.0,
+  "branch_coverage_percent": 100.0,
+  "test_duration_seconds": 2.86,
+  "test_environment": "Windows / CPython 3.12.16 local",
+  "python_version": "3.12.16",
+  "terraform_version": "1.17.1",
+  "docker_version": null,
+  "terraform_result": "fmt, init, validate e actionlint aprovados; apply ainda pendente",
+  "terraform_local_result": "Ubuntu WSL2 importado; Docker e apply em preparacao",
+  "terraform_ci_result": null,
+  "smoke_result": null,
+  "monitoring_result": null,
+  "security_result": "Revisao local: sem segredos em codigo; actions por SHA; contents read",
+  "tag": null,
+  "delivery_ready": false,
+  "pending_items": [
+    "Publicar commit e confirmar CI real aprovado",
+    "Concluir Docker e provisionamento no WSL local",
+    "Criar tag fase-1 e consolidar documento final"
+  ]
+}

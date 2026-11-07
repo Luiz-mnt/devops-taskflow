@@ -1,0 +1,15 @@
+Validacao local: Terraform1.17.1 e actionlint1.7.12 (sem provisionamento)
+$ .tools/terraform/terraform.exe -chdir=devops-taskflow/infra fmt -check -recursive
+
+
+exit_code=0
+$ .tools/terraform/terraform.exe -chdir=devops-taskflow/infra validate -no-color
+Success! The configuration is valid.
+
+
+
+exit_code=0
+$ .tools/actionlint/actionlint.exe devops-taskflow/.github/workflows/ci.yml
+
+
+exit_code=0

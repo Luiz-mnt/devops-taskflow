@@ -1,0 +1,21 @@
+flowchart TD
+    A[Alteracao em branch e commit] --> B[Push ou PR para main]
+    B --> C[Checkout e Python 3.12]
+    B --> D[Terraform fmt, init e validate]
+    C --> E[Ruff e pytest: cobertura minima 80%]
+    E --> F{Checks aprovados?}
+    D --> F
+    F -- Nao --> G[Interromper e corrigir codigo]
+    G --> A
+    E --> R[Publicar relatorios em always]
+    F -- Sim --> H{Push em main ou execucao manual?}
+    H -- PR --> I[CI aprovado para revisao]
+    H -- Sim --> J[Docker no runner: plan e apply]
+    J --> K[Inspecionar rede e volume]
+    K --> L[Segundo plan sem alteracoes]
+    L --> M[Coletar logs e outputs]
+    J --> N[Limpeza em always: somente runner]
+    M --> N
+    N --> O[Publicar evidencias]
+    P[Laboratorio local independente] --> Q[Docker local + Terraform apply]
+    Q --> S[Inspect e segundo plan; sem destroy automatico]

@@ -1,0 +1,134 @@
+# TaskFlow API — DevOps na Prática, fase 1
+
+Aluno: **Luiz Eduardo Santos Monteiro**. Projeto acadêmico da PUCRS.
+
+API de tarefas com FastAPI e SQLite, testes automatizados, integração contínua no
+GitHub Actions e infraestrutura Docker descrita em Terraform. A fase 1 cobre
+planejamento, CI e IaC. Containers da aplicação, Prometheus e entrega contínua
+pertencem à fase 2 e não são necessários para executar esta API no ambiente virtual.
+
+## Documentação e comprovação
+
+- [Planejamento e requisitos](docs/planejamento-fase1.md)
+- [Ambiente realmente identificado](docs/ambiente.md)
+- [Checklist de entrega](docs/checklist-entrega.md)
+- [Testes e cobertura](docs/evidencias/fase1-testes.md)
+- [Terraform e provisionamento](docs/evidencias/fase1-infra.md)
+- [Repositório e execução real do CI](docs/evidencias/fase1-github.md)
+- [Resumo verificável em JSON](docs/evidencias/resumo.json)
+- [Procedimento de demonstração](docs/roteiro-demonstracao.md)
+
+## Executar no Windows (PowerShell)
+
+Instale Python 3.12 ou utilize um Python 3.12 portátil. Os comandos abaixo partem
+da raiz deste repositório; não é preciso ativar o ambiente virtual.
+
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
+$env:TASKFLOW_DB_PATH = 'data/taskflow.db'
+.\.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000
+```
+
+Abra http://127.0.0.1:8000/docs para o contrato OpenAPI interativo e
+http://127.0.0.1:8000/health para verificar acesso ao banco.
+O arquivo `.env.example` documenta a configuração; a API lê a variável do processo
+e não carrega `.env` automaticamente.
+
+## Executar no Linux/WSL
+
+```bash
+python3.12 -m venv .venv
+.venv/bin/python -m pip install -r requirements-dev.txt
+export TASKFLOW_DB_PATH=data/taskflow.db
+.venv/bin/python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
+```
+
+## Contrato HTTP
+
+| Método e rota | Entrada | Resultado |
+|---|---|---|
+| `POST /tasks` | `{"title":"Estudar CI"}` | 201, tarefa com `id`, título e `status: pending` |
+| `GET /tasks` | — | 200, lista ordenada por ID |
+| `PATCH /tasks/{id}` | `{"status":"completed"}` | 200, tarefa concluída; repetição é idempotente |
+| `GET /health` | — | 200 com banco acessível; 503 se consulta ao banco falhar |
+
+Títulos aceitam de 1 a 200 caracteres após remover espaços nas extremidades.
+Entradas inválidas retornam 422. Tarefa inexistente retorna 404. A base SQLite
+permanece no caminho configurado entre reinícios e é excluída do Git. Cada teste
+utiliza banco temporário próprio. `/metrics` está reservado para a fase 2.
+
+## Lint, testes e relatórios
+
+```powershell
+.\.venv\Scripts\python.exe -m ruff check .
+.\.venv\Scripts\python.exe -m ruff format --check .
+.\.venv\Scripts\python.exe -m pytest
+```
+
+No Linux, substitua `.\.venv\Scripts\python.exe` por `.venv/bin/python`.
+O `pyproject.toml` exige cobertura mínima de **80%** com medição de branches.
+O pytest gera `reports/junit.xml`, `reports/coverage.xml` e `reports/htmlcov/index.html`.
+O CI publica esses relatórios inclusive quando a etapa de testes falha.
+Dependências e ferramentas de desenvolvimento estão fixadas nos arquivos
+`requirements*.txt`; os arquivos `.in` registram as dependências diretas.
+
+## Infraestrutura como Código
+
+É necessário Terraform na versão de `infra/versions.tf` e Docker Engine acessível
+para provisionar. No Docker Desktop, use Linux containers. O Terraform é o único
+responsável pela rede bridge e pelo volume; na fase 2, Compose os consumirá como
+recursos externos. Nesta fase, a API executada no ambiente virtual usa `data/`,
+sem montar o volume Docker antecipadamente.
+
+```powershell
+# Windows com Docker Desktop aberto:
+$env:TF_VAR_docker_host = 'npipe:////./pipe/docker_engine'
+docker version
+terraform -chdir=infra init -lockfile=readonly
+terraform -chdir=infra fmt -check -recursive
+terraform -chdir=infra validate
+terraform -chdir=infra plan -out=local.tfplan
+terraform -chdir=infra apply local.tfplan
+docker network inspect taskflow-net
+docker volume inspect taskflow-data
+terraform -chdir=infra plan -detailed-exitcode
+```
+
+No WSL/Linux, use `export TF_VAR_docker_host=unix:///var/run/docker.sock` e os mesmos
+comandos. O último `plan` deve encerrar com código **0** (sem alterações); **2**
+significa alterações e **1** significa erro. Estado, planos, `.terraform/`, bancos e
+segredos não são versionados. O `.terraform.lock.hcl` é versionado.
+
+`terraform init -backend=false` + `terraform validate` validam dependências e a
+configuração, **sem criar infraestrutura**. Somente `plan`/`apply` com Docker
+acessível comprovam provisionamento. O CI também executa uma demonstração real
+em runner efêmero, com prefixo exclusivo e limpeza dos recursos desse runner.
+Essa execução remota não comprova provisionamento neste Windows.
+
+Não há `destroy` automático do laboratório local. Alterar o prefixo pode planejar
+a substituição do volume: revise o plano antes de aplicar para preservar dados.
+
+## Pipeline
+
+O workflow `.github/workflows/ci.yml` executa em push e pull request para `main`.
+Os jobs verificam qualidade/testes e formatação/validação Terraform. Após essas
+verificações, um push em `main` demonstra o provisionamento em Docker no runner
+Linux e verifica um plano posterior sem alterações. Os recursos remotos efêmeros
+são removidos em `always`, após coleta das evidências; o laboratório local é
+independente. Nenhum job publica imagens nem utiliza segredos de deploy.
+
+O token tem `contents: read`, as actions são fixadas por SHA e há limites de tempo.
+O resultado observado e os links da execução estão na documentação de evidências.
+
+## Limites e evolução
+
+O projeto é um laboratório de host único: SQLite e rede/volume Docker locais.
+Não oferece autenticação, alta disponibilidade, nuvem gerenciada ou implantação
+pública da API. A evolução prevista inclui containers, métricas e CD na fase 2.
+O checklist diferencia requisitos do enunciado e verificações adicionais do guia.
+
+Fontes: [FastAPI](https://fastapi.tiangolo.com/),
+[GitHub Actions para Python](https://docs.github.com/en/actions/tutorials/build-and-test-code/python),
+[Terraform com Docker](https://developer.hashicorp.com/terraform/tutorials/docker-get-started/docker-build)
+e [Docker Desktop no Windows](https://docs.docker.com/desktop/setup/install/windows-install/).
