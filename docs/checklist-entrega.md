@@ -1,17 +1,29 @@
-# Checklist de entrega — fase 1
+# Checklist final — fase 1
 
-| Requisito | Arquivos/evidência | Estado nesta preparação |
+**Situação:** implementação e validações locais concluídas. Aprovação remota do
+CI e tag de fechamento pendentes por bloqueio de cobrança da conta GitHub.
+O aluno solicitou registrar essa pendência; não se declara prontidão integral.
+
+Repositório: https://github.com/Luiz-mnt/devops-taskflow
+
+| Requisito | Arquivos/evidência real | Estado |
 |---|---|---|
-| Descrição, objetivos e requisitos | docs/planejamento-fase1.md | Concluído |
-| Plano de CI | docs/planejamento-fase1.md e workflow | Concluído |
-| Especificação de infraestrutura | Planejamento e infra/*.tf | Concluído |
-| Repositório GitHub | Repositório público criado | Push em preparação |
-| GitHub Actions CI | .github/workflows/ci.yml, actionlint aprovado | Execução remota pendente |
-| Scripts IaC e lock real | infra/*.tf e .terraform.lock.hcl | Concluído; validação aprovada |
-| Testes implementados/integrados | tests/ e workflow; 32 aprovados, 100% cobertura local | Concluído localmente |
-| Apply, inspeções e segundo plan local (guia) | Ubuntu WSL2 criado | Docker/provisionamento em preparação |
-| Tag fase-1 e evidências remotas | docs/evidencias/ | Aguardando CI real |
-| Documento no template e PDF | Pasta de entrega fora do código | Consolidação final pendente |
+| Descrição, objetivos e requisitos | planejamento-fase1.md | Concluído |
+| Plano CI e infraestrutura necessária | planejamento-fase1.md e ambiente-wsl.md | Concluído |
+| Documento com link do repositório | Planejamento e apresentação revisada | Concluído |
+| Repositório GitHub | Público, código publicado e acesso sem login verificado | Concluído |
+| Pipeline GitHub Actions | ci.yml com push/PR main, jobs, gates e artefatos; actionlint aprovado | Configurado; aprovação remota pendente |
+| Testes implementados e integrados | tests/, pyproject.toml, workflow; 32 testes aprovados localmente | Concluído localmente; execução CI bloqueada |
+| Cobertura mínima 80% | 100% linhas/branches em Python 3.12.16, relatório real | Concluído localmente |
+| Scripts IaC | infra/*.tf e lock real Windows/Linux; fmt/init/validate aprovados | Concluído |
+| Provisionamento local (guia) | Apply com 2 criados, inspeções, plan posterior exit 0 em WSL2 | Concluído |
+| Evidência CI aprovado e tag fase-1 (guia) | Execução 42320791079 bloqueada antes das etapas | Pendente: liberação da conta e CI verde |
+| Proteção main | Checks exigidos; admin excepcionado; sem force-push/exclusão | Concluído, limitação documentada |
+| Template, PDF, capturas e logs | Entrega revisada fora do repositório; capturas reais e registros locais | Preparados com pendência CI explícita |
 
-Este registro inicial será atualizado com fatos observados após as execuções.
-Não significa que a fase esteja integralmente concluída neste commit inicial.
+## Encerramento
+
+O bloqueio remanescente é externo ao código: a conta GitHub precisa liberar os
+jobs. Não foram reduzidos gates, fabricados resultados ou criada tag de sucesso.
+Consulte [fechar-fase1.md](fechar-fase1.md) para concluir após a liberação.
+Docker/CD/Prometheus da fase 2 não são apresentados como implementados nesta fase.

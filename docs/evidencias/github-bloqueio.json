@@ -1,0 +1,11 @@
+{
+  "id": 42320791079,
+  "url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42320791079",
+  "head_sha": "06f7bf7e72f8358912000347ca120980c52bab49",
+  "conclusion": "failure",
+  "jobs_started": false,
+  "blocking_message": "The job was not started because your account is locked due to a billing issue.",
+  "user_instruction": "Usuario informou nao conseguir regularizar agora e solicitou registrar pendencia.",
+  "last_checked_at": "2026-11-07T11:53:22-03:00",
+  "latest_attempt": 2
+}

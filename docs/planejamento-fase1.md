@@ -8,6 +8,12 @@
 
 **Data de preparação:** 06/11/2026
 
+**Repositório público:** https://github.com/Luiz-mnt/devops-taskflow
+
+**Pipeline:** https://github.com/Luiz-mnt/devops-taskflow/blob/main/.github/workflows/ci.yml
+
+**Scripts IaC:** https://github.com/Luiz-mnt/devops-taskflow/tree/main/infra
+
 ## 1. Descrição do projeto, objetivos e requisitos
 
 A TaskFlow API gerencia tarefas por HTTP. O usuário cria uma tarefa, consulta a
@@ -87,9 +93,10 @@ Links reais, execuções, métricas e limitações são registrados em
 [resumo verificável](evidencias/resumo.json), após execução.
 
 Os requisitos do enunciado são planejamento, GitHub, GitHub Actions, scripts IaC
-e testes integrados. O guia acrescenta evidência de apply local, inspeções e
-plano posterior sem alterações. Esse item adicional permanece pendente se não
-houver daemon Docker local: validação sintática e apply no runner não o substituem.
+e testes integrados. O guia acrescenta evidência de apply local, inspeções e plano
+posterior sem alterações: essa verificação foi concluída no WSL2 local. O GitHub
+bloqueou os jobs por questão de cobrança da conta; a configuração de CI foi
+publicada e validada sintaticamente, mas sua execução remota não foi homologada.
 
 O [checklist de entrega](checklist-entrega.md) relaciona cada requisito aos
 arquivos e resultados observados. Não são utilizadas métricas, capturas ou URLs

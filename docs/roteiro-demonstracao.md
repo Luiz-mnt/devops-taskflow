@@ -2,29 +2,33 @@
 
 1. Abra o repositório indicado em `evidencias/fase1-github.md`. Mostre `app/`,
    `tests/`, `.github/workflows/ci.yml`, `infra/` e `docs/planejamento-fase1.md`.
-2. Abra a execução aprovada do Actions. Confira o commit e os jobs de qualidade,
-   testes, Terraform e provisionamento efêmero.
+2. Abra a execução do Actions registrada nas evidências. Ela foi bloqueada antes
+   das etapas por uma questão de cobrança da conta. Mostre a mensagem real;
+   não a apresente como execução aprovada. Depois da liberação da conta, execute
+   o CI e confira commit/jobs antes de atualizar o documento.
 3. Mostre o relatório JUnit/cobertura e explique que o limite de 80% faz parte da
    configuração executada pelo pytest. A cobertura e o total reais estão no resumo.
 4. Abra `infra/main.tf`: somente rede bridge e volume são provisionados. Mostre
    versões/lock, variáveis/prefixo e outputs. Não há containers da fase 2 neste escopo.
-5. Nos logs do job de provisionamento, mostre `apply`, inspeções reais, segundo
-   `plan` sem alterações e `destroy` dos recursos **efêmeros** do runner. Não afirme
-   que esses recursos foram criados no Windows local.
+5. Nos logs **locais WSL2**, mostre `apply` com dois recursos criados, inspeções e
+   segundo `plan` sem alterações (exit 0). A rede/volume locais foram preservados.
+   O provisionamento remoto efêmero está apenas configurado; não executou devido
+   ao bloqueio da conta. Seu `destroy` é restrito ao runner, quando puder executar.
 6. Para demonstração da API, siga o README: inicie Uvicorn, abra `/docs`, crie uma
    tarefa, liste e conclua. Reinicie o processo mantendo o mesmo banco e consulte
    novamente. `/health` consulta a tabela do banco, além de verificar o processo.
-7. Para comprovar provisionamento local, prepare Docker conforme `ambiente.md` e
-   execute `scripts/provisionar-local.ps1`. O script requer confirmação do plano e
-   não contém limpeza automática do volume local.
+7. Para repetir a verificação local, siga `ambiente-wsl.md`: inicie o daemon na
+   distribuição `TaskFlowDevOps` e execute `plan -detailed-exitcode`. O ambiente
+   já está preparado e os recursos continuam criados. Não é necessário reaplicar
+   nem destruir o volume para demonstrar o resultado.
 
 ## Capturas sugeridas
 
 - Repositório público com URL e diretórios visíveis.
-- Actions com execução aprovada, commit e jobs.
+- Actions com bloqueio real, commit e anotações; substituir por execução aprovada após regularização.
 - Relatório dos testes com total e cobertura.
 - Terraform apply e plan posterior sem mudanças, identificando o ambiente.
-- Se executado: Docker local com rede/volume e logs locais.
+- Docker local com rede/volume e logs locais reais já coletados.
 
 Os registros de terminal inseridos no documento são transcrições dos comandos
 executados, identificadas como tal. Não são apresentados como capturas da interface

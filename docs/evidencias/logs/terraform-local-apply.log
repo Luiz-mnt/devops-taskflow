@@ -1,0 +1,13 @@
+docker_network.taskflow: Creating...
+docker_volume.taskflow: Creating...
+docker_volume.taskflow: Creation complete after 0s [id=taskflow-data]
+docker_network.taskflow: Creation complete after 2s [id=7c5b1a6b743a72193fc27feba7e7e0e7c2636b3e7d2d4881b92601b55aecb100]
+
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+network_id = "7c5b1a6b743a72193fc27feba7e7e0e7c2636b3e7d2d4881b92601b55aecb100"
+network_name = "taskflow-net"
+volume_id = "taskflow-data"
+volume_name = "taskflow-data"

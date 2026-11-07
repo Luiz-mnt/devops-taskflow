@@ -1,33 +1,128 @@
 {
-  "timestamp": "2026-11-06T21:46:26-03:00",
+  "timestamp": "2026-11-07T11:53:22-03:00",
   "repository_url": "https://github.com/Luiz-mnt/devops-taskflow",
+  "repository_visibility": "público, acessível sem login",
   "workflow_url": "https://github.com/Luiz-mnt/devops-taskflow/blob/main/.github/workflows/ci.yml",
+  "published_commit": "06f7bf7e72f8358912000347ca120980c52bab49",
+  "published_ref": "main",
+  "published_commit_description": "Commit inicial da implementação e da tentativa CI; main inclui a consolidação posterior das evidências.",
   "phase1_commit": null,
   "phase2_commit": null,
-  "ci_run_url": null,
+  "ci_run_url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42320791079",
+  "infra_run_url": "https://github.com/Luiz-mnt/devops-taskflow/blob/main/docs/evidencias/fase1-infra.md",
+  "ci_head_sha": "06f7bf7e72f8358912000347ca120980c52bab49",
+  "ci_conclusion": "failure",
+  "ci_status_description": "Bloqueado pela cobrança da conta, antes das etapas",
+  "ci_jobs_executed": false,
+  "ci_test_count": null,
+  "ci_coverage_percent": null,
   "cd_run_url": null,
   "image_digest": null,
-  "ci_conclusion": null,
   "test_count": 32,
   "tests_passed": 32,
   "coverage_percent": 100.0,
   "branch_coverage_percent": 100.0,
   "test_duration_seconds": 2.86,
   "test_environment": "Windows / CPython 3.12.16 local",
+  "test_source_commit": "06f7bf7e72f8358912000347ca120980c52bab49",
   "python_version": "3.12.16",
   "terraform_version": "1.17.1",
-  "docker_version": null,
-  "terraform_result": "fmt, init, validate e actionlint aprovados; apply ainda pendente",
-  "terraform_local_result": "Ubuntu WSL2 importado; Docker e apply em preparacao",
-  "terraform_ci_result": null,
+  "docker_version": "29.9.3 (cliente e servidor WSL2)",
+  "environment_description": "Windows/PowerShell e Python 3.12; Ubuntu 24.04.4 WSL2 TaskFlowDevOps com Docker Engine 29.9.3 e Terraform 1.17.1. CI hospedado configurado, mas bloqueado pela conta.",
+  "terraform_result": "Local WSL2: 2 recursos criados; inspeções aprovadas; segundo plan sem alterações, exit 0",
+  "terraform_local_result": "Apply: 2 criados; inspeções OK; plan posterior sem alterações (exit 0)",
+  "terraform_apply_result": "Local WSL2: 2 added, 0 changed, 0 destroyed",
+  "terraform_post_apply_plan": "Local WSL2: No changes; exit 0",
+  "terraform_ci_result": "Não executado: conta bloqueou os jobs",
+  "terraform_resources": {
+    "network": "taskflow-net",
+    "volume": "taskflow-data",
+    "preserved": true
+  },
   "smoke_result": null,
   "monitoring_result": null,
-  "security_result": "Revisao local: sem segredos em codigo; actions por SHA; contents read",
+  "security_result": "Revisão staged sem segredos reconhecíveis; actions por SHA; contents read; main protegida com exceção de administrador documentada",
+  "phase1_tag": null,
   "tag": null,
   "delivery_ready": false,
   "pending_items": [
-    "Publicar commit e confirmar CI real aprovado",
-    "Concluir Docker e provisionamento no WSL local",
-    "Criar tag fase-1 e consolidar documento final"
-  ]
+    "GitHub Actions bloqueado por cobrança da conta; aguarda liberação e execução aprovada. Tag fase-1 depende dessa aprovação."
+  ],
+  "measurement_commands": [
+    "python -m ruff check .",
+    "python -m ruff format --check .",
+    "python -m pytest --basetemp=<diretorio-temporario-novo> (comando exato no log)",
+    "terraform -chdir=infra fmt -check -recursive",
+    "terraform -chdir=infra init -lockfile=readonly",
+    "terraform -chdir=infra validate",
+    "terraform -chdir=infra plan -out=local.tfplan",
+    "terraform -chdir=infra apply local.tfplan",
+    "docker network inspect taskflow-net",
+    "docker volume inspect taskflow-data",
+    "terraform -chdir=infra plan -detailed-exitcode",
+    "gh run view 42320791079 --repo Luiz-mnt/devops-taskflow --json status,conclusion,headSha,url,jobs"
+  ],
+  "presentation_evidence": [
+    {
+      "path": "docs/evidencias/imagens/github-repositorio-recorte.png",
+      "title": "Repositório público — captura real",
+      "caption": "Recorte da página pública real. Código, testes, workflow e Terraform publicados; CI inicial bloqueado pela conta.",
+      "source_slide": 7,
+      "url": "https://github.com/Luiz-mnt/devops-taskflow"
+    },
+    {
+      "path": "docs/evidencias/imagens/github-ci-resumo-recorte.png",
+      "title": "GitHub Actions — execução bloqueada",
+      "caption": "Recorte da captura real da execução 42320791079. Os jobs não iniciaram; não há resultado verde.",
+      "source_slide": 8,
+      "url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42320791079"
+    },
+    {
+      "path": "docs/evidencias/imagens/github-ci-annotation-recorte.png",
+      "title": "Causa externa registrada pelo GitHub",
+      "caption": "Recorte real: conta bloqueada por cobrança. O aluno solicitou registrar a pendência; nenhum gate foi desativado.",
+      "source_slide": 8,
+      "url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42320791079"
+    },
+    {
+      "path": "docs/evidencias/logs/python312-testes.log",
+      "title": "Testes locais — Python 3.12.16",
+      "caption": "Registro real de terminal local: 32 testes aprovados, 100% de linhas e branches, em 2,86 s. CI remoto não executou testes.",
+      "source_slide": 8,
+      "url": "https://github.com/Luiz-mnt/devops-taskflow/blob/main/docs/evidencias/logs/python312-testes.log"
+    },
+    {
+      "path": "docs/evidencias/logs/terraform-validacao.log",
+      "title": "Validação Terraform e workflow",
+      "caption": "Registro local: fmt, validate e actionlint aprovados. O lockfile foi gerado pelo init para Linux e Windows.",
+      "source_slide": 10,
+      "url": "https://github.com/Luiz-mnt/devops-taskflow/blob/main/docs/evidencias/logs/terraform-validacao.log"
+    },
+    {
+      "path": "docs/evidencias/logs/terraform-local-apply.log",
+      "title": "Terraform apply — WSL2 local",
+      "caption": "Registro real do laboratório TaskFlowDevOps: 2 recursos criados, 0 alterados e 0 destruídos. Rede e volume preservados.",
+      "source_slide": 10,
+      "url": "https://github.com/Luiz-mnt/devops-taskflow/blob/main/docs/evidencias/logs/terraform-local-apply.log"
+    },
+    {
+      "path": "docs/evidencias/logs/terraform-local-inspecao-resumo.log",
+      "title": "Docker — inspeções locais reais",
+      "caption": "Registro real do Docker Engine local: taskflow-net é bridge e taskflow-data usa driver local. Inspeções com exit 0.",
+      "source_slide": 10,
+      "url": "https://github.com/Luiz-mnt/devops-taskflow/blob/main/docs/evidencias/logs/terraform-local-inspecao-resumo.log"
+    },
+    {
+      "path": "docs/evidencias/logs/terraform-local-plan-after.log",
+      "title": "Terraform — plano posterior sem alterações",
+      "caption": "Registro real no WSL2 após apply: No changes; exit code 0. Idempotência comprovada sem destruir dados locais.",
+      "source_slide": 10,
+      "url": "https://github.com/Luiz-mnt/devops-taskflow/blob/main/docs/evidencias/logs/terraform-local-plan-after.log"
+    }
+  ],
+  "verification_timestamp": "2026-11-07T11:53:22-03:00",
+  "ci_attempt": 2,
+  "local_test_timestamp": "2026-11-06T21:46:26-03:00",
+  "local_terraform_timestamp": "2026-11-06T21:55:00-03:00",
+  "terraform_reverified_at": "2026-11-07T11:55:04-03:00"
 }

@@ -2,6 +2,14 @@
 
 Aluno: **Luiz Eduardo Santos Monteiro**. Projeto acadêmico da PUCRS.
 
+Repositório público: https://github.com/Luiz-mnt/devops-taskflow
+
+**Estado verificado:** 32 testes locais aprovados, cobertura de linhas e branches
+de 100%, lint e validação Terraform aprovados; rede e volume provisionados
+realmente no WSL2, com segundo plano sem alterações. **Pendência:** o GitHub
+bloqueou os jobs do Actions por uma questão de cobrança da conta, antes de
+executar etapas. A aprovação remota e a tag `fase-1` aguardam a liberação da conta.
+
 API de tarefas com FastAPI e SQLite, testes automatizados, integração contínua no
 GitHub Actions e infraestrutura Docker descrita em Terraform. A fase 1 cobre
 planejamento, CI e IaC. Containers da aplicação, Prometheus e entrega contínua
@@ -35,14 +43,21 @@ http://127.0.0.1:8000/health para verificar acesso ao banco.
 O arquivo `.env.example` documenta a configuração; a API lê a variável do processo
 e não carrega `.env` automaticamente.
 
+No ambiente já preparado nesta pasta, `.venv` usa o Python 3.12 portátil em
+`../.tools/python/`. Basta executar os comandos `.venv` acima; `py -3.12`
+documenta a recriação em uma máquina com esse Python registrado no launcher.
+
 ## Executar no Linux/WSL
 
 ```bash
-python3.12 -m venv .venv
-.venv/bin/python -m pip install -r requirements-dev.txt
+python3.12 -m venv .venv-linux
+.venv-linux/bin/python -m pip install -r requirements-dev.txt
 export TASKFLOW_DB_PATH=data/taskflow.db
-.venv/bin/python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
+.venv-linux/bin/python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
+
+O nome `.venv-linux` preserva o ambiente `.venv` do Windows ao compartilhar a
+mesma pasta pelo WSL. Ambientes virtuais não são intercambiáveis entre os sistemas.
 
 ## Contrato HTTP
 
@@ -66,7 +81,7 @@ utiliza banco temporário próprio. `/metrics` está reservado para a fase 2.
 .\.venv\Scripts\python.exe -m pytest
 ```
 
-No Linux, substitua `.\.venv\Scripts\python.exe` por `.venv/bin/python`.
+No Linux, substitua `.\.venv\Scripts\python.exe` por `.venv-linux/bin/python`.
 O `pyproject.toml` exige cobertura mínima de **80%** com medição de branches.
 O pytest gera `reports/junit.xml`, `reports/coverage.xml` e `reports/htmlcov/index.html`.
 O CI publica esses relatórios inclusive quando a etapa de testes falha.
@@ -74,6 +89,11 @@ Dependências e ferramentas de desenvolvimento estão fixadas nos arquivos
 `requirements*.txt`; os arquivos `.in` registram as dependências diretas.
 
 ## Infraestrutura como Código
+
+O laboratório desta entrega foi executado na distribuição WSL2 **TaskFlowDevOps**,
+com Docker Engine instalado diretamente no Ubuntu. Para reproduzir neste
+computador, consulte [o procedimento WSL](docs/ambiente-wsl.md). Os comandos
+PowerShell abaixo são uma alternativa para instalações com Docker Desktop.
 
 É necessário Terraform na versão de `infra/versions.tf` e Docker Engine acessível
 para provisionar. No Docker Desktop, use Linux containers. O Terraform é o único
@@ -102,9 +122,10 @@ segredos não são versionados. O `.terraform.lock.hcl` é versionado.
 
 `terraform init -backend=false` + `terraform validate` validam dependências e a
 configuração, **sem criar infraestrutura**. Somente `plan`/`apply` com Docker
-acessível comprovam provisionamento. O CI também executa uma demonstração real
-em runner efêmero, com prefixo exclusivo e limpeza dos recursos desse runner.
-Essa execução remota não comprova provisionamento neste Windows.
+acessível comprovam provisionamento. O CI está configurado para executar uma
+demonstração em runner efêmero, com prefixo exclusivo e limpeza desses recursos.
+Essa etapa ainda não executou devido ao bloqueio da conta. O provisionamento
+local foi comprovado separadamente no WSL2.
 
 Não há `destroy` automático do laboratório local. Alterar o prefixo pode planejar
 a substituição do volume: revise o plano antes de aplicar para preservar dados.
@@ -112,11 +133,12 @@ a substituição do volume: revise o plano antes de aplicar para preservar dados
 ## Pipeline
 
 O workflow `.github/workflows/ci.yml` executa em push e pull request para `main`.
-Os jobs verificam qualidade/testes e formatação/validação Terraform. Após essas
-verificações, um push em `main` demonstra o provisionamento em Docker no runner
-Linux e verifica um plano posterior sem alterações. Os recursos remotos efêmeros
-são removidos em `always`, após coleta das evidências; o laboratório local é
-independente. Nenhum job publica imagens nem utiliza segredos de deploy.
+Os jobs estão configurados para verificar qualidade/testes e formatação/validação
+Terraform. Após aprovação, um push em `main` deverá demonstrar o provisionamento
+em Docker no runner Linux e verificar um plano posterior sem alterações. Os
+recursos remotos efêmeros têm limpeza em `always`, após coleta das evidências;
+o laboratório local é independente. Nenhum job publica imagens nem utiliza
+segredos de deploy. A execução remota ainda não foi homologada.
 
 O token tem `contents: read`, as actions são fixadas por SHA e há limites de tempo.
 O resultado observado e os links da execução estão na documentação de evidências.

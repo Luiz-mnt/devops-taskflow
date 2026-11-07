@@ -1,0 +1,51 @@
+[
+  {
+    "file": "github-repositorio.png",
+    "source_url": "https://github.com/Luiz-mnt/devops-taskflow",
+    "captured_at_utc": "2026-11-07T00:52:27.547313+00:00",
+    "kind": "Captura real da UI pública com Chrome headless e perfil isolado, sem autenticação",
+    "sha_visible": "06f7bf7",
+    "ci_status_visible": "failure; GitHub account locked due to a billing issue"
+  },
+  {
+    "file": "github-ci-bloqueado.png",
+    "source_url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42320791079",
+    "captured_at_utc": "2026-11-07T00:53:39.482800+00:00",
+    "kind": "Captura real da UI pública com Chrome headless e perfil isolado, sem autenticação",
+    "sha_visible": "06f7bf7",
+    "ci_status_visible": "failure; GitHub account locked due to a billing issue"
+  },
+  {
+    "file": "github-ci-resumo-recorte.png",
+    "original": "github-ci-bloqueado.png",
+    "crop_pixels_ltrb": [
+      450,
+      340,
+      1955,
+      847
+    ],
+    "kind": "Recorte da captura real; sem alteração de texto, estado ou resultado"
+  },
+  {
+    "file": "github-ci-annotation-recorte.png",
+    "original": "github-ci-bloqueado.png",
+    "crop_pixels_ltrb": [
+      450,
+      865,
+      1955,
+      1121
+    ],
+    "kind": "Recorte da captura real; sem alteração de texto, estado ou resultado"
+  },
+  {
+    "file": "github-repositorio-recorte.png",
+    "original": "github-repositorio.png",
+    "crop_pixels_ltrb": [
+      215,
+      230,
+      1415,
+      880
+    ],
+    "kind": "Recorte da captura real; sem alteração de texto, estado ou resultado"
+  }
+]

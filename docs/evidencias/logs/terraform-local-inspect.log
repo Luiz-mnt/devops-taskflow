@@ -1,0 +1,87 @@
+Timestamp UTC: 2026-11-07T00:55:06+00:00
+
+Comando: docker network inspect taskflow-net
+[
+    {
+        "Name": "taskflow-net",
+        "Id": "7c5b1a6b743a72193fc27feba7e7e0e7c2636b3e7d2d4881b92601b55aecb100",
+        "Created": "2026-11-07T00:55:04.021300135Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.18.0.0/16",
+                    "Gateway": "172.18.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Options": {},
+        "Labels": {
+            "com.taskflow.environment": "taskflow",
+            "com.taskflow.managed-by": "terraform"
+        },
+        "Containers": {},
+        "Status": {
+            "IPAM": {
+                "Subnets": {
+                    "172.18.0.0/16": {
+                        "IPsInUse": 3,
+                        "DynamicIPsAvailable": 65533
+                    }
+                }
+            }
+        }
+    }
+]
+
+Comando: docker volume inspect taskflow-data
+[
+    {
+        "CreatedAt": "2026-11-07T00:55:04Z",
+        "Driver": "local",
+        "Labels": {
+            "com.taskflow.environment": "taskflow",
+            "com.taskflow.managed-by": "terraform"
+        },
+        "Mountpoint": "/var/lib/docker/volumes/taskflow-data/_data",
+        "Name": "taskflow-data",
+        "Options": null,
+        "Scope": "local"
+    }
+]
+
+Comando: terraform -chdir=infra output -json
+{
+  "network_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "7c5b1a6b743a72193fc27feba7e7e0e7c2636b3e7d2d4881b92601b55aecb100"
+  },
+  "network_name": {
+    "sensitive": false,
+    "type": "string",
+    "value": "taskflow-net"
+  },
+  "volume_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "taskflow-data"
+  },
+  "volume_name": {
+    "sensitive": false,
+    "type": "string",
+    "value": "taskflow-data"
+  }
+}

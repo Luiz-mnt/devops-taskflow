@@ -13,6 +13,7 @@ if [[ "${EUID}" -ne 0 ]]; then
 fi
 
 export DOCKER_HOST=unix:///var/run/docker.sock
+unset DOCKER_CONTEXT
 if docker info >/dev/null 2>&1; then
   printf '%s\n' 'Docker local ja esta disponivel.'
   exit 0

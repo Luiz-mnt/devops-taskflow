@@ -1,0 +1,57 @@
+Reverificacao real em 2026-11-07T11:53:22-03:00
+$ gh run view 42320791079 --repo Luiz-mnt/devops-taskflow --json status,conclusion,headSha,url,jobs,attempt
+{
+  "attempt": 2,
+  "conclusion": "failure",
+  "headSha": "06f7bf7e72f8358912000347ca120980c52bab49",
+  "jobs": [
+    {
+      "completedAt": "2026-11-07T14:51:57Z",
+      "conclusion": "failure",
+      "databaseId": 128436157372,
+      "name": "Qualidade e testes",
+      "startedAt": "2026-11-07T14:51:55Z",
+      "status": "completed",
+      "steps": [],
+      "url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42320791079/job/128436157372"
+    },
+    {
+      "completedAt": "2026-11-07T14:51:57Z",
+      "conclusion": "failure",
+      "databaseId": 128436157495,
+      "name": "Terraform",
+      "startedAt": "2026-11-07T14:51:55Z",
+      "status": "completed",
+      "steps": [],
+      "url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42320791079/job/128436157495"
+    },
+    {
+      "completedAt": "2026-11-07T14:51:57Z",
+      "conclusion": "skipped",
+      "databaseId": 128436167536,
+      "name": "Provisionamento efemero",
+      "startedAt": "2026-11-07T14:51:58Z",
+      "status": "completed",
+      "steps": [],
+      "url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42320791079/job/128436167536"
+    }
+  ],
+  "status": "completed",
+  "url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42320791079"
+}
+
+$ gh api repos/Luiz-mnt/devops-taskflow/check-runs/128436157372/annotations
+[
+  {
+    "path": ".github",
+    "blob_href": "https://github.com/Luiz-mnt/devops-taskflow/blob/06f7bf7e72f8358912000347ca120980c52bab49/.github",
+    "start_line": 1,
+    "start_column": null,
+    "end_line": 1,
+    "end_column": null,
+    "annotation_level": "failure",
+    "title": "",
+    "message": "The job was not started because your account is locked due to a billing issue.",
+    "raw_details": ""
+  }
+]

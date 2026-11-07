@@ -14,8 +14,12 @@ Data da preparação: **06/11/2026**, fuso America/Sao_Paulo.
 | Terraform | 1.17.1, binário oficial portátil; não adicionado ao PATH global |
 | Provider Docker | kreuzwerker/docker 4.6.0; lock real para windows_amd64 e linux_amd64 |
 | actionlint | 1.7.12, distribuição oficial portátil, workflow validado |
-| Docker | Não localizado no PATH nem nos caminhos de instalação verificados; nenhum daemon disponível |
-| WSL | Comando disponível; `wsl --list --verbose` confirmou ausência de distribuições instaladas |
+| Docker inicial no Windows | Não localizado no PATH nem nos caminhos de instalação verificados |
+| WSL inicial | Comando disponível; nenhuma distribuição instalada no diagnóstico inicial |
+| WSL preparado | Distribuição exclusiva TaskFlowDevOps, Ubuntu 24.04.4 LTS, kernel 6.6.87.2 |
+| Docker local preparado | Engine Community 29.9.3, cliente e servidor linux/amd64 confirmados no WSL2 |
+| Compose local | 5.7.0; não usado no escopo da fase 1 |
+| Terraform no WSL | 1.17.1, checksum oficial validado; provider Docker 4.6.0 |
 | PowerPoint | Executável instalado; automação COM indisponível nesta sessão (80070520) |
 
 Python, uv, Terraform e actionlint foram obtidos em `.tools/` da pasta de trabalho
@@ -28,18 +32,34 @@ consulta de autenticação aparentou token inválido. Repetidas com acesso de re
 autorizado, confirmaram autenticação válida; não foi necessário novo login.
 Tokens não foram copiados para o repositório nem para esta documentação.
 
-## Limitação local e como resolvê-la
+## Laboratório local efetivamente preparado
 
-O código, os testes e a validação Terraform podem ser executados neste Windows.
-O provisionamento **local** exige instalar/iniciar Docker com backend Linux.
-Um apply bem-sucedido no GitHub Actions comprova apenas o ambiente do runner.
+Após explicar a preparação ao aluno, foi importada uma imagem Ubuntu Base oficial
+na distribuição WSL2 dedicada `TaskFlowDevOps`. O SHA256 foi conferido:
+`c1e67ef7b17a6300e136118bd1dc04725009cb376c1aad10abcf8cd453628d58`.
+Dentro dela, foram instalados Docker Engine pelo repositório oficial Docker e
+Terraform Linux pelo binário oficial. Não foi necessário Docker Desktop.
 
-1. Consulte os [requisitos oficiais do Docker Desktop para Windows](https://docs.docker.com/desktop/setup/install/windows-install/).
-2. Instale uma distribuição seguindo a [documentação oficial do WSL](https://learn.microsoft.com/windows/wsl/install), se usar esse backend. O comando administrativo usual é `wsl --install -d Ubuntu`; reinicie se solicitado.
-3. Instale e abra Docker Desktop, selecione Linux containers e aguarde o servidor iniciar. Se usar Ubuntu/WSL, habilite a integração da distribuição.
-4. No PowerShell, `docker version` deve mostrar Client **e Server**; `docker info --format '{{.OSType}}'` deve mostrar `linux`.
-5. Na raiz deste repositório, execute `powershell -ExecutionPolicy Bypass -File scripts/provisionar-local.ps1`. Revise e confirme o plano exibido pelo Terraform. O script não destrói dados locais.
-6. Atualize as evidências e o documento da entrega com os logs reais produzidos. A pendência local só pode ser encerrada após apply, inspect e novo plan sem alterações.
+O daemon escuta somente `unix:///var/run/docker.sock`, sem listener TCP. O
+laboratório usa configuração normal do Docker, driver overlayfs e cgroups v2.
+Os recursos `taskflow-net` e `taskflow-data` foram realmente criados pelo Terraform
+e preservados. O segundo plano retornou **exit 0, sem alterações**. Consulte
+[evidências locais](evidencias/fase1-infra.md) e
+[comandos do WSL](ambiente-wsl.md).
 
-Nenhum Docker Engine, distribuição WSL ou componente de virtualização foi
-instalado silenciosamente como parte desta preparação.
+A API e os testes executam no Python 3.12 do ambiente virtual Windows; o Terraform
+e o Docker do laboratório executam no WSL2. O cliente Docker não foi instalado
+no PowerShell. `scripts/provisionar-local.ps1` é uma alternativa para máquinas
+com Docker Desktop; neste laboratório, use o procedimento WSL.
+
+## Pendência externa
+
+O GitHub recebeu o código e o workflow, mas bloqueou os jobs antes de qualquer
+etapa por uma questão de cobrança da conta. O aluno informou que não consegue
+regularizar agora e solicitou registrar a pendência. Não há execução verde ou
+tag `fase-1`. Não foram alteradas configurações de cobrança.
+
+Fontes: [importação de distribuições WSL](https://learn.microsoft.com/windows/wsl/use-custom-distro),
+[imagem Ubuntu oficial](https://cdimage.ubuntu.com/ubuntu-base/releases/24.04/release/),
+[Docker Engine no Ubuntu](https://docs.docker.com/engine/install/ubuntu/) e
+[Terraform](https://developer.hashicorp.com/terraform/install).

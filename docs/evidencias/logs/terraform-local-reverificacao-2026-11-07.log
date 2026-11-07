@@ -1,0 +1,17 @@
+2026-11-07T11:55:04-03:00
+$ wsl -d TaskFlowDevOps -u root -- bash scripts/start-lab-wsl.sh
+Docker local iniciado; socket unix:///var/run/docker.sock.
+
+
+exit_code=0
+$ wsl -d TaskFlowDevOps -u root -- env TF_VAR_docker_host=unix:///var/run/docker.sock terraform -chdir=infra plan -detailed-exitcode -input=false -no-color
+docker_volume.taskflow: Refreshing state... [id=taskflow-data]
+docker_network.taskflow: Refreshing state... [id=7c5b1a6b743a72193fc27feba7e7e0e7c2636b3e7d2d4881b92601b55aecb100]
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration
+and found no differences, so no changes are needed.
+
+
+exit_code=0

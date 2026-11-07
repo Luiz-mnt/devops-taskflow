@@ -1,5 +1,6 @@
 # Python e ferramentas locais
 .venv/
+.venv-linux/
 venv/
 __pycache__/
 *.py[cod]

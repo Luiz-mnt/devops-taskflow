@@ -1,0 +1,8 @@
+$ wsl -d TaskFlowDevOps -u root -- docker network inspect --format Name={{.Name}} Driver={{.Driver}} Scope={{.Scope}} taskflow-net
+Name=taskflow-net Driver=bridge Scope=local
+
+exit_code=0
+$ wsl -d TaskFlowDevOps -u root -- docker volume inspect --format Name={{.Name}} Driver={{.Driver}} Scope={{.Scope}} taskflow-data
+Name=taskflow-data Driver=local Scope=local
+
+exit_code=0
