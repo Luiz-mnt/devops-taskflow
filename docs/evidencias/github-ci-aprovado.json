@@ -1,0 +1,300 @@
+{
+  "attempt": 1,
+  "conclusion": "success",
+  "createdAt": "2026-11-08T13:32:30Z",
+  "headSha": "30b49c595e931f1ea6c2e122ba4ca25ead004b48",
+  "jobs": [
+    {
+      "completedAt": "2026-11-08T13:32:51Z",
+      "conclusion": "success",
+      "databaseId": 128746187752,
+      "name": "Qualidade e testes",
+      "startedAt": "2026-11-08T13:32:34Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-08T13:32:36Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-08T13:32:35Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:32:37Z",
+          "conclusion": "success",
+          "name": "Obter codigo",
+          "number": 2,
+          "startedAt": "2026-11-08T13:32:36Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:32:38Z",
+          "conclusion": "success",
+          "name": "Configurar Python 3.12",
+          "number": 3,
+          "startedAt": "2026-11-08T13:32:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:32:44Z",
+          "conclusion": "success",
+          "name": "Instalar dependencias fixadas",
+          "number": 4,
+          "startedAt": "2026-11-08T13:32:38Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:32:44Z",
+          "conclusion": "success",
+          "name": "Verificar lint",
+          "number": 5,
+          "startedAt": "2026-11-08T13:32:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:32:44Z",
+          "conclusion": "success",
+          "name": "Verificar formatacao",
+          "number": 6,
+          "startedAt": "2026-11-08T13:32:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:32:46Z",
+          "conclusion": "success",
+          "name": "Testar com cobertura minima de 80 por cento",
+          "number": 7,
+          "startedAt": "2026-11-08T13:32:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:32:47Z",
+          "conclusion": "success",
+          "name": "Publicar relatorios de testes e cobertura",
+          "number": 8,
+          "startedAt": "2026-11-08T13:32:46Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:32:49Z",
+          "conclusion": "success",
+          "name": "Post Configurar Python 3.12",
+          "number": 15,
+          "startedAt": "2026-11-08T13:32:47Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:32:49Z",
+          "conclusion": "success",
+          "name": "Post Obter codigo",
+          "number": 16,
+          "startedAt": "2026-11-08T13:32:49Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:32:49Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 17,
+          "startedAt": "2026-11-08T13:32:49Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42485447573/job/128746187752"
+    },
+    {
+      "completedAt": "2026-11-08T13:32:41Z",
+      "conclusion": "success",
+      "databaseId": 128746188060,
+      "name": "Terraform",
+      "startedAt": "2026-11-08T13:32:34Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-08T13:32:35Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-08T13:32:34Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:32:36Z",
+          "conclusion": "success",
+          "name": "Obter codigo",
+          "number": 2,
+          "startedAt": "2026-11-08T13:32:35Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:32:37Z",
+          "conclusion": "success",
+          "name": "Configurar Terraform",
+          "number": 3,
+          "startedAt": "2026-11-08T13:32:36Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:32:37Z",
+          "conclusion": "success",
+          "name": "Verificar formatacao",
+          "number": 4,
+          "startedAt": "2026-11-08T13:32:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:32:39Z",
+          "conclusion": "success",
+          "name": "Inicializar sem backend",
+          "number": 5,
+          "startedAt": "2026-11-08T13:32:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:32:39Z",
+          "conclusion": "success",
+          "name": "Validar configuracao",
+          "number": 6,
+          "startedAt": "2026-11-08T13:32:39Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:32:39Z",
+          "conclusion": "success",
+          "name": "Post Obter codigo",
+          "number": 12,
+          "startedAt": "2026-11-08T13:32:39Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:32:39Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 13,
+          "startedAt": "2026-11-08T13:32:39Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42485447573/job/128746188060"
+    },
+    {
+      "completedAt": "2026-11-08T13:33:11Z",
+      "conclusion": "success",
+      "databaseId": 128746268656,
+      "name": "Provisionamento efemero",
+      "startedAt": "2026-11-08T13:32:53Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-08T13:32:55Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-08T13:32:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:32:56Z",
+          "conclusion": "success",
+          "name": "Obter codigo",
+          "number": 2,
+          "startedAt": "2026-11-08T13:32:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:32:57Z",
+          "conclusion": "success",
+          "name": "Configurar Terraform",
+          "number": 3,
+          "startedAt": "2026-11-08T13:32:56Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:32:57Z",
+          "conclusion": "success",
+          "name": "Verificar daemon Docker do runner",
+          "number": 4,
+          "startedAt": "2026-11-08T13:32:57Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:32:59Z",
+          "conclusion": "success",
+          "name": "Inicializar infraestrutura efemera",
+          "number": 5,
+          "startedAt": "2026-11-08T13:32:57Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:32:59Z",
+          "conclusion": "success",
+          "name": "Planejar criacao da rede e do volume",
+          "number": 6,
+          "startedAt": "2026-11-08T13:32:59Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:33:01Z",
+          "conclusion": "success",
+          "name": "Provisionar somente os recursos efemeros",
+          "number": 7,
+          "startedAt": "2026-11-08T13:32:59Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:33:01Z",
+          "conclusion": "success",
+          "name": "Inspecionar recursos reais",
+          "number": 8,
+          "startedAt": "2026-11-08T13:33:01Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:33:03Z",
+          "conclusion": "success",
+          "name": "Confirmar plano sem alteracoes",
+          "number": 9,
+          "startedAt": "2026-11-08T13:33:01Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:33:08Z",
+          "conclusion": "success",
+          "name": "Remover apenas recursos deste runner efemero",
+          "number": 10,
+          "startedAt": "2026-11-08T13:33:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:33:09Z",
+          "conclusion": "success",
+          "name": "Publicar evidencias do provisionamento",
+          "number": 11,
+          "startedAt": "2026-11-08T13:33:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:33:09Z",
+          "conclusion": "success",
+          "name": "Post Obter codigo",
+          "number": 22,
+          "startedAt": "2026-11-08T13:33:09Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T13:33:09Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 23,
+          "startedAt": "2026-11-08T13:33:09Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42485447573/job/128746268656"
+    }
+  ],
+  "status": "completed",
+  "updatedAt": "2026-11-08T13:33:11Z",
+  "url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42485447573"
+}

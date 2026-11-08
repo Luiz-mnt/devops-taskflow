@@ -1,0 +1,20 @@
+$ gh run view 42485447573 --repo Luiz-mnt/devops-taskflow --json status,conclusion,headSha,url,jobs,attempt,createdAt,updatedAt
+{
+  "headSha": "30b49c595e931f1ea6c2e122ba4ca25ead004b48",
+  "url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42485447573",
+  "conclusion": "success",
+  "jobs": [
+    {
+      "name": "Qualidade e testes",
+      "conclusion": "success"
+    },
+    {
+      "name": "Terraform",
+      "conclusion": "success"
+    },
+    {
+      "name": "Provisionamento efemero",
+      "conclusion": "success"
+    }
+  ]
+}

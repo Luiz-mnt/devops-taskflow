@@ -69,7 +69,7 @@ registradas em `evidencias/fase1-github.md`, sem presumir que existe.
 
 | Componente | Especificação | Responsável |
 |---|---|---|
-| Host de desenvolvimento | Windows + PowerShell; WSL2/Linux sugerido para fase 2 | Estudante |
+| Host de desenvolvimento | Windows/PowerShell para API; Ubuntu/WSL2 TaskFlowDevOps para Docker e Terraform reais da fase 1 | Estudante |
 | Runtime da API | Python 3.12 + FastAPI/Uvicorn; 127.0.0.1:8000 | Ambiente virtual nesta fase |
 | Persistência da API local | SQLite em TASKFLOW_DB_PATH, padrão data/taskflow.db | Aplicação |
 | Rede Docker | Bridge `${resource_prefix}-net`, padrão taskflow-net | Terraform |
@@ -94,9 +94,10 @@ Links reais, execuções, métricas e limitações são registrados em
 
 Os requisitos do enunciado são planejamento, GitHub, GitHub Actions, scripts IaC
 e testes integrados. O guia acrescenta evidência de apply local, inspeções e plano
-posterior sem alterações: essa verificação foi concluída no WSL2 local. O GitHub
-bloqueou os jobs por questão de cobrança da conta; a configuração de CI foi
-publicada e validada sintaticamente, mas sua execução remota não foi homologada.
+posterior sem alterações: essa verificação foi concluída no WSL2 local e no
+runner GitHub. Após a resolução do bloqueio inicial da conta, a execução
+42485447573 aprovou os três jobs em 08/11/2026; a tag fase-1 identifica o commit
+verificado. O checklist final registra todos os requisitos concluídos.
 
 O [checklist de entrega](checklist-entrega.md) relaciona cada requisito aos
 arquivos e resultados observados. Não são utilizadas métricas, capturas ou URLs

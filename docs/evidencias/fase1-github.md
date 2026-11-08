@@ -1,64 +1,57 @@
-# GitHub e CI — configuração publicada; aprovação remota pendente
+# GitHub e CI — fase 1 aprovada
 
 - Repositório público: https://github.com/Luiz-mnt/devops-taskflow
 - Workflow: https://github.com/Luiz-mnt/devops-taskflow/blob/main/.github/workflows/ci.yml
 - Scripts IaC: https://github.com/Luiz-mnt/devops-taskflow/tree/main/infra
-- Execução efetivamente consultada: https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42320791079
-- Commit dessa tentativa: `06f7bf7e72f8358912000347ca120980c52bab49`
-- Conclusão registrada pelo GitHub: **failure**, antes de executar qualquer etapa.
-- Testes/cobertura remotos: **não medidos**, pois nenhum job iniciou.
-- Tag `fase-1`: **não criada**, pois depende de CI aprovado conforme o guia.
+- **Execução aprovada:** https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42485447573
+- **Commit aprovado:** `30b49c595e931f1ea6c2e122ba4ca25ead004b48`
+- **Tag:** [fase-1](https://github.com/Luiz-mnt/devops-taskflow/tree/fase-1), criada após a aprovação sem mover tag anterior.
+- Conclusão em **08/11/2026 às 10:33:11, America/Sao_Paulo** (13:33:11 UTC).
 
-## Reverifica??o em 07/11/2026
+| Job | Resultado observado |
+|---|---|
+| Qualidade e testes | Ruff/lint e formatação aprovados; 32 testes aprovados; cobertura de linhas/branches 100% |
+| Terraform | fmt, init com lockfile readonly e validate aprovados |
+| Provisionamento efêmero | Apply: 2 criados; inspeções; segundo plan sem alterações; cleanup: 2 removidos somente do runner |
 
-Foi executada uma segunda tentativa real do mesmo workflow/commit. O GitHub
-voltou a bloquear os jobs antes de qualquer etapa, pela mesma quest?o de cobran?a.
-A tentativa 2 est? registrada nos JSONs e no log CLI; as capturas preservam a
-tentativa original, com a mesma mensagem de bloqueio. N?o h? execu??o aprovada.
+Python do runner: **3.12.16**, Linux/Ubuntu 24.04. O pytest registrou **0.85 s**;
+o relatório JUnit soma **0.857 s** de suíte. O tempo local
+de 2,86 s é uma medição separada, feita no Windows em 06/11. Não se infere ganho
+de desempenho comparando esses ambientes.
 
-## Motivo observado
+## Evidências permanentes
 
-As anotações dos jobs de qualidade e Terraform apresentam:
+- [Metadados completos da execução aprovada](github-ci-aprovado.json)
+- [Log de testes e lint do runner](logs/ci-42485447573-testes.log)
+- [JUnit](ci/42485447573/testes/junit.xml) e [coverage XML](ci/42485447573/testes/coverage.xml)
+- [Apply](ci/42485447573/infra/apply.log), [rede](ci/42485447573/infra/network.json), [volume](ci/42485447573/infra/volume.json)
+- [Segundo plano](ci/42485447573/infra/replan.log) e [limpeza do runner](ci/42485447573/infra/destroy.log)
+- [Capturas reais e procedência](imagens/fontes-capturas.json)
 
-> The job was not started because your account is locked due to a billing issue.
+Os artefatos originais do Actions têm retenção de 14 dias. As cópias acima e no
+pacote de entrega preservam a prova após essa retenção.
 
-O job de provisionamento foi pulado porque depende dos anteriores. Não existem
-logs de etapas nem artefatos remotos de testes nessa execução. Não é uma falha de
-teste observada; também não é possível afirmar aprovação remota do código.
-O aluno informou que não consegue regularizar agora e solicitou registrar a
-pendência. Nenhum dado de pagamento foi solicitado ou alterado.
+## Rastreabilidade do código e dos documentos
 
-Registros: [execução e jobs](github-execucao.json),
-[anotação original](github-anotacoes.json),
-[contexto do bloqueio](github-bloqueio.json),
-[capturas reais](imagens/) e [consulta CLI](logs/github-run.log).
+A tag `fase-1` congela o commit aprovado acima, incluindo o histórico disponível
+no momento. Como a consolidação só pode relatar uma aprovação depois que ela
+ocorre, os documentos finais foram acrescentados posteriormente em `main`.
+O código da aplicação, testes, dependências, workflow e Terraform permanece o
+mesmo da versão aprovada. A tag não foi movida para um commit documental posterior.
 
-## Validações locais já aprovadas
+## Acesso e proteção
 
-32 testes, cobertura de linhas/branches 100%, Ruff, Terraform fmt/init/validate,
-actionlint e provisionamento real no WSL2 com plano posterior sem alterações.
-Esses resultados são **locais**, não atribuídos ao runner GitHub.
-O código da API, os testes e as dependências correspondem ao commit acima; os
-commits posteriores consolidam evidências e ajustes do procedimento de laboratório.
+O repositório é público, com acesso do professor sem convite. Main exige os checks
+**Qualidade e testes** e **Terraform**, mantém histórico linear e impede force-push
+e exclusão. A exceção de administrador (`enforce_admins: false`) permite gerir o
+projeto individual; não equivale a aprovação dos checks. [Estado consultado](github-protecao-main.json).
+O workflow mantém `contents: read`, actions por SHA, timeout e ausência de segredos
+de deploy. PR não publica imagens nem aplica infraestrutura.
 
-## Acesso e proteção de main
+## Histórico do impedimento resolvido
 
-A API e o navegador sem login confirmaram o repositório público. O professor pode
-acessar os arquivos sem convite. Main está protegida com os checks **Qualidade e
-testes** e **Terraform** exigidos, branch atualizada, histórico linear, force-push
-e exclusão desabilitados. A exceção de administrador permanece habilitada
-(`enforce_admins: false`) para viabilizar o trabalho individual. Portanto, o dono
-pode publicar alterações administrativas mesmo enquanto os checks estão
-bloqueados; isso não equivale a aprovação dos checks.
-
-Estado real: [proteção consultada pela API](github-protecao-main.json).
-As permissões do workflow são `contents: read`; actions fixadas por SHA; PR não
-publica imagens nem utiliza segredos de deploy.
-
-## Como encerrar a pendência
-
-Após o aluno resolver a situação da conta em suas configurações do GitHub,
-execute o procedimento [fechar fase 1](../fechar-fase1.md). Confirme o CI aprovado,
-baixe seus relatórios, atualize as métricas remotas separadamente e só então crie
-a tag `fase-1` no commit aprovado, sem mover tag existente. Atualize PPTX/PDF com
-essa prova. Até isso ocorrer, a fase não é declarada integralmente concluída.
+As primeiras tentativas não iniciaram os jobs devido ao bloqueio de cobrança da
+conta. Em 08/11 o desbloqueio foi confirmado e a execução acima comprovou o
+funcionamento. `github-bloqueio.json`, `github-anotacoes.json`, `github-execucao.json`
+e as capturas com nome `bloqueado` são registros **históricos**, não pendências atuais.
+Nenhum gate foi removido para obter a aprovação.

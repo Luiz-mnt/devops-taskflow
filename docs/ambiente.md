@@ -52,14 +52,15 @@ e o Docker do laboratório executam no WSL2. O cliente Docker não foi instalado
 no PowerShell. `scripts/provisionar-local.ps1` é uma alternativa para máquinas
 com Docker Desktop; neste laboratório, use o procedimento WSL.
 
-## Pendência externa
+## Verificação remota e encerramento
 
-O GitHub recebeu o código e o workflow, mas bloqueou os jobs antes de qualquer
-etapa por uma questão de cobrança da conta. O aluno informou que não consegue
-regularizar agora e solicitou registrar a pendência. Não há execução verde ou
-tag `fase-1`. Não foram alteradas configurações de cobrança.
+O bloqueio inicial de cobrança foi resolvido. Em 08/11/2026, [o CI real](https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42485447573)
+aprovou qualidade/testes, Terraform e provisionamento efêmero no commit 30b49c5.
+Runner Ubuntu 24.04, Python 3.12.16 e Docker 28.0.4. O Docker local WSL permanece
+na versão 29.9.3. A tag fase-1 foi criada no SHA aprovado; as evidências e documentos
+finais estão no repositório. Nenhum dado de pagamento ou conteúdo privado do
+atendimento foi incluído na entrega.
 
-Fontes: [importação de distribuições WSL](https://learn.microsoft.com/windows/wsl/use-custom-distro),
-[imagem Ubuntu oficial](https://cdimage.ubuntu.com/ubuntu-base/releases/24.04/release/),
-[Docker Engine no Ubuntu](https://docs.docker.com/engine/install/ubuntu/) e
+Fontes: [WSL](https://learn.microsoft.com/windows/wsl/use-custom-distro),
+[Docker no Ubuntu](https://docs.docker.com/engine/install/ubuntu/) e
 [Terraform](https://developer.hashicorp.com/terraform/install).

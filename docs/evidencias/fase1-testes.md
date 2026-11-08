@@ -42,3 +42,18 @@ migração de `httpx` para `httpx2`. A versão fixada funciona e todos os testes
 passaram; o aviso permanece visível, sem supressão.
 
 Resolução de versões: [log de dependências](logs/dependencias.log).
+
+## GitHub Actions aprovado — 08/11/2026
+
+Execução: https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42485447573; commit `30b49c595e931f1ea6c2e122ba4ca25ead004b48`; Python 3.12.16/Linux.
+Ruff check/format aprovados. **32 testes aprovados, zero falhas/erros/skips;
+100% de linhas (89/89) e branches (4/4)**. O pytest registrou **0.85 s**;
+o tempo agregado no JUnit é **0.857 s**.
+
+[JUnit permanente](ci/42485447573/testes/junit.xml) ·
+[Cobertura XML permanente](ci/42485447573/testes/coverage.xml) ·
+[Log original da etapa](logs/ci-42485447573-testes.log).
+
+Esses tempos são do runner de 08/11; os 2,86 s da seção inicial são do Windows
+local em 06/11. Não representam uma comparação controlada de desempenho.
+O aviso de depreciação documentado permaneceu visível e não reprovou os testes.

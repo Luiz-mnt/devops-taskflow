@@ -1,0 +1,93 @@
+Qualidade e testes	Configurar Python 3.12	﻿2026-11-08T13:32:37.9337963Z ##[group]Run actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+Qualidade e testes	Configurar Python 3.12	2026-11-08T13:32:37.9338767Z with:
+Qualidade e testes	Configurar Python 3.12	2026-11-08T13:32:37.9339128Z   python-version: 3.12
+Qualidade e testes	Configurar Python 3.12	2026-11-08T13:32:37.9339531Z   cache: pip
+Qualidade e testes	Configurar Python 3.12	2026-11-08T13:32:37.9340053Z   cache-dependency-path: requirements.txt
+Qualidade e testes	Configurar Python 3.12	requirements-dev.txt
+Qualidade e testes	Configurar Python 3.12	
+Qualidade e testes	Configurar Python 3.12	2026-11-08T13:32:37.9340761Z   check-latest: false
+Qualidade e testes	Configurar Python 3.12	2026-11-08T13:32:37.9344984Z   token: ***
+Qualidade e testes	Configurar Python 3.12	2026-11-08T13:32:37.9345561Z   mirror: https://raw.githubusercontent.com/actions/python-versions/main
+Qualidade e testes	Configurar Python 3.12	2026-11-08T13:32:37.9346309Z   update-environment: true
+Qualidade e testes	Configurar Python 3.12	2026-11-08T13:32:37.9346763Z   allow-prereleases: false
+Qualidade e testes	Configurar Python 3.12	2026-11-08T13:32:37.9347202Z   freethreaded: false
+Qualidade e testes	Configurar Python 3.12	2026-11-08T13:32:37.9347595Z ##[endgroup]
+Qualidade e testes	Configurar Python 3.12	2026-11-08T13:32:38.0338683Z ##[group]Installed versions
+Qualidade e testes	Configurar Python 3.12	2026-11-08T13:32:38.0401652Z Successfully set up CPython (3.12.16)
+Qualidade e testes	Configurar Python 3.12	2026-11-08T13:32:38.0403647Z ##[endgroup]
+Qualidade e testes	Configurar Python 3.12	2026-11-08T13:32:38.0682022Z [command]/opt/hostedtoolcache/Python/3.12.16/x64/bin/pip cache dir
+Qualidade e testes	Configurar Python 3.12	2026-11-08T13:32:38.3801637Z /home/runner/.cache/pip
+Qualidade e testes	Configurar Python 3.12	2026-11-08T13:32:38.6036194Z pip cache is not found
+Qualidade e testes	Verificar lint	﻿2026-11-08T13:32:44.2675368Z ##[group]Run python -m ruff check .
+Qualidade e testes	Verificar lint	2026-11-08T13:32:44.2675669Z [36;1mpython -m ruff check .[0m
+Qualidade e testes	Verificar lint	2026-11-08T13:32:44.2693782Z shell: /usr/bin/bash -e {0}
+Qualidade e testes	Verificar lint	2026-11-08T13:32:44.2694004Z env:
+Qualidade e testes	Verificar lint	2026-11-08T13:32:44.2694240Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+Qualidade e testes	Verificar lint	2026-11-08T13:32:44.2694618Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+Qualidade e testes	Verificar lint	2026-11-08T13:32:44.2694968Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+Qualidade e testes	Verificar lint	2026-11-08T13:32:44.2695283Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+Qualidade e testes	Verificar lint	2026-11-08T13:32:44.2695771Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+Qualidade e testes	Verificar lint	2026-11-08T13:32:44.2696097Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+Qualidade e testes	Verificar lint	2026-11-08T13:32:44.2696364Z ##[endgroup]
+Qualidade e testes	Verificar lint	2026-11-08T13:32:44.3024717Z All checks passed!
+Qualidade e testes	Verificar formatacao	﻿2026-11-08T13:32:44.3058589Z ##[group]Run python -m ruff format --check .
+Qualidade e testes	Verificar formatacao	2026-11-08T13:32:44.3058907Z [36;1mpython -m ruff format --check .[0m
+Qualidade e testes	Verificar formatacao	2026-11-08T13:32:44.3077065Z shell: /usr/bin/bash -e {0}
+Qualidade e testes	Verificar formatacao	2026-11-08T13:32:44.3077279Z env:
+Qualidade e testes	Verificar formatacao	2026-11-08T13:32:44.3077503Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+Qualidade e testes	Verificar formatacao	2026-11-08T13:32:44.3077861Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+Qualidade e testes	Verificar formatacao	2026-11-08T13:32:44.3078203Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+Qualidade e testes	Verificar formatacao	2026-11-08T13:32:44.3078518Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+Qualidade e testes	Verificar formatacao	2026-11-08T13:32:44.3078818Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+Qualidade e testes	Verificar formatacao	2026-11-08T13:32:44.3079118Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+Qualidade e testes	Verificar formatacao	2026-11-08T13:32:44.3079396Z ##[endgroup]
+Qualidade e testes	Verificar formatacao	2026-11-08T13:32:44.3383551Z 18 files already formatted
+Qualidade e testes	Testar com cobertura minima de 80 por cento	﻿2026-11-08T13:32:44.3415801Z ##[group]Run python -m pytest
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:44.3416076Z [36;1mpython -m pytest[0m
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:44.3433871Z shell: /usr/bin/bash -e {0}
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:44.3434086Z env:
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:44.3434309Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:44.3434665Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:44.3435007Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:44.3435347Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:44.3435651Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:44.3435960Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:44.3436224Z ##[endgroup]
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:45.6407576Z ============================= test session starts ==============================
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:45.6408389Z platform linux -- Python 3.12.16, pytest-9.2.0, pluggy-1.7.0
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:45.6408907Z rootdir: /home/runner/work/devops-taskflow/devops-taskflow
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:45.6409393Z configfile: pyproject.toml
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:45.6409692Z testpaths: tests
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:45.6409966Z plugins: anyio-4.16.0, cov-7.1.0
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:45.6410260Z collected 32 items
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:45.6410413Z 
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:45.7776708Z tests/test_health.py .....                                               [ 15%]
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:46.4716915Z tests/test_tasks.py ...........................                          [100%]
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:46.4717391Z 
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:46.4717573Z =============================== warnings summary ===============================
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:46.4718225Z ../../../../../opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/fastapi/testclient.py:1
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:46.4719548Z   /opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:46.4720742Z     from starlette.testclient import TestClient as TestClient  # noqa
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:46.4721070Z 
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:46.4721330Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:46.4721969Z - generated xml file: /home/runner/work/devops-taskflow/devops-taskflow/reports/junit.xml -
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:46.4722776Z ================================ tests coverage ================================
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:46.4723276Z _______________ coverage: platform linux, python 3.12.16-final-0 _______________
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:46.4723593Z 
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:46.4723756Z Name              Stmts   Miss Branch BrPart    Cover   Missing
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:46.4724151Z ---------------------------------------------------------------
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:46.4724539Z app/database.py      33      0      2      0  100.00%
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:46.4725295Z app/main.py          40      0      2      0  100.00%
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:46.4725633Z app/models.py        16      0      0      0  100.00%
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:46.4725999Z ---------------------------------------------------------------
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:46.4726364Z TOTAL                89      0      4      0  100.00%
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:46.4726580Z 
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:46.4726685Z 1 empty file skipped.
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:46.4726985Z Coverage HTML written to dir reports/htmlcov
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:46.4727350Z Coverage XML written to file reports/coverage.xml
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:46.4727768Z Required test coverage of 80% reached. Total coverage: 100.00%
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T13:32:46.4728212Z ======================== 32 passed, 1 warning in 0.85s =========================
+Qualidade e testes	Post Configurar Python 3.12	﻿2026-11-08T13:32:47.9588901Z Post job cleanup.
+Qualidade e testes	Post Configurar Python 3.12	2026-11-08T13:32:48.0717171Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/devops-taskflow/devops-taskflow --files-from manifest.txt --use-compress-program zstdmt
+Qualidade e testes	Post Configurar Python 3.12	2026-11-08T13:32:49.3345240Z Sent 20707202 of 20707202 (100.0%), 19.7 MBs/sec
+Qualidade e testes	Post Configurar Python 3.12	2026-11-08T13:32:49.6917467Z Cache saved with the key: setup-python-Linux-x64-24.04-Ubuntu-python-3.12.16-pip-a6f4b1d9ef60435f4622b8ac606b0eb1de341c08b9a00acd6599a2d928250ace

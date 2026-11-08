@@ -7,5 +7,8 @@
   "blocking_message": "The job was not started because your account is locked due to a billing issue.",
   "user_instruction": "Usuario informou nao conseguir regularizar agora e solicitou registrar pendencia.",
   "last_checked_at": "2026-11-07T11:53:22-03:00",
-  "latest_attempt": 2
+  "latest_attempt": 2,
+  "historical_record": true,
+  "resolved_verified_by_ci_run": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42485447573",
+  "resolved": true
 }

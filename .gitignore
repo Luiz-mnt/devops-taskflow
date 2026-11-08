@@ -20,6 +20,7 @@ data/
 *.sqlite*
 *.log
 !docs/evidencias/logs/*.log
+!docs/evidencias/ci/**/*.log
 
 # Terraform: lock de dependências deve ser versionado; estado não
 **/.terraform/

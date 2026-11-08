@@ -1,42 +1,23 @@
-# Roteiro de demonstração — fase 1
+# Demonstração — fase 1 concluída
 
-1. Abra o repositório indicado em `evidencias/fase1-github.md`. Mostre `app/`,
-   `tests/`, `.github/workflows/ci.yml`, `infra/` e `docs/planejamento-fase1.md`.
-2. Abra a execução do Actions registrada nas evidências. Ela foi bloqueada antes
-   das etapas por uma questão de cobrança da conta. Mostre a mensagem real;
-   não a apresente como execução aprovada. Depois da liberação da conta, execute
-   o CI e confira commit/jobs antes de atualizar o documento.
-3. Mostre o relatório JUnit/cobertura e explique que o limite de 80% faz parte da
-   configuração executada pelo pytest. A cobertura e o total reais estão no resumo.
-4. Abra `infra/main.tf`: somente rede bridge e volume são provisionados. Mostre
-   versões/lock, variáveis/prefixo e outputs. Não há containers da fase 2 neste escopo.
-5. Nos logs **locais WSL2**, mostre `apply` com dois recursos criados, inspeções e
-   segundo `plan` sem alterações (exit 0). A rede/volume locais foram preservados.
-   O provisionamento remoto efêmero está apenas configurado; não executou devido
-   ao bloqueio da conta. Seu `destroy` é restrito ao runner, quando puder executar.
-6. Para demonstração da API, siga o README: inicie Uvicorn, abra `/docs`, crie uma
-   tarefa, liste e conclua. Reinicie o processo mantendo o mesmo banco e consulte
-   novamente. `/health` consulta a tabela do banco, além de verificar o processo.
-7. Para repetir a verificação local, siga `ambiente-wsl.md`: inicie o daemon na
-   distribuição `TaskFlowDevOps` e execute `plan -detailed-exitcode`. O ambiente
-   já está preparado e os recursos continuam criados. Não é necessário reaplicar
-   nem destruir o volume para demonstrar o resultado.
+1. Abra https://github.com/Luiz-mnt/devops-taskflow e apresente app/, tests/, workflow, infra/ e planejamento.
+2. Abra https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42485447573. Confira os três jobs aprovados e o commit 30b49c5.
+3. Mostre Ruff, 32 testes aprovados e cobertura 100% com gate mínimo 80%.
+   Distinga o runner Linux (pytest 0.85 s, 08/11) do Windows local (2,86 s, 06/11).
+4. Mostre infra/versions.tf, main.tf, variables.tf, outputs.tf e lockfile. O
+   Terraform é responsável pela rede e pelo volume; os containers virão na fase 2.
+5. No job efêmero, mostre apply com duas adições, inspeções, segundo plan sem
+   alterações e cleanup de dois recursos exclusivos do runner.
+6. Mostre os logs WSL2 locais: apply, inspect e plan exit 0. Os recursos locais
+   permanecem criados. Para repetir a comparação, siga ambiente-wsl.md; não é
+   necessário destruir nem recriar o volume.
+7. Para a API local, siga o README: Uvicorn em 127.0.0.1:8000, /docs, criar,
+   listar, concluir tarefa e /health com acesso ao banco. Os testes também
+   comprovam persistência entre instâncias e isolamento dos bancos.
+8. Abra a tag fase-1 e relacione o SHA à execução aprovada. Os documentos finais
+   em main são a consolidação posterior dessa mesma implementação.
 
-## Capturas sugeridas
-
-- Repositório público com URL e diretórios visíveis.
-- Actions com bloqueio real, commit e anotações; substituir por execução aprovada após regularização.
-- Relatório dos testes com total e cobertura.
-- Terraform apply e plan posterior sem mudanças, identificando o ambiente.
-- Docker local com rede/volume e logs locais reais já coletados.
-
-Os registros de terminal inseridos no documento são transcrições dos comandos
-executados, identificadas como tal. Não são apresentados como capturas da interface
-do GitHub. Não fotografe configurações contendo tokens ou credenciais.
-
-## Explicação dos limites
-
-O CI valida mudanças e gera evidências. A demonstração no runner é temporária;
-o repositório público não hospeda a API. O banco local da fase 1 fica em `data/`.
-O volume Docker será montado pela aplicação na fase 2. Alta disponibilidade,
-autenticação, backup de produção e implantação pública estão fora deste escopo.
+As capturas do GitHub são reais e os registros de terminal são identificados.
+Não há hospedagem pública permanente da API: repositório público e runner
+temporário não representam um servidor de produção. Dados locais da API ficam
+no caminho TASKFLOW_DB_PATH; o volume Docker será consumido na fase 2.

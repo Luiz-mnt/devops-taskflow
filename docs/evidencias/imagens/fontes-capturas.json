@@ -47,5 +47,86 @@
       880
     ],
     "kind": "Recorte da captura real; sem alteração de texto, estado ou resultado"
+  },
+  {
+    "file": "github-ci-aprovado.png",
+    "source_url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42485447573",
+    "captured_at_utc": "2026-11-08T13:34:49.119003+00:00",
+    "kind": "Captura real da UI pública com Chrome headless e perfil isolado, sem autenticação",
+    "sha_visible": "30b49c5",
+    "ci_status_visible": "Success; Qualidade e testes, Terraform e Provisionamento efêmero aprovados; 2 artifacts"
+  },
+  {
+    "file": "github-ci-aprovado-resumo-recorte.png",
+    "original": "github-ci-aprovado.png",
+    "crop_pixels_ltrb": [
+      450,
+      340,
+      1955,
+      847
+    ],
+    "kind": "Recorte da captura real; sem alteração de texto, estado ou resultado"
+  },
+  {
+    "file": "github-ci-aprovado-artefatos-recorte.png",
+    "original": "github-ci-aprovado.png",
+    "crop_pixels_ltrb": [
+      450,
+      865,
+      1955,
+      1205
+    ],
+    "kind": "Recorte da captura real; sem alteração de texto, estado ou resultado"
+  },
+  {
+    "file": "github-repositorio-fase1-inicial.png",
+    "source_url": "https://github.com/Luiz-mnt/devops-taskflow/tree/fase-1",
+    "captured_at_utc": "2026-11-08T13:37:06.028274+00:00",
+    "kind": "Captura real da UI pública com Chrome headless e perfil isolado, sem autenticação",
+    "sha_visible": "30b49c5",
+    "tag_visible": "fase-1",
+    "ci_status_visible": "Indicador de falha histórica no cabeçalho do commit; CI aprovado documentado separadamente no run 42485447573"
+  },
+  {
+    "file": "github-repositorio-fase1-recorte.png",
+    "original": "github-repositorio-fase1-inicial.png",
+    "crop_pixels_ltrb": [
+      215,
+      230,
+      1415,
+      880
+    ],
+    "kind": "Recorte da captura real; sem alteração de texto, estado ou resultado"
+  },
+  {
+    "file": "github-tag-fase1-recorte.png",
+    "original": "github-repositorio-fase1-inicial.png",
+    "crop_pixels_ltrb": [
+      215,
+      230,
+      1750,
+      385
+    ],
+    "kind": "Recorte da captura real; sem alteração de texto, estado ou resultado"
+  },
+  {
+    "file": "github-repositorio-fase1.png",
+    "source_url": "https://github.com/Luiz-mnt/devops-taskflow/tree/fase-1",
+    "captured_at_utc": "2026-11-08T13:42:46.356856+00:00",
+    "kind": "Captura real da UI pública com Chrome headless e perfil isolado, sem autenticação",
+    "sha_visible": "30b49c5",
+    "tag_visible": "fase-1",
+    "ci_status_visible": "Indicador verde no commit; todos os checks de 30b49c5 aprovados"
+  },
+  {
+    "file": "github-repositorio-fase1-aprovado-recorte.png",
+    "original": "github-repositorio-fase1.png",
+    "crop_pixels_ltrb": [
+      215,
+      230,
+      1415,
+      880
+    ],
+    "kind": "Recorte da captura real aprovada; sem alteração de texto, estado ou resultado"
   }
 ]

@@ -42,9 +42,17 @@ rede/volume; Compose deverá consumi-los como externos na fase 2.
 - [Reverificação em 07/11: recursos preservados, plano sem alterações](logs/terraform-local-reverificacao-2026-11-07.log)
 - [Fmt, validate e actionlint](logs/terraform-validacao.log)
 
-## CI: configuração distinta da execução
+## CI: provisionamento remoto aprovado
 
-O workflow possui um job de provisionamento efêmero, prefixo exclusivo, inspeções,
-plano posterior e limpeza em `always`, restrita ao runner. **Esse job não executou**:
-a conta GitHub bloqueou os jobs antes das etapas por questão de cobrança. Não há
-apply remoto aprovado. Isso não altera a evidência local acima.
+Na [execução 42485447573](https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42485447573), Terraform 1.17.1 e provider 4.6.0 executaram
+em runner Ubuntu 24.04 com Docker 28.0.4. O prefixo exclusivo foi
+`taskflow-ci-42485447573-1`. O apply criou dois recursos, as inspeções confirmaram
+rede/volume, o segundo plan não apresentou alterações e o cleanup removeu somente
+os dois recursos do runner. O laboratório WSL2 local permaneceu preservado.
+
+Provas permanentes: [apply](ci/42485447573/infra/apply.log),
+[rede](ci/42485447573/infra/network.json), [volume](ci/42485447573/infra/volume.json),
+[plan posterior](ci/42485447573/infra/replan.log) e [cleanup](ci/42485447573/infra/destroy.log).
+
+O uso de init/validate confirma a configuração; os applies e inspeções acima
+comprovam provisionamento real, em ambientes explicitamente distintos.

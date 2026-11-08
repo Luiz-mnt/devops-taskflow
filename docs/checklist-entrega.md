@@ -1,29 +1,32 @@
-# Checklist final — fase 1
+# Checklist final — fase 1 concluída
 
-**Situação:** implementação e validações locais concluídas. Aprovação remota do
-CI e tag de fechamento pendentes por bloqueio de cobrança da conta GitHub.
-O aluno solicitou registrar essa pendência; não se declara prontidão integral.
-
+**Situação verificada em 08/11/2026:** planejamento, implementação, testes locais,
+CI real, scripts IaC, provisionamento local/remoto, evidências e tag concluídos.
 Repositório: https://github.com/Luiz-mnt/devops-taskflow
 
-| Requisito | Arquivos/evidência real | Estado |
+| Requisito | Arquivos e prova | Estado |
 |---|---|---|
 | Descrição, objetivos e requisitos | planejamento-fase1.md | Concluído |
-| Plano CI e infraestrutura necessária | planejamento-fase1.md e ambiente-wsl.md | Concluído |
-| Documento com link do repositório | Planejamento e apresentação revisada | Concluído |
-| Repositório GitHub | Público, código publicado e acesso sem login verificado | Concluído |
-| Pipeline GitHub Actions | ci.yml com push/PR main, jobs, gates e artefatos; actionlint aprovado | Configurado; aprovação remota pendente |
-| Testes implementados e integrados | tests/, pyproject.toml, workflow; 32 testes aprovados localmente | Concluído localmente; execução CI bloqueada |
-| Cobertura mínima 80% | 100% linhas/branches em Python 3.12.16, relatório real | Concluído localmente |
-| Scripts IaC | infra/*.tf e lock real Windows/Linux; fmt/init/validate aprovados | Concluído |
-| Provisionamento local (guia) | Apply com 2 criados, inspeções, plan posterior exit 0 em WSL2 | Concluído |
-| Evidência CI aprovado e tag fase-1 (guia) | Execução 42320791079 bloqueada antes das etapas | Pendente: liberação da conta e CI verde |
-| Proteção main | Checks exigidos; admin excepcionado; sem force-push/exclusão | Concluído, limitação documentada |
-| Template, PDF, capturas e logs | Entrega revisada fora do repositório; capturas reais e registros locais | Preparados com pendência CI explícita |
+| Plano de integração contínua | Planejamento e .github/workflows/ci.yml | Concluído |
+| Especificação da infraestrutura | Planejamento, infra/*.tf e ambiente-wsl.md | Concluído |
+| Documento com links de repositório/CI/IaC | Planejamento e apresentação final | Concluído |
+| Repositório GitHub | Público e acessível ao avaliador | Concluído |
+| Pipeline GitHub Actions | Execução 42485447573: três jobs aprovados | Concluído |
+| Testes automatizados implementados e integrados | 32 testes locais e 32 no CI, sem falhas | Concluído |
+| Cobertura mínima 80% | 100% de linhas e branches nos dois ambientes | Concluído |
+| Scripts IaC e lock real | Terraform 1.17.1/provider 4.6.0; validação local e CI | Concluído |
+| Apply local, inspect e plan posterior | WSL2: 2 criados, inspeções e plan exit 0 | Concluído |
+| Apply e limpeza efêmeros no CI | 2 criados; plan sem alterações; 2 removidos no runner | Concluído |
+| Evidência CI aprovado e tag fase-1 | Tag no commit 30b49c5 aprovado, sem mover referência | Concluído |
+| Proteção de main | Checks exigidos, sem force-push/exclusão; exceção admin documentada | Concluído |
+| Documento no template e PDF | Versões finais com links, métricas e capturas reais; validação dos slides | Concluído |
 
-## Encerramento
+## Escopo
 
-O bloqueio remanescente é externo ao código: a conta GitHub precisa liberar os
-jobs. Não foram reduzidos gates, fabricados resultados ou criada tag de sucesso.
-Consulte [fechar-fase1.md](fechar-fase1.md) para concluir após a liberação.
-Docker/CD/Prometheus da fase 2 não são apresentados como implementados nesta fase.
+Não há requisito obrigatório da fase 1 pendente. CD, imagem da API, Compose da
+aplicação, Prometheus e demais funcionalidades da fase 2 serão desenvolvidos
+posteriormente. Docker Engine instalado e rede/volume provisionados pertencem
+à preparação da infraestrutura da fase 1.
+
+[Execução aprovada](https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42485447573) · [Tag fase-1](https://github.com/Luiz-mnt/devops-taskflow/tree/fase-1) ·
+[Resumo verificável](evidencias/resumo.json) · [Rastreabilidade](evidencias/fase1-github.md).

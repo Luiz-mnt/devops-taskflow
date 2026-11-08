@@ -1,0 +1,22 @@
+{
+  "network_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "71a17a64171ba9d7b7c4d6fcd432c7851f128e0815ebebf99a5736707c1e99ff"
+  },
+  "network_name": {
+    "sensitive": false,
+    "type": "string",
+    "value": "taskflow-ci-42485447573-1-net"
+  },
+  "volume_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "taskflow-ci-42485447573-1-data"
+  },
+  "volume_name": {
+    "sensitive": false,
+    "type": "string",
+    "value": "taskflow-ci-42485447573-1-data"
+  }
+}

@@ -4,11 +4,10 @@ Aluno: **Luiz Eduardo Santos Monteiro**. Projeto acadêmico da PUCRS.
 
 Repositório público: https://github.com/Luiz-mnt/devops-taskflow
 
-**Estado verificado:** 32 testes locais aprovados, cobertura de linhas e branches
-de 100%, lint e validação Terraform aprovados; rede e volume provisionados
-realmente no WSL2, com segundo plano sem alterações. **Pendência:** o GitHub
-bloqueou os jobs do Actions por uma questão de cobrança da conta, antes de
-executar etapas. A aprovação remota e a tag `fase-1` aguardam a liberação da conta.
+**Fase 1 concluída e verificada:** 32 testes locais e 32 testes no GitHub Actions,
+cobertura de linhas/branches 100%, Ruff e Terraform aprovados. Rede e volume
+provisionados no WSL2 local; no CI, provisionamento e limpeza efêmeros aprovados.
+[CI aprovado](https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42485447573) · [Tag fase-1](https://github.com/Luiz-mnt/devops-taskflow/tree/fase-1).
 
 API de tarefas com FastAPI e SQLite, testes automatizados, integração contínua no
 GitHub Actions e infraestrutura Docker descrita em Terraform. A fase 1 cobre
@@ -124,8 +123,9 @@ segredos não são versionados. O `.terraform.lock.hcl` é versionado.
 configuração, **sem criar infraestrutura**. Somente `plan`/`apply` com Docker
 acessível comprovam provisionamento. O CI está configurado para executar uma
 demonstração em runner efêmero, com prefixo exclusivo e limpeza desses recursos.
-Essa etapa ainda não executou devido ao bloqueio da conta. O provisionamento
-local foi comprovado separadamente no WSL2.
+Essa etapa foi aprovada na execução registrada, incluindo inspeções, plano
+sem alterações e limpeza dos recursos efêmeros. O laboratório WSL2 local
+foi comprovado separadamente e permanece preservado.
 
 Não há `destroy` automático do laboratório local. Alterar o prefixo pode planejar
 a substituição do volume: revise o plano antes de aplicar para preservar dados.
@@ -138,7 +138,8 @@ Terraform. Após aprovação, um push em `main` deverá demonstrar o provisionam
 em Docker no runner Linux e verificar um plano posterior sem alterações. Os
 recursos remotos efêmeros têm limpeza em `always`, após coleta das evidências;
 o laboratório local é independente. Nenhum job publica imagens nem utiliza
-segredos de deploy. A execução remota ainda não foi homologada.
+segredos de deploy. A execução remota foi aprovada e seus relatórios estão
+em docs/evidencias/ci/42485447573/.
 
 O token tem `contents: read`, as actions são fixadas por SHA e há limites de tempo.
 O resultado observado e os links da execução estão na documentação de evidências.
