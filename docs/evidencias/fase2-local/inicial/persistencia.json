@@ -1,0 +1,18 @@
+{
+  "timestamp": "2026-11-08T14:25:22.777746+00:00",
+  "environment": "Ubuntu/WSL2 TaskFlowDevOps, Docker local",
+  "image_ref": "taskflow-local:phase2-inicial",
+  "image_id": "sha256:cef08e6e44c70b4756816c6b11eeaa8039c7b9877c1e3ae57d73ade56aeac6ab",
+  "container_before": "146973e3bd3575dcae2e357b75646b9774f6da7c9dcea7eaa63158cacdef7daf",
+  "container_after": "3c9b75af5f9342fb632c2817407d0c8a0574ff31b18d19efa1e346118ef934d6",
+  "different_container": true,
+  "persistent_task": {
+    "id": 2,
+    "title": "Persistencia local 4987ec095771",
+    "status": "pending"
+  },
+  "persistent_task_found_after_recreation": true,
+  "api_uid": 10001,
+  "volume": "taskflow-data",
+  "passed": true
+}

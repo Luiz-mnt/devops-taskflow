@@ -1,0 +1,72 @@
+name: ${TASKFLOW_RESOURCE_PREFIX:-taskflow}
+
+services:
+  api:
+    image: ${IMAGE_REF:?Defina IMAGE_REF com a imagem local ou digest publicado}
+    platform: linux/amd64
+    pull_policy: ${IMAGE_PULL_POLICY:-always}
+    user: "10001:10001"
+    environment:
+      TASKFLOW_DB_PATH: /data/taskflow.db
+    ports:
+      - "127.0.0.1:${API_PORT:-8000}:8000"
+    volumes:
+      - taskflow-data:/data
+    networks:
+      - taskflow-net
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    restart: unless-stopped
+    mem_limit: 256m
+    cpus: 1.0
+
+  prometheus:
+    image: prom/prometheus:v3.16.0@sha256:89c1a644817e9ad70fa2af76c84898e327c1de7063735f962e8313b1e28672c3
+    platform: linux/amd64
+    user: "65534:65534"
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=6h
+      - --web.listen-address=0.0.0.0:9090
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "127.0.0.1:${PROMETHEUS_PORT:-9090}:9090"
+    networks:
+      - taskflow-net
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "--quiet", "http://127.0.0.1:9090/-/ready"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 10s
+    read_only: true
+    tmpfs:
+      - /prometheus:rw,noexec,nosuid,size=256m,uid=65534,gid=65534,mode=0700
+      - /tmp:rw,noexec,nosuid,size=16m
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    restart: unless-stopped
+    mem_limit: 512m
+    cpus: 1.0
+
+networks:
+  taskflow-net:
+    external: true
+    name: ${TASKFLOW_RESOURCE_PREFIX:-taskflow}-net
+
+volumes:
+  taskflow-data:
+    external: true
+    name: ${TASKFLOW_RESOURCE_PREFIX:-taskflow}-data

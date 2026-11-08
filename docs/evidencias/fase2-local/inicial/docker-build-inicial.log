@@ -1,0 +1,146 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile:
+#1 transferring dockerfile: 1.36kB 0.1s done
+#1 DONE 0.2s
+
+#2 [internal] load metadata for docker.io/library/python:3.12.16-slim-bookworm@sha256:0f086103b026048cc50cb5da25ec435c023c5241a83fc44daea593377abc61c4
+#2 DONE 2.1s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 241B 0.1s done
+#3 DONE 0.1s
+
+#4 [1/5] FROM docker.io/library/python:3.12.16-slim-bookworm@sha256:0f086103b026048cc50cb5da25ec435c023c5241a83fc44daea593377abc61c4
+#4 resolve docker.io/library/python:3.12.16-slim-bookworm@sha256:0f086103b026048cc50cb5da25ec435c023c5241a83fc44daea593377abc61c4 0.0s done
+#4 ...
+
+#5 [internal] load build context
+#5 transferring context: 9.99kB 0.1s done
+#5 DONE 0.2s
+
+#4 [1/5] FROM docker.io/library/python:3.12.16-slim-bookworm@sha256:0f086103b026048cc50cb5da25ec435c023c5241a83fc44daea593377abc61c4
+#4 sha256:8691b22c22a3e005c632ab6bc07b085b98dae9cc02d1d84de175849f997439c7 0B / 13.68MB 0.2s
+#4 sha256:a47be7bff94f52aefb243d8b245b01c74976150bb88de60875c5eb7ac964f91e 0B / 3.34MB 0.2s
+#4 sha256:88d15687540999237909e04714b1393c610db9dc2e13d82acd6356fa9bf8f092 0B / 249B 0.2s
+#4 sha256:dd051e1b8c92ff101fa3071ab97ea4924885942f15644e01c3dc095764e863e3 0B / 28.25MB 0.2s
+#4 sha256:8691b22c22a3e005c632ab6bc07b085b98dae9cc02d1d84de175849f997439c7 1.05MB / 13.68MB 0.8s
+#4 sha256:8691b22c22a3e005c632ab6bc07b085b98dae9cc02d1d84de175849f997439c7 2.10MB / 13.68MB 1.2s
+#4 sha256:88d15687540999237909e04714b1393c610db9dc2e13d82acd6356fa9bf8f092 249B / 249B 1.3s done
+#4 sha256:8691b22c22a3e005c632ab6bc07b085b98dae9cc02d1d84de175849f997439c7 3.15MB / 13.68MB 1.6s
+#4 sha256:a47be7bff94f52aefb243d8b245b01c74976150bb88de60875c5eb7ac964f91e 1.05MB / 3.34MB 2.0s
+#4 sha256:8691b22c22a3e005c632ab6bc07b085b98dae9cc02d1d84de175849f997439c7 4.19MB / 13.68MB 2.2s
+#4 sha256:8691b22c22a3e005c632ab6bc07b085b98dae9cc02d1d84de175849f997439c7 5.24MB / 13.68MB 2.8s
+#4 sha256:8691b22c22a3e005c632ab6bc07b085b98dae9cc02d1d84de175849f997439c7 6.29MB / 13.68MB 3.5s
+#4 sha256:a47be7bff94f52aefb243d8b245b01c74976150bb88de60875c5eb7ac964f91e 2.10MB / 3.34MB 3.5s
+#4 sha256:8691b22c22a3e005c632ab6bc07b085b98dae9cc02d1d84de175849f997439c7 7.34MB / 13.68MB 3.9s
+#4 sha256:8691b22c22a3e005c632ab6bc07b085b98dae9cc02d1d84de175849f997439c7 8.39MB / 13.68MB 4.3s
+#4 sha256:a47be7bff94f52aefb243d8b245b01c74976150bb88de60875c5eb7ac964f91e 3.34MB / 3.34MB 4.3s done
+#4 sha256:8691b22c22a3e005c632ab6bc07b085b98dae9cc02d1d84de175849f997439c7 9.44MB / 13.68MB 4.8s
+#4 sha256:8691b22c22a3e005c632ab6bc07b085b98dae9cc02d1d84de175849f997439c7 10.49MB / 13.68MB 5.1s
+#4 sha256:dd051e1b8c92ff101fa3071ab97ea4924885942f15644e01c3dc095764e863e3 1.05MB / 28.25MB 5.3s
+#4 sha256:8691b22c22a3e005c632ab6bc07b085b98dae9cc02d1d84de175849f997439c7 11.53MB / 13.68MB 5.5s
+#4 sha256:8691b22c22a3e005c632ab6bc07b085b98dae9cc02d1d84de175849f997439c7 12.58MB / 13.68MB 5.8s
+#4 sha256:8691b22c22a3e005c632ab6bc07b085b98dae9cc02d1d84de175849f997439c7 13.68MB / 13.68MB 6.1s done
+#4 sha256:dd051e1b8c92ff101fa3071ab97ea4924885942f15644e01c3dc095764e863e3 3.15MB / 28.25MB 7.4s
+#4 sha256:dd051e1b8c92ff101fa3071ab97ea4924885942f15644e01c3dc095764e863e3 5.24MB / 28.25MB 8.3s
+#4 sha256:dd051e1b8c92ff101fa3071ab97ea4924885942f15644e01c3dc095764e863e3 7.34MB / 28.25MB 8.9s
+#4 sha256:dd051e1b8c92ff101fa3071ab97ea4924885942f15644e01c3dc095764e863e3 9.44MB / 28.25MB 9.5s
+#4 sha256:dd051e1b8c92ff101fa3071ab97ea4924885942f15644e01c3dc095764e863e3 11.53MB / 28.25MB 10.1s
+#4 sha256:dd051e1b8c92ff101fa3071ab97ea4924885942f15644e01c3dc095764e863e3 13.63MB / 28.25MB 10.7s
+#4 sha256:dd051e1b8c92ff101fa3071ab97ea4924885942f15644e01c3dc095764e863e3 15.73MB / 28.25MB 11.3s
+#4 sha256:dd051e1b8c92ff101fa3071ab97ea4924885942f15644e01c3dc095764e863e3 17.83MB / 28.25MB 12.0s
+#4 sha256:dd051e1b8c92ff101fa3071ab97ea4924885942f15644e01c3dc095764e863e3 19.92MB / 28.25MB 12.8s
+#4 sha256:dd051e1b8c92ff101fa3071ab97ea4924885942f15644e01c3dc095764e863e3 22.02MB / 28.25MB 13.4s
+#4 sha256:dd051e1b8c92ff101fa3071ab97ea4924885942f15644e01c3dc095764e863e3 24.12MB / 28.25MB 14.0s
+#4 sha256:dd051e1b8c92ff101fa3071ab97ea4924885942f15644e01c3dc095764e863e3 26.21MB / 28.25MB 14.6s
+#4 sha256:dd051e1b8c92ff101fa3071ab97ea4924885942f15644e01c3dc095764e863e3 28.25MB / 28.25MB 15.0s
+#4 sha256:dd051e1b8c92ff101fa3071ab97ea4924885942f15644e01c3dc095764e863e3 28.25MB / 28.25MB 15.1s done
+#4 extracting sha256:dd051e1b8c92ff101fa3071ab97ea4924885942f15644e01c3dc095764e863e3
+#4 extracting sha256:dd051e1b8c92ff101fa3071ab97ea4924885942f15644e01c3dc095764e863e3 1.3s done
+#4 DONE 16.6s
+
+#4 [1/5] FROM docker.io/library/python:3.12.16-slim-bookworm@sha256:0f086103b026048cc50cb5da25ec435c023c5241a83fc44daea593377abc61c4
+#4 extracting sha256:a47be7bff94f52aefb243d8b245b01c74976150bb88de60875c5eb7ac964f91e 0.1s done
+#4 DONE 16.7s
+
+#4 [1/5] FROM docker.io/library/python:3.12.16-slim-bookworm@sha256:0f086103b026048cc50cb5da25ec435c023c5241a83fc44daea593377abc61c4
+#4 extracting sha256:8691b22c22a3e005c632ab6bc07b085b98dae9cc02d1d84de175849f997439c7
+#4 extracting sha256:8691b22c22a3e005c632ab6bc07b085b98dae9cc02d1d84de175849f997439c7 0.7s done
+#4 extracting sha256:88d15687540999237909e04714b1393c610db9dc2e13d82acd6356fa9bf8f092
+#4 extracting sha256:88d15687540999237909e04714b1393c610db9dc2e13d82acd6356fa9bf8f092 0.0s done
+#4 DONE 17.4s
+
+#6 [2/5] WORKDIR /app
+#6 DONE 0.3s
+
+#7 [3/5] COPY requirements.txt ./requirements.txt
+#7 DONE 0.0s
+
+#8 [4/5] RUN python -m pip install --no-cache-dir --disable-pip-version-check -r requirements.txt     && groupadd --gid 10001 taskflow     && useradd --uid 10001 --gid 10001 --no-create-home --home-dir /app --shell /usr/sbin/nologin taskflow     && install -d -o 10001 -g 10001 -m 0750 /data
+#8 2.538 Collecting annotated-doc==0.0.5 (from -r requirements.txt (line 1))
+#8 2.685   Downloading annotated_doc-0.0.5-py3-none-any.whl.metadata (6.5 kB)
+#8 2.725 Collecting annotated-types==0.8.0 (from -r requirements.txt (line 3))
+#8 2.753   Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+#8 2.824 Collecting anyio==4.16.0 (from -r requirements.txt (line 5))
+#8 2.867   Downloading anyio-4.16.0-py3-none-any.whl.metadata (4.7 kB)
+#8 2.914 Collecting click==8.5.1 (from -r requirements.txt (line 7))
+#8 2.941   Downloading click-8.5.1-py3-none-any.whl.metadata (2.6 kB)
+#8 3.109 Collecting fastapi==0.162.0 (from -r requirements.txt (line 9))
+#8 3.150   Downloading fastapi-0.162.0-py3-none-any.whl.metadata (26 kB)
+#8 3.217 Collecting h11==0.16.0 (from -r requirements.txt (line 11))
+#8 3.249   Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+#8 3.293 Collecting idna==3.20 (from -r requirements.txt (line 13))
+#8 3.345   Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+#8 3.425 Collecting opentelemetry-api==1.45.2 (from -r requirements.txt (line 15))
+#8 3.464   Downloading opentelemetry_api-1.45.2-py3-none-any.whl.metadata (1.4 kB)
+#8 3.504 Collecting prometheus-client==0.26.0 (from -r requirements.txt (line 17))
+#8 3.530   Downloading prometheus_client-0.26.0-py3-none-any.whl.metadata (2.1 kB)
+#8 3.820 Collecting pydantic==2.14.3 (from -r requirements.txt (line 19))
+#8 3.853   Downloading pydantic-2.14.3-py3-none-any.whl.metadata (141 kB)
+#8 5.026 Collecting pydantic-core==2.50.4 (from -r requirements.txt (line 23))
+#8 5.052   Downloading pydantic_core-2.50.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (6.6 kB)
+#8 5.117 Collecting starlette==1.10.0 (from -r requirements.txt (line 25))
+#8 5.147   Downloading starlette-1.10.0-py3-none-any.whl.metadata (6.6 kB)
+#8 5.202 Collecting typing-extensions==4.16.0 (from -r requirements.txt (line 27))
+#8 5.224   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+#8 5.264 Collecting typing-inspection==0.4.5 (from -r requirements.txt (line 36))
+#8 5.290   Downloading typing_inspection-0.4.5-py3-none-any.whl.metadata (2.6 kB)
+#8 5.352 Collecting uvicorn==0.54.0 (from -r requirements.txt (line 40))
+#8 5.401   Downloading uvicorn-0.54.0-py3-none-any.whl.metadata (6.6 kB)
+#8 5.514 Downloading annotated_doc-0.0.5-py3-none-any.whl (5.3 kB)
+#8 5.545 Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+#8 5.577 Downloading anyio-4.16.0-py3-none-any.whl (134 kB)
+#8 5.658 Downloading click-8.5.1-py3-none-any.whl (126 kB)
+#8 5.751 Downloading fastapi-0.162.0-py3-none-any.whl (148 kB)
+#8 5.840 Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+#8 5.880 Downloading idna-3.20-py3-none-any.whl (69 kB)
+#8 5.922 Downloading opentelemetry_api-1.45.2-py3-none-any.whl (60 kB)
+#8 5.968 Downloading prometheus_client-0.26.0-py3-none-any.whl (64 kB)
+#8 6.007 Downloading pydantic-2.14.3-py3-none-any.whl (494 kB)
+#8 6.214 Downloading pydantic_core-2.50.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (2.3 MB)
+#8 6.897    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.3/2.3 MB 3.4 MB/s eta 0:00:00
+#8 6.932 Downloading starlette-1.10.0-py3-none-any.whl (80 kB)
+#8 6.976 Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+#8 7.012 Downloading typing_inspection-0.4.5-py3-none-any.whl (14 kB)
+#8 7.053 Downloading uvicorn-0.54.0-py3-none-any.whl (87 kB)
+#8 7.125 Installing collected packages: typing-extensions, prometheus-client, idna, h11, click, annotated-types, annotated-doc, uvicorn, typing-inspection, pydantic-core, opentelemetry-api, anyio, starlette, pydantic, fastapi
+#8 8.415 Successfully installed annotated-doc-0.0.5 annotated-types-0.8.0 anyio-4.16.0 click-8.5.1 fastapi-0.162.0 h11-0.16.0 idna-3.20 opentelemetry-api-1.45.2 prometheus-client-0.26.0 pydantic-2.14.3 pydantic-core-2.50.4 starlette-1.10.0 typing-extensions-4.16.0 typing-inspection-0.4.5 uvicorn-0.54.0
+#8 8.416 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#8 DONE 8.6s
+
+#9 [5/5] COPY app/ ./app/
+#9 DONE 0.1s
+
+#10 exporting to image
+#10 exporting layers
+#10 exporting layers 0.9s done
+#10 exporting manifest sha256:56568a2affd55cb91f3bf1873569fcada29b9f3e57288dd9bc12cdd0a8fe2bd7 0.0s done
+#10 exporting config sha256:cc95a9a65754045b2b6f54614d96a79acbb98808c58d3a094cf80749089da2b4 0.0s done
+#10 exporting attestation manifest sha256:6bae17d65e729b52bc848b773ab0b57bf18f3757e77da3605b3f6c18015fa848 0.0s done
+#10 exporting manifest list sha256:cef08e6e44c70b4756816c6b11eeaa8039c7b9877c1e3ae57d73ade56aeac6ab done
+#10 naming to docker.io/library/taskflow-local:phase2-inicial done
+#10 unpacking to docker.io/library/taskflow-local:phase2-inicial
+#10 unpacking to docker.io/library/taskflow-local:phase2-inicial 2.0s done
+#10 DONE 3.0s

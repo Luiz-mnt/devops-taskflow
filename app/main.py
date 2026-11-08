@@ -8,10 +8,12 @@ from typing import Annotated
 
 from fastapi import FastAPI, HTTPException
 from fastapi import Path as PathParameter
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
+from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
 
 from app.database import TaskStore
 from app.models import HealthResponse, TaskComplete, TaskCreate, TaskResponse
+from app.observability import HttpMetrics, ObservabilityMiddleware
 
 
 def create_app(database_path: str | Path | None = None) -> FastAPI:
@@ -21,6 +23,7 @@ def create_app(database_path: str | Path | None = None) -> FastAPI:
         else os.environ.get("TASKFLOW_DB_PATH", "data/taskflow.db")
     )
     store = TaskStore(configured_path)
+    metrics = HttpMetrics()
 
     @asynccontextmanager
     async def lifespan(application: FastAPI):
@@ -29,11 +32,13 @@ def create_app(database_path: str | Path | None = None) -> FastAPI:
 
     application = FastAPI(
         title="TaskFlow API",
-        version="1.0.0",
-        description="API acadêmica de tarefas para a fase 1 de DevOps na Prática.",
+        version="2.0.0",
+        description="API acadêmica de tarefas com CI/CD e observabilidade.",
         lifespan=lifespan,
     )
     application.state.store = store
+    application.state.metrics = metrics
+    application.add_middleware(ObservabilityMiddleware, metrics=metrics)
 
     @application.post("/tasks", response_model=TaskResponse, status_code=201)
     def create_task(payload: TaskCreate):
@@ -71,6 +76,12 @@ def create_app(database_path: str | Path | None = None) -> FastAPI:
                 content={"status": "unhealthy", "database": "unavailable"},
             )
         return {"status": "healthy", "database": "ok"}
+
+    @application.get("/metrics", include_in_schema=False)
+    def prometheus_metrics():
+        return Response(
+            generate_latest(metrics.registry), media_type=CONTENT_TYPE_LATEST
+        )
 
     return application
 

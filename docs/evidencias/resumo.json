@@ -1,153 +1,136 @@
 {
-  "timestamp": "2026-11-08T10:41:21-03:00",
+  "timestamp": "2026-11-08T15:37:44-03:00",
   "repository_url": "https://github.com/Luiz-mnt/devops-taskflow",
-  "repository_visibility": "público, acessível sem login",
   "workflow_url": "https://github.com/Luiz-mnt/devops-taskflow/blob/main/.github/workflows/ci.yml",
-  "published_commit": "30b49c595e931f1ea6c2e122ba4ca25ead004b48",
-  "published_ref": "main",
-  "published_commit_description": "Commit de implementação aprovado pelo CI e congelado na tag fase-1. Main recebe a consolidação documental posterior sem mover a tag.",
   "phase1_commit": "30b49c595e931f1ea6c2e122ba4ca25ead004b48",
+  "phase1_tag": "fase-1",
+  "phase1_ci_run_url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42485447573",
+  "phase1_results": "Concluída: 32 testes e 100% de linhas/branches; CI e IaC local/remoto aprovados.",
   "phase2_commit": null,
-  "ci_run_url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42485447573",
-  "infra_run_url": "https://github.com/Luiz-mnt/devops-taskflow/blob/main/docs/evidencias/fase1-infra.md",
-  "ci_head_sha": "30b49c595e931f1ea6c2e122ba4ca25ead004b48",
-  "ci_conclusion": "success",
-  "ci_status_description": "Aprovado: qualidade/testes, Terraform e provisionamento efêmero",
-  "ci_jobs_executed": true,
-  "ci_test_count": 32,
-  "ci_coverage_percent": 100.0,
+  "phase2_tag": null,
+  "ci_run_url": null,
+  "ci_head_sha": null,
+  "ci_conclusion": null,
   "cd_run_url": null,
+  "cd_head_sha": null,
+  "cd_conclusion": null,
   "image_digest": null,
-  "test_count": 32,
-  "tests_passed": 32,
+  "image_ref": null,
+  "local_image_id": "sha256:cef08e6e44c70b4756816c6b11eeaa8039c7b9877c1e3ae57d73ade56aeac6ab",
+  "local_image_config_id": "sha256:cc95a9a65754045b2b6f54614d96a79acbb98808c58d3a094cf80749089da2b4",
+  "test_count": 38,
+  "tests_passed": 38,
   "coverage_percent": 100.0,
   "branch_coverage_percent": 100.0,
-  "test_duration_seconds": 2.86,
-  "test_environment": "Windows / CPython 3.12.16 local",
-  "test_source_commit": "06f7bf7e72f8358912000347ca120980c52bab49",
-  "python_version": "3.12.16",
-  "terraform_version": "1.17.1",
-  "docker_version": "29.9.3 (cliente e servidor WSL2)",
-  "environment_description": "Windows/PowerShell e Python 3.12; Ubuntu 24.04.4 WSL2 com Docker 29.9.3 e Terraform 1.17.1. CI aprovado em Ubuntu 24.04 hospedado no GitHub, com Docker 28.0.4.",
-  "terraform_result": "Local e CI aprovados: rede/volume criados e inspecionados, segundo plan sem alterações; laboratório local preservado",
-  "terraform_local_result": "Apply: 2 criados; inspeções OK; plan posterior sem alterações (exit 0)",
-  "terraform_apply_result": "Local WSL2: 2 added, 0 changed, 0 destroyed",
-  "terraform_post_apply_plan": "Local WSL2: No changes; exit 0",
-  "terraform_ci_result": "Aprovado: 2 criados, inspeções OK, plan sem alterações; 2 removidos somente no runner efêmero",
-  "terraform_resources": {
-    "network": "taskflow-net",
-    "volume": "taskflow-data",
-    "preserved": true
-  },
-  "smoke_result": null,
-  "monitoring_result": null,
-  "security_result": "Revisão staged sem segredos reconhecíveis; actions por SHA; contents read; main protegida com exceção de administrador documentada",
-  "phase1_tag": "fase-1",
-  "tag": "fase-1",
-  "delivery_ready": true,
-  "pending_items": [],
+  "test_duration_seconds": 5.55,
+  "test_environment": "Windows / CPython 3.12.16, pasta Fase 2, workspace antes da publicação",
+  "test_timestamp": "2026-11-08T18:38:35Z",
+  "terraform_result": "Continuidade local: estado copiado explicitamente; plan sem alterações, exit 0. CD ainda em validação.",
+  "smoke_result": "Local inicial aprovado: saúde SQLite e criar/listar/concluir tarefa; CD em validação.",
+  "monitoring_result": "Local inicial: alvo taskflow-api UP e consulta up=1.",
+  "security_result": "pip-audit local: 51 pacotes, zero vulnerabilidades; Trivy local: zero HIGH/CRITICAL corrigíveis e 42 sem correção informada.",
+  "pip_audit_result": "Local: 51 pacotes, zero vulnerabilidades identificadas, exit 0.",
+  "image_scan_result": "Local: 0 HIGH/CRITICAL corrigíveis; 40 HIGH e 2 CRITICAL sem correção informada.",
+  "controlled_failure_run_url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42489956044",
+  "pr_url": "https://github.com/Luiz-mnt/devops-taskflow/pull/1",
+  "rollback_result": null,
+  "persistence_result": "Local inicial aprovado: tarefa id 2 preservada após recriar a API; container mudou e UID 10001 confirmado.",
+  "pending_items": [
+    "Aprovação do PR corrigido",
+    "Publicação GHCR e CD real",
+    "Deploy local por digest e rollback compatível",
+    "Tag fase-2",
+    "Relatório, fluxograma e PDF finais"
+  ],
+  "delivery_ready": false,
   "measurement_commands": [
-    "python -m ruff check .",
-    "python -m ruff format --check .",
-    "python -m pytest --basetemp=<diretorio-temporario-novo> (comando exato no log)",
-    "terraform -chdir=infra fmt -check -recursive",
-    "terraform -chdir=infra init -lockfile=readonly",
-    "terraform -chdir=infra validate",
-    "terraform -chdir=infra plan -out=local.tfplan",
-    "terraform -chdir=infra apply local.tfplan",
-    "docker network inspect taskflow-net",
-    "docker volume inspect taskflow-data",
+    "python -m pytest",
+    "python -m pip_audit --strict --no-deps --disable-pip -r requirements-dev.txt",
     "terraform -chdir=infra plan -detailed-exitcode",
-    "gh run view 42485447573 --repo Luiz-mnt/devops-taskflow --json status,conclusion,headSha,url,jobs"
+    "IMAGE_PULL_POLICY=never bash scripts/deploy.sh",
+    "bash scripts/smoke.sh",
+    "docker compose up --force-recreate --no-deps --wait api"
   ],
-  "presentation_evidence": [
-    {
-      "path": "docs/evidencias/imagens/github-repositorio-fase1.png",
-      "title": "Repositório e tag fase-1 — captura real",
-      "caption": "Recorte da captura real da tag fase-1 no commit 30b49c5. O código foi aprovado; os documentos finais são consolidados em main.",
-      "source_slide": 7,
-      "url": "https://github.com/Luiz-mnt/devops-taskflow/tree/fase-1",
-      "crop": [
-        215,
-        230,
-        1415,
-        880
-      ]
-    },
-    {
-      "path": "docs/evidencias/imagens/github-ci-aprovado-resumo-recorte.png",
-      "title": "GitHub Actions — três jobs aprovados",
-      "caption": "Recorte da captura real da execução 42485447573: qualidade/testes, Terraform e provisionamento efêmero aprovados.",
-      "source_slide": 8,
-      "url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42485447573"
-    },
-    {
-      "path": "docs/evidencias/imagens/github-ci-aprovado-artefatos-recorte.png",
-      "title": "Relatórios produzidos pelo CI",
-      "caption": "Recorte real dos artefatos de testes/cobertura e infraestrutura. Cópias permanentes estão no repositório e no pacote de entrega.",
-      "source_slide": 8,
-      "url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42485447573"
-    },
-    {
-      "path": "docs/evidencias/logs/ci-42485447573-testes.log",
-      "title": "Testes no GitHub — Python 3.12.16",
-      "caption": "Log real do runner Linux em 08/11: 32 testes aprovados, 100% de linhas e branches; pytest 0.85 s. Local Windows: 2,86 s em 06/11.",
-      "source_slide": 8,
-      "url": "https://github.com/Luiz-mnt/devops-taskflow/blob/main/docs/evidencias/logs/ci-42485447573-testes.log"
-    },
-    {
-      "path": "docs/evidencias/logs/terraform-local-apply.log",
-      "title": "Terraform apply — laboratório WSL2 local",
-      "caption": "Registro real local: 2 recursos criados, 0 alterados e 0 destruídos. Rede e volume locais continuam preservados.",
-      "source_slide": 10,
-      "url": "https://github.com/Luiz-mnt/devops-taskflow/blob/main/docs/evidencias/logs/terraform-local-apply.log"
-    },
-    {
-      "path": "docs/evidencias/logs/terraform-local-plan-after.log",
-      "title": "Plano local posterior sem alterações",
-      "caption": "Registro real do WSL2: No changes e exit 0. A preservação foi confirmada novamente em 07/11.",
-      "source_slide": 10,
-      "url": "https://github.com/Luiz-mnt/devops-taskflow/blob/main/docs/evidencias/logs/terraform-local-plan-after.log"
-    },
-    {
-      "path": "docs/evidencias/ci/42485447573/infra/apply.log",
-      "title": "Terraform apply — runner GitHub",
-      "caption": "Registro real do runner: 2 recursos efêmeros criados com prefixo exclusivo. Docker do runner 28.0.4; local 29.9.3.",
-      "source_slide": 10,
-      "url": "https://github.com/Luiz-mnt/devops-taskflow/blob/main/docs/evidencias/ci/42485447573/infra/apply.log"
-    },
-    {
-      "path": "docs/evidencias/ci/42485447573/infra/replan.log",
-      "title": "Plano do runner sem alterações",
-      "caption": "Registro real após o apply no runner: No changes. Etapa aprovada com exit 0, sem reduzir a exigência de validação.",
-      "source_slide": 10,
-      "url": "https://github.com/Luiz-mnt/devops-taskflow/blob/main/docs/evidencias/ci/42485447573/infra/replan.log"
-    },
-    {
-      "path": "docs/evidencias/ci/42485447573/infra/destroy.log",
-      "title": "Limpeza dos recursos efêmeros",
-      "caption": "Registro real: 2 recursos removidos somente no runner após coleta das provas. O laboratório local não foi destruído.",
-      "source_slide": 10,
-      "url": "https://github.com/Luiz-mnt/devops-taskflow/blob/main/docs/evidencias/ci/42485447573/infra/destroy.log"
-    }
-  ],
-  "verification_timestamp": "2026-11-08T10:41:21-03:00",
-  "ci_attempt": 1,
-  "local_test_timestamp": "2026-11-06T21:46:26-03:00",
-  "local_terraform_timestamp": "2026-11-06T21:55:00-03:00",
-  "terraform_reverified_at": "2026-11-07T11:55:04-03:00",
-  "tag_url": "https://github.com/Luiz-mnt/devops-taskflow/tree/fase-1",
-  "ci_completed_at": "2026-11-08T13:33:11Z",
-  "ci_tests_passed": 32,
-  "ci_branch_coverage_percent": 100.0,
-  "ci_test_duration_seconds": 0.85,
-  "ci_junit_duration_seconds": 0.857,
-  "ci_test_environment": "Ubuntu 24.04 / CPython 3.12.16 (GitHub-hosted)",
-  "ci_test_timestamp": "2026-11-08T13:32:44Z",
-  "ci_python_version": "3.12.16",
-  "ci_docker_version": "28.0.4",
-  "terraform_ci_prefix": "taskflow-ci-42485447573-1",
-  "billing_block_resolved": true,
-  "billing_resolution_verified_by_run": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42485447573",
-  "permanent_ci_reports": "docs/evidencias/ci/42485447573/testes/"
+  "presentation_evidence": [],
+  "limitations": "Laboratório de host único; monitoramento em tmpfs; não há implantação pública permanente. Achados de segurança sem correção são inventariados.",
+  "improvements": "Backup/restauração testados, PostgreSQL, alertas, TLS/autenticação e ambiente permanente com aprovação.",
+  "local_final_python_validation": {
+    "recorded_at_utc": "2026-11-08T18:38:35.106620+00:00",
+    "working_directory": "C:\\Users\\luizs\\OneDrive\\Documentos\\Análise e Desenvolvimento de Sistemas PUCRS\\Ano 3\\10º trimestre\\DevOps na Prática\\Fase 2\\devops-taskflow",
+    "python": "3.12.16 (main, Oct 26 2026, 14:10:56) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "checks": [
+      {
+        "check": "python-version",
+        "started_at_utc": "2026-11-08T18:38:35.466380+00:00",
+        "duration_seconds": 0.039,
+        "command": [
+          "C:\\Users\\luizs\\OneDrive\\Documentos\\Análise e Desenvolvimento de Sistemas PUCRS\\Ano 3\\10º trimestre\\DevOps na Prática\\Fase 2\\devops-taskflow\\.venv\\Scripts\\python.exe",
+          "--version"
+        ],
+        "exit_code": 0
+      },
+      {
+        "check": "pip-check",
+        "started_at_utc": "2026-11-08T18:38:35.506856+00:00",
+        "duration_seconds": 2.43,
+        "command": [
+          "C:\\Users\\luizs\\OneDrive\\Documentos\\Análise e Desenvolvimento de Sistemas PUCRS\\Ano 3\\10º trimestre\\DevOps na Prática\\Fase 2\\devops-taskflow\\.venv\\Scripts\\python.exe",
+          "-m",
+          "pip",
+          "check"
+        ],
+        "exit_code": 0
+      },
+      {
+        "check": "ruff-check",
+        "started_at_utc": "2026-11-08T18:38:37.936867+00:00",
+        "duration_seconds": 0.256,
+        "command": [
+          "C:\\Users\\luizs\\OneDrive\\Documentos\\Análise e Desenvolvimento de Sistemas PUCRS\\Ano 3\\10º trimestre\\DevOps na Prática\\Fase 2\\devops-taskflow\\.venv\\Scripts\\python.exe",
+          "-m",
+          "ruff",
+          "check",
+          "."
+        ],
+        "exit_code": 0
+      },
+      {
+        "check": "ruff-format",
+        "started_at_utc": "2026-11-08T18:38:38.195675+00:00",
+        "duration_seconds": 0.246,
+        "command": [
+          "C:\\Users\\luizs\\OneDrive\\Documentos\\Análise e Desenvolvimento de Sistemas PUCRS\\Ano 3\\10º trimestre\\DevOps na Prática\\Fase 2\\devops-taskflow\\.venv\\Scripts\\python.exe",
+          "-m",
+          "ruff",
+          "format",
+          "--check",
+          "."
+        ],
+        "exit_code": 0
+      },
+      {
+        "check": "pytest",
+        "started_at_utc": "2026-11-08T18:38:38.443294+00:00",
+        "duration_seconds": 12.822,
+        "command": [
+          "C:\\Users\\luizs\\OneDrive\\Documentos\\Análise e Desenvolvimento de Sistemas PUCRS\\Ano 3\\10º trimestre\\DevOps na Prática\\Fase 2\\devops-taskflow\\.venv\\Scripts\\python.exe",
+          "-m",
+          "pytest",
+          "-o",
+          "addopts=",
+          "-ra",
+          "--strict-markers",
+          "--cov=app",
+          "--cov-branch",
+          "--cov-fail-under=80",
+          "--cov-report=term-missing",
+          "--cov-report=xml:reports/fase2-final-python/coverage.xml",
+          "--cov-report=html:reports/fase2-final-python/htmlcov",
+          "--junitxml=reports/fase2-final-python/junit.xml"
+        ],
+        "exit_code": 0
+      }
+    ]
+  }
 }

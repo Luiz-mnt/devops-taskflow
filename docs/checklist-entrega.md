@@ -1,32 +1,26 @@
-# Checklist final — fase 1 concluída
+# Checklist de entrega — fase 2 em validação
 
-**Situação verificada em 08/11/2026:** planejamento, implementação, testes locais,
-CI real, scripts IaC, provisionamento local/remoto, evidências e tag concluídos.
-Repositório: https://github.com/Luiz-mnt/devops-taskflow
+A fase 1 está concluída e preservada na tag fase-1. Os resultados locais da
+fase 2 estão registrados; a aprovação remota e os documentos finais ainda serão
+consolidados. Este checklist não declara a fase 2 pronta para submissão.
 
-| Requisito | Arquivos e prova | Estado |
+| Requisito | Arquivo / evidência | Situação |
 |---|---|---|
-| Descrição, objetivos e requisitos | planejamento-fase1.md | Concluído |
-| Plano de integração contínua | Planejamento e .github/workflows/ci.yml | Concluído |
-| Especificação da infraestrutura | Planejamento, infra/*.tf e ambiente-wsl.md | Concluído |
-| Documento com links de repositório/CI/IaC | Planejamento e apresentação final | Concluído |
-| Repositório GitHub | Público e acessível ao avaliador | Concluído |
-| Pipeline GitHub Actions | Execução 42485447573: três jobs aprovados | Concluído |
-| Testes automatizados implementados e integrados | 32 testes locais e 32 no CI, sem falhas | Concluído |
-| Cobertura mínima 80% | 100% de linhas e branches nos dois ambientes | Concluído |
-| Scripts IaC e lock real | Terraform 1.17.1/provider 4.6.0; validação local e CI | Concluído |
-| Apply local, inspect e plan posterior | WSL2: 2 criados, inspeções e plan exit 0 | Concluído |
-| Apply e limpeza efêmeros no CI | 2 criados; plan sem alterações; 2 removidos no runner | Concluído |
-| Evidência CI aprovado e tag fase-1 | Tag no commit 30b49c5 aprovado, sem mover referência | Concluído |
-| Proteção de main | Checks exigidos, sem force-push/exclusão; exceção admin documentada | Concluído |
-| Documento no template e PDF | Versões finais com links, métricas e capturas reais; validação dos slides | Concluído |
+| Expandir CI para CD | .github/workflows/ci.yml | Implementado; validar execução remota |
+| Dockerfile não-root | Dockerfile | Build e deploy locais aprovados |
+| Orquestração e scripts de deploy | compose.yaml e scripts/*.sh | Smoke local aprovado |
+| Monitoramento e logs | app/observability.py, monitoring/, docs/observabilidade.md | UP=1 e JSON locais confirmados |
+| Testes integrados | tests/ e reports/ | 38 testes locais; confirmar runner |
+| Segurança | pip-audit, Trivy e gate obrigatório | Auditorias locais registradas; confirmar runner |
+| Infraestrutura e persistência | infra/, volume externo | Plan local exit 0; tarefa preservada após recriar API |
+| Publicação por digest | GHCR e job publish | Pendente de execução real |
+| Deploy por digest e rollback | scripts/deploy.sh e rollback.sh | Pendente de validação com imagem publicada |
+| Falha controlada | Execução 42489956044 do PR #1 | Bloqueio confirmado; correção em validação |
+| Fluxograma completo | docs/fluxograma.mmd | Fonte preparada; revisar e exportar |
+| Relatório final e PDF no template | entrega-fase2/ | Em preparação |
+| Tag fase-2 | Commit aprovado | Pendente após validação |
 
-## Escopo
-
-Não há requisito obrigatório da fase 1 pendente. CD, imagem da API, Compose da
-aplicação, Prometheus e demais funcionalidades da fase 2 serão desenvolvidos
-posteriormente. Docker Engine instalado e rede/volume provisionados pertencem
-à preparação da infraestrutura da fase 1.
-
-[Execução aprovada](https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42485447573) · [Tag fase-1](https://github.com/Luiz-mnt/devops-taskflow/tree/fase-1) ·
-[Resumo verificável](evidencias/resumo.json) · [Rastreabilidade](evidencias/fase1-github.md).
+O enunciado requer o pipeline de CD, o fluxograma e o relatório final em PDF.
+O guia acrescenta demonstrações reais de persistência, falha controlada e
+rollback quando houver duas versões compatíveis. Não há limpeza automática
+de dados locais. O deploy no runner é temporário.

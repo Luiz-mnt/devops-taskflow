@@ -6,6 +6,7 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .ruff_cache/
+.cache/
 .coverage*
 reports/
 .tools/
@@ -44,3 +45,5 @@ terraform.rc
 Thumbs.db
 .idea/
 .vscode/
+
+!docs/evidencias/fase2-local/**/*.log

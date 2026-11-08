@@ -1,4 +1,4 @@
-# TaskFlow API — DevOps na Prática, fase 1
+# TaskFlow API — DevOps na Prática, fases 1 e 2
 
 Aluno: **Luiz Eduardo Santos Monteiro**. Projeto acadêmico da PUCRS.
 
@@ -43,7 +43,7 @@ O arquivo `.env.example` documenta a configuração; a API lê a variável do pr
 e não carrega `.env` automaticamente.
 
 No ambiente já preparado nesta pasta, `.venv` usa o Python 3.12 portátil em
-`../.tools/python/`. Basta executar os comandos `.venv` acima; `py -3.12`
+`../../Fase 1/.tools/python/`. Basta executar os comandos `.venv` acima; `py -3.12`
 documenta a recriação em uma máquina com esse Python registrado no launcher.
 
 ## Executar no Linux/WSL
@@ -66,11 +66,12 @@ mesma pasta pelo WSL. Ambientes virtuais não são intercambiáveis entre os sis
 | `GET /tasks` | — | 200, lista ordenada por ID |
 | `PATCH /tasks/{id}` | `{"status":"completed"}` | 200, tarefa concluída; repetição é idempotente |
 | `GET /health` | — | 200 com banco acessível; 503 se consulta ao banco falhar |
+| `GET /metrics` | — | 200, métricas HTTP no formato Prometheus |
 
 Títulos aceitam de 1 a 200 caracteres após remover espaços nas extremidades.
 Entradas inválidas retornam 422. Tarefa inexistente retorna 404. A base SQLite
 permanece no caminho configurado entre reinícios e é excluída do Git. Cada teste
-utiliza banco temporário próprio. `/metrics` está reservado para a fase 2.
+utiliza banco temporário próprio. `GET /metrics` expõe métricas HTTP para o Prometheus.
 
 ## Lint, testes e relatórios
 
@@ -96,9 +97,9 @@ PowerShell abaixo são uma alternativa para instalações com Docker Desktop.
 
 É necessário Terraform na versão de `infra/versions.tf` e Docker Engine acessível
 para provisionar. No Docker Desktop, use Linux containers. O Terraform é o único
-responsável pela rede bridge e pelo volume; na fase 2, Compose os consumirá como
-recursos externos. Nesta fase, a API executada no ambiente virtual usa `data/`,
-sem montar o volume Docker antecipadamente.
+responsável pela rede bridge e pelo volume; Compose os consome como recursos
+externos. A API em container persiste em `/data`; a execução opcional em ambiente
+virtual utiliza o caminho local configurado por TASKFLOW_DB_PATH.
 
 ```powershell
 # Windows com Docker Desktop aberto:
@@ -133,13 +134,22 @@ a substituição do volume: revise o plano antes de aplicar para preservar dados
 ## Pipeline
 
 O workflow `.github/workflows/ci.yml` executa em push e pull request para `main`.
-Os jobs estão configurados para verificar qualidade/testes e formatação/validação
-Terraform. Após aprovação, um push em `main` deverá demonstrar o provisionamento
-em Docker no runner Linux e verificar um plano posterior sem alterações. Os
-recursos remotos efêmeros têm limpeza em `always`, após coleta das evidências;
-o laboratório local é independente. Nenhum job publica imagens nem utiliza
-segredos de deploy. A execução remota foi aprovada e seus relatórios estão
-em docs/evidencias/ci/42485447573/.
+Os jobs verificam Ruff, testes com cobertura mínima de 80%, auditoria das
+dependências de produção/desenvolvimento e formatação/validação Terraform.
+Build/scan constrói uma imagem Linux amd64 e inventaria suas vulnerabilidades.
+O gate bloqueia HIGH/CRITICAL com correção disponível. O inventário registra
+também vulnerabilidades sem correção e das demais severidades.
+
+Pull requests validam e não publicam. Após aprovação de build/scan e da prova
+IaC, main publica no GHCR exatamente a imagem aprovada, sem rebuild, usando
+tag sha-commit e digest real. Um job dependente baixa esse digest, provisiona
+rede/volume exclusivos, implanta API/Prometheus, executa smoke e coleta provas.
+A limpeza em always remove somente os recursos efêmeros do runner.
+
+Somente o job de publicação recebe packages: write; o deploy usa packages: read.
+Login utiliza GITHUB_TOKEN fornecido pelo GitHub Actions. Não há token pessoal
+no código. O laboratório local é independente e seus dados são preservados.
+Os registros da fase 1 continuam em docs/evidencias/ci/42485447573/.
 
 O token tem `contents: read`, as actions são fixadas por SHA e há limites de tempo.
 O resultado observado e os links da execução estão na documentação de evidências.
@@ -148,10 +158,79 @@ O resultado observado e os links da execução estão na documentação de evid�
 
 O projeto é um laboratório de host único: SQLite e rede/volume Docker locais.
 Não oferece autenticação, alta disponibilidade, nuvem gerenciada ou implantação
-pública da API. A evolução prevista inclui containers, métricas e CD na fase 2.
+pública da API. A fase 2 acrescenta containers, métricas e entrega contínua.
 O checklist diferencia requisitos do enunciado e verificações adicionais do guia.
 
 Fontes: [FastAPI](https://fastapi.tiangolo.com/),
 [GitHub Actions para Python](https://docs.github.com/en/actions/tutorials/build-and-test-code/python),
 [Terraform com Docker](https://developer.hashicorp.com/terraform/tutorials/docker-get-started/docker-build)
 e [Docker Desktop no Windows](https://docs.docker.com/desktop/setup/install/windows-install/).
+
+## Fase 2 — construir e implantar localmente
+
+No Ubuntu/WSL com Docker Linux, Compose, Terraform, Python 3 e este diretório:
+
+```bash
+bash scripts/start-lab-wsl.sh  # somente na distro dedicada TaskFlowDevOps
+export TF_VAR_resource_prefix=taskflow
+export TF_VAR_docker_host=unix:///var/run/docker.sock
+export TASKFLOW_RESOURCE_PREFIX=taskflow
+terraform -chdir=infra init -lockfile=readonly
+terraform -chdir=infra plan -out=local.tfplan
+# Revise o plano; preserve o estado e o volume existentes.
+terraform -chdir=infra apply local.tfplan
+docker build --platform linux/amd64 --tag taskflow-local:teste .
+export IMAGE_REF=taskflow-local:teste
+docker compose pull prometheus
+IMAGE_PULL_POLICY=never bash scripts/deploy.sh
+bash scripts/smoke.sh
+```
+
+API: http://127.0.0.1:8000/docs; métricas: http://127.0.0.1:8000/metrics;
+Prometheus: http://127.0.0.1:9090. Consulte up{job="taskflow-api"} e
+taskflow_http_requests_total. Logs HTTP JSON usam rota normalizada, status e
+duração, sem títulos, IDs, corpo, headers ou query string. Métodos desconhecidos
+e rotas não encontradas usam rótulos fixos para limitar cardinalidade.
+
+```bash
+docker compose logs --follow api
+docker compose ps
+docker compose restart api
+docker compose up -d --no-deps --force-recreate --wait api
+bash scripts/smoke.sh
+docker compose down   # preserva rede e volume externos; não use terraform destroy
+```
+
+O volume SQLite persiste entre recriações da API. Prometheus usa armazenamento
+temporário de até 256 MB e retenção de seis horas; suas séries reiniciam quando
+o container é recriado. A API executa como UID/GID 10001, com filesystem raiz
+somente leitura, capabilities removidas e sem socket Docker montado.
+
+## Fase 2 — imagem publicada, segurança e rollback
+
+Use o digest real registrado em docs/evidencias/ e nos artefatos do workflow.
+Para pacote público, docker pull funciona sem login. Se privado, autentique
+pelo fluxo oficial do registry com read:packages; não coloque tokens no Git.
+A visibilidade do repositório não determina automaticamente a do pacote.
+
+```bash
+export IMAGE_REF=ghcr.io/luiz-mnt/devops-taskflow@sha256:DIGEST_REAL_DO_RELATORIO
+docker pull "$IMAGE_REF"
+bash scripts/deploy.sh
+bash scripts/smoke.sh
+# Quando houver um digest anterior compatível:
+bash scripts/rollback.sh ghcr.io/luiz-mnt/devops-taskflow@sha256:DIGEST_ANTERIOR
+```
+
+Substitua os nomes em maiúsculas pelos digests medidos no relatório. O caminho
+de deploy não faz build. Rollback reimplanta uma imagem e preserva o banco;
+ele não reverte esquema nem restaura dados. Revise compatibilidade antes de usar.
+
+Auditoria de dependências: python -m pip_audit --strict --no-deps --disable-pip
+-r requirements-dev.txt. A política de imagem mantém o inventário completo e
+bloqueia HIGH/CRITICAL corrigíveis. Vulnerabilidades sem correção não são
+tratadas como ausência de risco: constam do relatório e exigem acompanhamento.
+Não há supressão geral de falhas ou lista de CVEs ignoradas.
+
+[Planejamento da fase 2](docs/planejamento-fase2.md) ·
+[Contrato HTTP](docs/contrato-api.md).
