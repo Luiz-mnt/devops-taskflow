@@ -1,16 +1,16 @@
 {
-  "timestamp": "2026-11-08T15:37:44-03:00",
+  "timestamp": "2026-11-08T15:54:51-03:00",
   "repository_url": "https://github.com/Luiz-mnt/devops-taskflow",
   "workflow_url": "https://github.com/Luiz-mnt/devops-taskflow/blob/main/.github/workflows/ci.yml",
   "phase1_commit": "30b49c595e931f1ea6c2e122ba4ca25ead004b48",
   "phase1_tag": "fase-1",
   "phase1_ci_run_url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42485447573",
   "phase1_results": "Concluída: 32 testes e 100% de linhas/branches; CI e IaC local/remoto aprovados.",
-  "phase2_commit": null,
+  "phase2_commit": "b5cc28f0fc3538779ac3f432d2c4c5aaf548619d",
   "phase2_tag": null,
-  "ci_run_url": null,
-  "ci_head_sha": null,
-  "ci_conclusion": null,
+  "ci_run_url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42511228720",
+  "ci_head_sha": "b5cc28f0fc3538779ac3f432d2c4c5aaf548619d",
+  "ci_conclusion": "success",
   "cd_run_url": null,
   "cd_head_sha": null,
   "cd_conclusion": null,
@@ -22,25 +22,24 @@
   "tests_passed": 38,
   "coverage_percent": 100.0,
   "branch_coverage_percent": 100.0,
-  "test_duration_seconds": 5.55,
-  "test_environment": "Windows / CPython 3.12.16, pasta Fase 2, workspace antes da publicação",
-  "test_timestamp": "2026-11-08T18:38:35Z",
-  "terraform_result": "Continuidade local: estado copiado explicitamente; plan sem alterações, exit 0. CD ainda em validação.",
-  "smoke_result": "Local inicial aprovado: saúde SQLite e criar/listar/concluir tarefa; CD em validação.",
-  "monitoring_result": "Local inicial: alvo taskflow-api UP e consulta up=1.",
-  "security_result": "pip-audit local: 51 pacotes, zero vulnerabilidades; Trivy local: zero HIGH/CRITICAL corrigíveis e 42 sem correção informada.",
-  "pip_audit_result": "Local: 51 pacotes, zero vulnerabilidades identificadas, exit 0.",
-  "image_scan_result": "Local: 0 HIGH/CRITICAL corrigíveis; 40 HIGH e 2 CRITICAL sem correção informada.",
+  "test_duration_seconds": 1.29,
+  "test_environment": "Ubuntu 24.04 / CPython 3.12.16, CI do PR",
+  "test_timestamp": "2026-11-08T18:41:30.722612+00:00",
+  "terraform_result": "Local: plan sem mudanças, exit 0. PR: fmt/init/validate aprovados. Provisionamento/CD de main ainda não executados.",
+  "smoke_result": "Local: saúde SQLite, criar/listar/concluir e métricas aprovados. Smoke de CD ainda não executado.",
+  "monitoring_result": "Laboratório local: Prometheus taskflow-api UP e consulta up=1.",
+  "security_result": "PR aprovado: pip-audit 50 pacotes Linux sem vulnerabilidades identificadas; Trivy 0 HIGH/CRITICAL corrigíveis e 42 sem correção informada.",
+  "pip_audit_result": "PR/Linux: 50 pacotes e zero vulnerabilidades identificadas; local/Windows: 51 pacotes e zero (colorama condicionado à plataforma).",
+  "image_scan_result": "Local e PR: zero HIGH/CRITICAL corrigíveis; 40 HIGH e 2 CRITICAL sem correção informada.",
   "controlled_failure_run_url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42489956044",
   "pr_url": "https://github.com/Luiz-mnt/devops-taskflow/pull/1",
-  "rollback_result": null,
+  "rollback_result": "Não executado: ainda não há dois digests publicados para demonstrar rollback compatível.",
   "persistence_result": "Local inicial aprovado: tarefa id 2 preservada após recriar a API; container mudou e UID 10001 confirmado.",
   "pending_items": [
-    "Aprovação do PR corrigido",
-    "Publicação GHCR e CD real",
-    "Deploy local por digest e rollback compatível",
-    "Tag fase-2",
-    "Relatório, fluxograma e PDF finais"
+    "Publicação GHCR e execução do CD em main: não executadas, conforme escolha de manter o PR sem integração",
+    "Deploy local pela imagem publicada e rollback para digest anterior compatível",
+    "Tag fase-2 depois das validações remotas completas",
+    "PDF final de submissão com evidências reais do CD"
   ],
   "delivery_ready": false,
   "measurement_commands": [
@@ -51,7 +50,64 @@
     "bash scripts/smoke.sh",
     "docker compose up --force-recreate --no-deps --wait api"
   ],
-  "presentation_evidence": [],
+  "presentation_evidence": [
+    {
+      "path": "docs/evidencias/imagens/fase2-pr/github-ci-falha-controlada.png",
+      "title": "Falha controlada — gate de qualidade",
+      "caption": "Execução 42489956044: qualidade/testes falhou com exit 1; Terraform passou e o fluxo não avançou. Captura real de um PR, sem integração em main.",
+      "source_slide": 3,
+      "crop": [
+        20,
+        185,
+        1570,
+        835
+      ],
+      "url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42489956044"
+    },
+    {
+      "path": "docs/evidencias/imagens/fase2-pr/github-ci-pr-aprovado.png",
+      "title": "CI do PR aprovado — sem integração",
+      "caption": "Execução 42511228720: qualidade/testes, Terraform e build/scan aprovados. Publicação GHCR e deploy aparecem pulados; o PR permanece sem integração.",
+      "source_slide": 3,
+      "crop": [
+        20,
+        185,
+        1570,
+        680
+      ],
+      "url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42511228720"
+    },
+    {
+      "path": "docs/evidencias/imagens/fase2-pr/api-docs-local-inicial.png",
+      "title": "API local — interface OpenAPI",
+      "caption": "Captura real inicial do laboratório local, com rotas de tarefas e saúde. Não é evidência de publicação GHCR ou CD remoto.",
+      "source_slide": 9,
+      "crop": [
+        65,
+        40,
+        1515,
+        485
+      ]
+    },
+    {
+      "path": "docs/evidencias/imagens/fase2-pr/prometheus-targets-local-inicial.png",
+      "title": "Prometheus local — alvo UP",
+      "caption": "Captura real inicial do laboratório local: alvo taskflow-api UP. A publicação da imagem e o CD em main não foram executados.",
+      "source_slide": 10,
+      "crop": [
+        0,
+        0,
+        1585,
+        300
+      ]
+    },
+    {
+      "path": "docs/evidencias/fase2-local/pasta-final/smoke-pasta-final.log",
+      "title": "Smoke local — saúde, CRUD e Prometheus",
+      "caption": "Registro de terminal real na pasta Fase 2: CRUD e alvo UP aprovados, consulta up=1. O arquivo integral está no projeto; não é captura da interface GitHub.",
+      "source_slide": 10
+    }
+  ],
   "limitations": "Laboratório de host único; monitoramento em tmpfs; não há implantação pública permanente. Achados de segurança sem correção são inventariados.",
   "improvements": "Backup/restauração testados, PostgreSQL, alertas, TLS/autenticação e ambiente permanente com aprovação.",
   "local_final_python_validation": {
@@ -132,5 +188,41 @@
         "exit_code": 0
       }
     ]
-  }
+  },
+  "pr_ci_run_url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42511228720",
+  "pr_ci_head_sha": "b5cc28f0fc3538779ac3f432d2c4c5aaf548619d",
+  "pr_ci_conclusion": "success",
+  "pr_ci_test_count": 38,
+  "pr_ci_pytest_duration_seconds": 1.29,
+  "pr_ci_junit_duration_seconds": 1.305,
+  "pr_ci_test_timestamp": "2026-11-08T18:41:30.722612+00:00",
+  "pr_ci_coverage_percent": 100.0,
+  "pr_ci_branch_coverage_percent": 100.0,
+  "pr_ci_pip_audit_packages": 50,
+  "pr_ci_pip_audit_vulnerabilities": 0,
+  "pr_ci_image_policy": {
+    "image_config_id": "sha256:6bf18f5accfdccf3077092b010155c082858abe51446f4d4fc7ab0532f2aab6a",
+    "policy": "Block every HIGH/CRITICAL vulnerability with a fixed version",
+    "severity_counts": {
+      "LOW": 109,
+      "HIGH": 40,
+      "MEDIUM": 122,
+      "CRITICAL": 2
+    },
+    "blocking_count": 0,
+    "unfixed_high_critical_count": 42,
+    "passed": true
+  },
+  "phase2_candidate_commit": "b5cc28f0fc3538779ac3f432d2c4c5aaf548619d",
+  "ci_event": "pull_request",
+  "ci_status_description": "CI do PR aprovado; publicação e CD omitidos nesse evento",
+  "test_junit_duration_seconds": 1.305,
+  "local_test_count": 38,
+  "local_test_duration_seconds": 5.55,
+  "local_test_environment": "Windows / CPython 3.12.16, pasta Fase 2",
+  "local_test_timestamp": "2026-11-08T18:38:35Z",
+  "prometheus_target_status": "UP no laboratório local",
+  "integration_authorized": false,
+  "requested_repository_action": "Manter somente o PR, sem integrar",
+  "delivery_status": "Prévia para revisão. Implementação e CI do PR aprovados; CD não executado porque o PR permanecerá sem merge por escolha do estudante."
 }

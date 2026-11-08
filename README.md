@@ -14,6 +14,18 @@ GitHub Actions e infraestrutura Docker descrita em Terraform. A fase 1 cobre
 planejamento, CI e IaC. Containers da aplicação, Prometheus e entrega contínua
 pertencem à fase 2 e não são necessários para executar esta API no ambiente virtual.
 
+## Situação da fase 2 — PR mantido sem integração
+
+Código e CI do [PR #1](https://github.com/Luiz-mnt/devops-taskflow/pull/1)
+aprovados: 38 testes, 100% de linhas/branches, auditoria e build/scan.
+O estudante escolheu manter o PR sem merge. Portanto, publicação no GHCR,
+execução real do CD e tag fase-2 **não foram realizadas**. O documento da fase 2
+é uma prévia para revisão e não deve ser tratado como entrega completa.
+
+[Relatório factual](docs/relatorio-fase2.md) ·
+[Checklist da fase 2](docs/checklist-entrega.md) ·
+[CI aprovado do PR](https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42511228720).
+
 ## Documentação e comprovação
 
 - [Planejamento e requisitos](docs/planejamento-fase1.md)

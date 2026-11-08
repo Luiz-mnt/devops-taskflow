@@ -1,0 +1,13 @@
+{
+  "file": "github-ci-falha-controlada.png",
+  "source_url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42489956044",
+  "started_at_utc": "2026-11-08T18:55:47.282596+00:00",
+  "captured_at_utc": "2026-11-08T18:55:53.424487+00:00",
+  "dimensions": [
+    1600,
+    1100
+  ],
+  "sha256": "8dbca8f92d3ea4b82dbc6250207a62b89f8b1a46ebad49a5dc0f77af9cce9ba5",
+  "kind": "Captura real de interface com Chrome headless, perfil isolado e sem autenticação pessoal",
+  "context": "Registro público da falha controlada do pipeline. Não comprova integração, publicação GHCR nem CD."
+}

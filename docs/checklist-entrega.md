@@ -1,17 +1,17 @@
-# Checklist de entrega — fase 2 em validação
+# Checklist de entrega — fase 2 mantida em PR, sem integração
 
 A fase 1 está concluída e preservada na tag fase-1. Os resultados locais da
 fase 2 estão registrados; a aprovação remota e os documentos finais ainda serão
-consolidados. Este checklist não declara a fase 2 pronta para submissão.
+consolidados. O estudante escolheu manter somente o PR, sem merge. Este checklist não declara a fase 2 pronta para submissão.
 
 | Requisito | Arquivo / evidência | Situação |
 |---|---|---|
-| Expandir CI para CD | .github/workflows/ci.yml | Implementado; validar execução remota |
+| Expandir CI para CD | .github/workflows/ci.yml | CI do PR aprovado; CD não executado por escolha de não integrar |
 | Dockerfile não-root | Dockerfile | Build e deploy locais aprovados |
 | Orquestração e scripts de deploy | compose.yaml e scripts/*.sh | Smoke local aprovado |
 | Monitoramento e logs | app/observability.py, monitoring/, docs/observabilidade.md | UP=1 e JSON locais confirmados |
-| Testes integrados | tests/ e reports/ | 38 testes locais; confirmar runner |
-| Segurança | pip-audit, Trivy e gate obrigatório | Auditorias locais registradas; confirmar runner |
+| Testes integrados | tests/ e reports/ | 38 locais e 38 no PR; 100% de linhas/branches |
+| Segurança | pip-audit, Trivy e gate obrigatório | PR: pip-audit/scan aprovados; achados sem correção registrados |
 | Infraestrutura e persistência | infra/, volume externo | Plan local exit 0; tarefa preservada após recriar API |
 | Publicação por digest | GHCR e job publish | Pendente de execução real |
 | Deploy por digest e rollback | scripts/deploy.sh e rollback.sh | Pendente de validação com imagem publicada |

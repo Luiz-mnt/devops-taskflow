@@ -1,0 +1,13 @@
+{
+  "file": "api-docs-local-inicial.png",
+  "source_url": "http://127.0.0.1:8000/docs",
+  "started_at_utc": "2026-11-08T14:28:05.790441+00:00",
+  "captured_at_utc": "2026-11-08T14:28:12.780833+00:00",
+  "dimensions": [
+    1600,
+    1100
+  ],
+  "sha256": "d59f4670ee486fdf7551bc18e9de4e61e49798caf72089f2785bb7fc90a00a2b",
+  "kind": "Captura real de interface com Chrome headless, perfil isolado e sem autenticação pessoal",
+  "context": "Laboratorio local com imagem inicial, anterior a publicacao no registro."
+}
