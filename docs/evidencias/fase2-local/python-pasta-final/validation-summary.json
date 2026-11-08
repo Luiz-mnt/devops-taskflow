@@ -1,0 +1,79 @@
+{
+  "recorded_at_utc": "2026-11-08T18:38:35.106620+00:00",
+  "working_directory": "C:\\Users\\luizs\\OneDrive\\Documentos\\Análise e Desenvolvimento de Sistemas PUCRS\\Ano 3\\10º trimestre\\DevOps na Prática\\Fase 2\\devops-taskflow",
+  "python": "3.12.16 (main, Oct 26 2026, 14:10:56) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "checks": [
+    {
+      "check": "python-version",
+      "started_at_utc": "2026-11-08T18:38:35.466380+00:00",
+      "duration_seconds": 0.039,
+      "command": [
+        "C:\\Users\\luizs\\OneDrive\\Documentos\\Análise e Desenvolvimento de Sistemas PUCRS\\Ano 3\\10º trimestre\\DevOps na Prática\\Fase 2\\devops-taskflow\\.venv\\Scripts\\python.exe",
+        "--version"
+      ],
+      "exit_code": 0
+    },
+    {
+      "check": "pip-check",
+      "started_at_utc": "2026-11-08T18:38:35.506856+00:00",
+      "duration_seconds": 2.43,
+      "command": [
+        "C:\\Users\\luizs\\OneDrive\\Documentos\\Análise e Desenvolvimento de Sistemas PUCRS\\Ano 3\\10º trimestre\\DevOps na Prática\\Fase 2\\devops-taskflow\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "exit_code": 0
+    },
+    {
+      "check": "ruff-check",
+      "started_at_utc": "2026-11-08T18:38:37.936867+00:00",
+      "duration_seconds": 0.256,
+      "command": [
+        "C:\\Users\\luizs\\OneDrive\\Documentos\\Análise e Desenvolvimento de Sistemas PUCRS\\Ano 3\\10º trimestre\\DevOps na Prática\\Fase 2\\devops-taskflow\\.venv\\Scripts\\python.exe",
+        "-m",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0
+    },
+    {
+      "check": "ruff-format",
+      "started_at_utc": "2026-11-08T18:38:38.195675+00:00",
+      "duration_seconds": 0.246,
+      "command": [
+        "C:\\Users\\luizs\\OneDrive\\Documentos\\Análise e Desenvolvimento de Sistemas PUCRS\\Ano 3\\10º trimestre\\DevOps na Prática\\Fase 2\\devops-taskflow\\.venv\\Scripts\\python.exe",
+        "-m",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0
+    },
+    {
+      "check": "pytest",
+      "started_at_utc": "2026-11-08T18:38:38.443294+00:00",
+      "duration_seconds": 12.822,
+      "command": [
+        "C:\\Users\\luizs\\OneDrive\\Documentos\\Análise e Desenvolvimento de Sistemas PUCRS\\Ano 3\\10º trimestre\\DevOps na Prática\\Fase 2\\devops-taskflow\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "-o",
+        "addopts=",
+        "-ra",
+        "--strict-markers",
+        "--cov=app",
+        "--cov-branch",
+        "--cov-fail-under=80",
+        "--cov-report=term-missing",
+        "--cov-report=xml:reports/fase2-final-python/coverage.xml",
+        "--cov-report=html:reports/fase2-final-python/htmlcov",
+        "--junitxml=reports/fase2-final-python/junit.xml"
+      ],
+      "exit_code": 0
+    }
+  ]
+}

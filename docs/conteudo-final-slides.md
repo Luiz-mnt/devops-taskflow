@@ -1,239 +1,275 @@
-# Conteúdo consolidado da fase 1
+# Prévia do conteúdo dos slides — Fase 2
 
 ## Slide 1
 
 Luiz Eduardo Santos Monteiro
 
-TaskFlow API: Configuração e Automação Inicial
+TaskFlow API: entrega, monitoramento e segurança
 
-Entrega da Fase 1
+PRÉVIA — validações em consolidação
+
+PRÉVIA • TaskFlow API • Fase 2 • atualizado em 08/11/2026 • código b5cc28f0fc35
+
+## Slide 2
+
+PRÉVIA • TaskFlow API • Fase 2 • atualizado em 08/11/2026 • código b5cc28f0fc35
 
 ## Slide 3
 
-Projeto
+Expansão do CI para CI/CD
 
-TaskFlow API: serviço HTTP para criar, listar e concluir tarefas. Projeto acadêmico independente de sistemas empresariais.
+CI valida código, testes e IaC; build produz a imagem; auditorias aprovadas liberam a publicação no GHCR. PR valida sem publicar; main permite entrega após os gates.
 
-Objetivo
+Artefato rastreável
 
-Aplicar integração contínua, testes automatizados e infraestrutura como código em um laboratório reproduzível e versionado.
+Commit b5cc28f0fc35. A imagem aprovada é publicada e implantada pelo digest: Pendente de medição.
 
-Requisitos funcionais
+Deploy automatizado
 
-POST /tasks, GET /tasks, PATCH /tasks/{id} e GET /health. SQLite persistente, título obrigatório com até 200 caracteres e validação de entradas.
+Runner hospedado provisiona rede/volume com prefixo exclusivo, executa Compose pelo digest e aplica smoke tests. Coleta provas e limpa somente os recursos efêmeros.
 
-Requisitos de qualidade
+Execução e escopo
 
-Testes isolados com banco temporário, cobertura mínima de 80%, lint e formatação Ruff, dependências fixadas e configuração por ambiente.
+CI do PR aprovado. Usuário optou por manter somente o PR; publicação GHCR e deploy automatizado não executados. O ambiente do runner é temporário; o laboratório local mantém seus dados. https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42511228720
 
-TaskFlow API • Fase 1 • atualizado em 08/11/2026 • código 30b49c595e93
+PRÉVIA • TaskFlow API • Fase 2 • atualizado em 08/11/2026 • código b5cc28f0fc35
 
 ## Slide 4
 
-Eventos e validações
+Falha controlada — gate de qualidade
 
-Push e pull request para main, além de execução manual, acionam jobs de aplicação e infraestrutura em runners Linux hospedados pelo GitHub.
+Recorte da captura original. Execução 42489956044: qualidade/testes falhou com exit 1; Terraform passou e o fluxo não avançou. Captura real de um PR, sem integração em main.
 
-Aplicação e infraestrutura
-
-Python 3.12, dependências fixadas, Ruff e pytest. Job Terraform: fmt -check, init -backend=false e validate. Outro job executa apply, inspeções, plan e limpeza efêmeros.
-
-Critérios de aprovação
-
-Falhas de lint, testes, cobertura abaixo de 80% ou validação Terraform reprovam o CI. Relatórios JUnit e cobertura são publicados mesmo em falha.
-
-Rastreabilidade e acesso
-
-Execuções vinculadas ao commit. Actions fixadas por SHA, contents: read, timeout por job e sem segredos de deploy ou publicação de pacotes nesta fase.
-
-TaskFlow API • Fase 1 • atualizado em 08/11/2026 • código 30b49c595e93
+PRÉVIA • TaskFlow API • Fase 2 • atualizado em 08/11/2026 • código b5cc28f0fc35
 
 ## Slide 5
 
-Ambiente de desenvolvimento
+CI do PR aprovado — sem integração
 
-Windows/PowerShell e Python 3.12; Ubuntu 24.04.4 WSL2 com Docker 29.9.3 e Terraform 1.17.1. CI aprovado em Ubuntu 24.04 hospedado no GitHub, com Docker 28.0.4.
+Recorte da captura original. Execução 42511228720: qualidade/testes, Terraform e build/scan aprovados. Publicação GHCR e deploy aparecem pulados; o PR permanece sem integração.
 
-Recursos definidos como código
+PRÉVIA • TaskFlow API • Fase 2 • atualizado em 08/11/2026 • código b5cc28f0fc35
 
-Provider kreuzwerker/docker: rede bridge e volume. Padrão local taskflow-net/taskflow-data; CI usa prefixo exclusivo. Lockfile versionado; estado local fora do Git.
+## Slide 6
 
-Execução e dados
-
-Nesta fase, API em 127.0.0.1:8000 e SQLite em caminho configurável. Rede e volume são geridos exclusivamente pelo Terraform e reservados à evolução com containers.
-
-Escopo e capacidade
-
-Laboratório em host único, sem nuvem contratada. Referência: 4 CPUs, 8 GB RAM e 10 GB livres. Sem alta disponibilidade ou SLA de produção.
-
-TaskFlow API • Fase 1 • atualizado em 08/11/2026 • código 30b49c595e93
+PRÉVIA • TaskFlow API • Fase 2 • atualizado em 08/11/2026 • código b5cc28f0fc35
 
 ## Slide 7
 
-Repositório
+Dockerfile e imagem
 
-https://github.com/Luiz-mnt/devops-taskflow
+https://github.com/Luiz-mnt/devops-taskflow/blob/b5cc28f0fc3538779ac3f432d2c4c5aaf548619d/Dockerfile. Imagem: Pendente de medição.
 
-Organização implementada
+Container da API
 
-app/ e tests/: aplicação e testes. infra/: Terraform. .github/workflows/ci.yml: CI. docs/: planejamento, ambiente e evidências verificáveis.
+Base Python enxuta, dependências fixadas, usuário não-root, diretório /data gravável e healthcheck sem depender de curl.
 
-Versionamento
+Persistência e configuração
 
-Branch main para integração e branches curtas para mudanças. Referência da entrega: fase-1. Commit da entrega: 30b49c595e93.
+SQLite no volume externo taskflow-data; caminho por ambiente. .dockerignore exclui bancos, venv e segredos. Terraform é o único dono da rede e do volume.
 
-Controle de acesso
+Serviços coordenados
 
-Repositório público, acessível sem login. Segredos, .env, banco, venv, .terraform/ e terraform.tfstate excluídos do versionamento. Acesso do avaliador conforme visibilidade.
+Compose conecta API e Prometheus à rede externa taskflow-net. Portas 8000 e 9090 em 127.0.0.1; recursos locais são preservados ao recriar containers.
 
-TaskFlow API • Fase 1 • atualizado em 08/11/2026 • código 30b49c595e93
-
-GitHub
+PRÉVIA • TaskFlow API • Fase 2 • atualizado em 08/11/2026 • código b5cc28f0fc35
 
 ## Slide 8
 
-GitHub
+Scripts de deploy e validação
 
-Repositório e tag fase-1 — captura real
+scripts/deploy.sh, scripts/smoke.sh e scripts/rollback.sh; compose.yaml configura os serviços. Links e comandos completos no README.
 
-Recorte da captura real da tag fase-1 no commit 30b49c5. O código foi aprovado; os documentos finais são consolidados em main.
+Fluxo de implantação
 
-TaskFlow API • Fase 1 • atualizado em 08/11/2026 • código 30b49c595e93
+Provisionar a infraestrutura local; informar IMAGE_REF pelo digest; executar pull e compose up -d --wait com prazo limitado. Build local é um modo explícito de desenvolvimento.
+
+Testes e persistência
+
+Smoke: Local: saúde SQLite, criar/listar/concluir e métricas aprovados. Smoke de CD ainda não executado.. Persistência: Local inicial aprovado: tarefa id 2 preservada após recriar a API; container mudou e UID 10001 confirmado..
+
+Reversão
+
+Não executado: ainda não há dois digests publicados para demonstrar rollback compatível.
+
+PRÉVIA • TaskFlow API • Fase 2 • atualizado em 08/11/2026 • código b5cc28f0fc35
 
 ## Slide 9
 
-Workflow configurado
-
-https://github.com/Luiz-mnt/devops-taskflow/blob/main/.github/workflows/ci.yml
-
-Execução no GitHub Actions
-
-Resultado: Aprovado: qualidade/testes, Terraform e provisionamento efêmero. https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42485447573
-
-Testes funcionais integrados
-
-Criação, entradas inválidas, listagem, conclusão, IDs inexistentes, saúde com acesso ao banco e persistência entre instâncias. Bancos temporários por teste.
-
-Resultados do CI e validação local
-
-CI 08/11/2026: 32/32 testes aprovados, cobertura 100.0%, 0.85 s. LOCAL 06/11/2026: 32/32 testes aprovados, cobertura 100.0%, 2.86 s.
-
-TaskFlow API • Fase 1 • atualizado em 08/11/2026 • código 30b49c595e93
+PRÉVIA • TaskFlow API • Fase 2 • atualizado em 08/11/2026 • código b5cc28f0fc35
 
 ## Slide 10
 
-GitHub Actions — três jobs aprovados
+Planejamento e aplicação na fase 1
 
-Recorte da captura real da execução 42485447573: qualidade/testes, Terraform e provisionamento efêmero aprovados.
+Concluída: 32 testes e 100% de linhas/branches; CI e IaC local/remoto aprovados.
 
-TaskFlow API • Fase 1 • atualizado em 08/11/2026 • código 30b49c595e93
+CI e infraestrutura
+
+Referência histórica validada: fase-1 / 30b49c595e93. GitHub Actions integrado aos testes; Terraform criou rede e volume, com plano posterior sem alterações.
+
+Evolução preservada
+
+A fase 2 evolui o mesmo projeto. A tag fase-1 permanece imutável; métricas históricas não são substituídas pelas novas medições da aplicação instrumentada.
+
+Rastreabilidade
+
+https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42485447573
+
+PRÉVIA • TaskFlow API • Fase 2 • atualizado em 08/11/2026 • código b5cc28f0fc35
 
 ## Slide 11
 
-Relatórios produzidos pelo CI
+Entrega e deploy na fase 2
 
-Recorte real dos artefatos de testes/cobertura e infraestrutura. Cópias permanentes estão no repositório e no pacote de entrega.
+Tag ainda pendente; commit b5cc28f0fc35. Imagem imutável: Pendente de medição.
 
-TaskFlow API • Fase 1 • atualizado em 08/11/2026 • código 30b49c595e93
+Operação local
 
-## Slide 12
+Smoke: Local: saúde SQLite, criar/listar/concluir e métricas aprovados. Smoke de CD ainda não executado.. Monitoramento: Laboratório local: Prometheus taskflow-api UP e consulta up=1..
 
-Testes no GitHub — Python 3.12.16
+Segurança e permissões
 
-Log real do runner Linux em 08/11: 32 testes aprovados, 100% de linhas e branches; pytest 0.85 s. Local Windows: 2,86 s em 06/11.
-
-TaskFlow API • Fase 1 • atualizado em 08/11/2026 • código 30b49c595e93
-
-## Slide 14
-
-Código de infraestrutura
-
-https://github.com/Luiz-mnt/devops-taskflow/tree/fase-1/infra
-
-Arquivos e responsabilidades
-
-versions.tf fixa versões. main.tf cria rede e volume. variables.tf define prefixo e conexão Docker. outputs.tf expõe nomes/IDs. Lockfile gerado por init.
-
-Procedimento de provisionamento
-
-terraform init, fmt -check, validate, plan e apply. Inspeções Docker confirmam rede e volume; segundo plan verifica idempotência. Validação de sintaxe não cria recursos.
-
-Resultados local e remoto
-
-CI: Aprovado: 2 criados, inspeções OK, plan sem alterações; 2 removidos somente no runner efêmero. Local: Apply: 2 criados; inspeções OK; plan posterior sem alterações (exit 0). Local WSL2: No changes; exit 0.
-
-TaskFlow API • Fase 1 • atualizado em 08/11/2026 • código 30b49c595e93
-
-Terraform
-
-## Slide 15
-
-Terraform
-
-Terraform apply — laboratório WSL2 local
-
-Registro real local: 2 recursos criados, 0 alterados e 0 destruídos. Rede e volume locais continuam preservados.
-
-TaskFlow API • Fase 1 • atualizado em 08/11/2026 • código 30b49c595e93
-
-## Slide 16
-
-Terraform
-
-Plano local posterior sem alterações
-
-Registro real do WSL2: No changes e exit 0. A preservação foi confirmada novamente em 07/11.
-
-TaskFlow API • Fase 1 • atualizado em 08/11/2026 • código 30b49c595e93
-
-## Slide 17
-
-Terraform
-
-Terraform apply — runner GitHub
-
-Registro real do runner: 2 recursos efêmeros criados com prefixo exclusivo. Docker do runner 28.0.4; local 29.9.3.
-
-TaskFlow API • Fase 1 • atualizado em 08/11/2026 • código 30b49c595e93
-
-## Slide 18
-
-Terraform
-
-Plano do runner sem alterações
-
-Registro real após o apply no runner: No changes. Etapa aprovada com exit 0, sem reduzir a exigência de validação.
-
-TaskFlow API • Fase 1 • atualizado em 08/11/2026 • código 30b49c595e93
-
-## Slide 19
-
-Terraform
-
-Limpeza dos recursos efêmeros
-
-Registro real: 2 recursos removidos somente no runner após coleta das provas. O laboratório local não foi destruído.
-
-TaskFlow API • Fase 1 • atualizado em 08/11/2026 • código 30b49c595e93
-
-## Slide 20
-
-Verificação dos requisitos
-
-Planejamento, código versionado, GitHub Actions, testes automatizados e scripts Terraform. Registros e links permitem reproduzir e auditar os resultados.
-
-Atualização do documento
-
-Documento: 08/11/2026; código 30b49c595e93; Python 3.12.16; Terraform 1.17.1. CI: 08/11/2026. Medições locais: testes 06/11/2026; IaC 06/11/2026.
+pip-audit e scanner de imagem antecedem a publicação. O gate bloqueia HIGH/CRITICAL com correção disponível; vulnerabilidades sem correção permanecem identificadas nos relatórios.
 
 Resultados observados
 
-CI 08/11/2026: 32/32 testes aprovados, cobertura 100.0%, 0.85 s. IaC CI: Aprovado: 2 criados, inspeções OK, plan sem alterações; 2 removidos somente no runner efêmero. IaC local: Apply: 2 criados; inspeções OK; plan posterior sem alterações (exit 0).
+Ubuntu 24.04 / CPython 3.12.16, CI do PR, 08/11/2026: 38/38 testes aprovados; cobertura 100.0%; pytest 1.29 s.
 
-Estado da entrega
+PRÉVIA • TaskFlow API • Fase 2 • atualizado em 08/11/2026 • código b5cc28f0fc35
 
-Validações obrigatórias concluídas; links e registros incluídos.
+## Slide 12
 
-TaskFlow API • Fase 1 • atualizado em 08/11/2026 • código 30b49c595e93
+API local — interface OpenAPI
 
-Terraform
+Recorte da captura original. Captura real inicial do laboratório local, com rotas de tarefas e saúde. Não é evidência de publicação GHCR ou CD remoto.
+
+PRÉVIA • TaskFlow API • Fase 2 • atualizado em 08/11/2026 • código b5cc28f0fc35
+
+## Slide 13
+
+Monitoramento e logging
+
+Prometheus coleta /metrics; /health verifica API e SQLite. Contadores e histogramas usam rotas normalizadas. Logs JSON em stdout registram status, rota e duração sem dados sensíveis.
+
+Segurança e limitações reais
+
+pip-audit: 51 pacotes locais e 50 no CI do PR, zero vulnerabilidades identificadas. Trivy no PR: zero HIGH/CRITICAL corrigíveis e 42 sem correção (40 HIGH, 2 CRITICAL).
+
+Configuração e propriedade
+
+Versões/digest fixados e .env.example sem segredos. Terraform gerencia rede/volume; Compose gerencia containers. Estados e dados locais ficam fora do Git.
+
+Evidências operacionais
+
+Monitoramento: Laboratório local: Prometheus taskflow-api UP e consulta up=1.. Logs: Amostras e consultas nos registros da demonstração.
+
+PRÉVIA • TaskFlow API • Fase 2 • atualizado em 08/11/2026 • código b5cc28f0fc35
+
+## Slide 14
+
+Prometheus local — alvo UP
+
+Recorte da captura original. Captura real inicial do laboratório local: alvo taskflow-api UP. A publicação da imagem e o CD em main não foram executados.
+
+PRÉVIA • TaskFlow API • Fase 2 • atualizado em 08/11/2026 • código b5cc28f0fc35
+
+## Slide 15
+
+Smoke local — saúde, CRUD e Prometheus
+
+Registro de terminal real na pasta Fase 2: CRUD e alvo UP aprovados, consulta up=1. O arquivo integral está no projeto; não é captura da interface GitHub.
+
+PRÉVIA • TaskFlow API • Fase 2 • atualizado em 08/11/2026 • código b5cc28f0fc35
+
+## Slide 16
+
+Fluxo DevOps — visão geral
+
+Figura 1. Dependências entre as três seções. As próximas páginas ampliam o mesmo fluxo; Mermaid, SVG e PNG integrais acompanham a entrega.
+
+PRÉVIA • TaskFlow API • Fase 2 • atualizado em 08/11/2026 • código b5cc28f0fc35
+
+## Slide 17
+
+GitHub Actions: CI e aprovação — parte 1/2
+
+Figura 1-CI — parte 1/2. Mesmos nós e arestas do fluxo completo; disposição horizontal por seção. Setas no limite continuam no recorte seguinte ou anterior.
+
+PRÉVIA • TaskFlow API • Fase 2 • atualizado em 08/11/2026 • código b5cc28f0fc35
+
+## Slide 18
+
+GitHub Actions: CI e aprovação — parte 2/2
+
+Figura 1-CI — parte 2/2. Mesmos nós e arestas do fluxo completo; disposição horizontal por seção. Setas no limite continuam no recorte seguinte ou anterior.
+
+PRÉVIA • TaskFlow API • Fase 2 • atualizado em 08/11/2026 • código b5cc28f0fc35
+
+## Slide 19
+
+GitHub Actions: entrega e demonstração temporária — parte 1/2
+
+Figura 1-CD — parte 1/2. Mesmos nós e arestas do fluxo completo; disposição horizontal por seção. Setas no limite continuam no recorte seguinte ou anterior.
+
+PRÉVIA • TaskFlow API • Fase 2 • atualizado em 08/11/2026 • código b5cc28f0fc35
+
+## Slide 20
+
+GitHub Actions: entrega e demonstração temporária — parte 2/2
+
+Figura 1-CD — parte 2/2. Mesmos nós e arestas do fluxo completo; disposição horizontal por seção. Setas no limite continuam no recorte seguinte ou anterior.
+
+PRÉVIA • TaskFlow API • Fase 2 • atualizado em 08/11/2026 • código b5cc28f0fc35
+
+## Slide 21
+
+Laboratório persistente no WSL2
+
+Figura 1-LOCAL. Mesmos nós e arestas do fluxo completo; disposição horizontal por seção. Contexto de entrada preservado.
+
+PRÉVIA • TaskFlow API • Fase 2 • atualizado em 08/11/2026 • código b5cc28f0fc35
+
+## Slide 22
+
+Demonstração de integração
+
+PR: https://github.com/Luiz-mnt/devops-taskflow/pull/1. Falha controlada: https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42489956044.
+
+Aplicação e observabilidade
+
+Deploy pelo digest; criação, listagem e conclusão de tarefa; /health; métricas e alvo Prometheus; logs JSON. A sequência e os comandos estão no roteiro de demonstração.
+
+Persistência e recuperação
+
+Local inicial aprovado: tarefa id 2 preservada após recriar a API; container mudou e UID 10001 confirmado.. Rollback: Não executado: ainda não há dois digests publicados para demonstrar rollback compatível..
+
+Registros da demonstração
+
+Resultados discriminados nos logs e nas capturas reais da entrega. Pendências: Publicação GHCR e execução do CD em main: não executadas, conforme escolha de manter o PR sem integração; Deploy local pela imagem publicada e rollback para digest anterior compatível; Tag fase-2 depois das validações remotas completas; PDF final de submissão com evidências reais do CD
+
+PRÉVIA • TaskFlow API • Fase 2 • atualizado em 08/11/2026 • código b5cc28f0fc35
+
+## Slide 23
+
+Resultados medidos
+
+CI do PR: 38 testes aprovados; 100% de linhas e branches; pytest 1,29 s no Linux. Local Windows: 38 testes e 100%, pytest 5,55 s. GHCR e CD ainda não executados.
+
+Critérios de sucesso
+
+Pendências: Publicação GHCR e execução do CD em main: não executadas, conforme escolha de manter o PR sem integração; Deploy local pela imagem publicada e rollback para digest anterior compatível; Tag fase-2 depois das validações remotas completas; PDF final de submissão com evidências reais do CD
+
+Limitações
+
+Laboratório de host único; monitoramento em tmpfs; não há implantação pública permanente. Achados de segurança sem correção são inventariados.
+
+Melhorias futuras
+
+Backup/restauração testados, PostgreSQL, alertas, TLS/autenticação e ambiente permanente com aprovação.
+
+PRÉVIA • TaskFlow API • Fase 2 • atualizado em 08/11/2026 • código b5cc28f0fc35
+
+## Slide 24
+
+PRÉVIA • TaskFlow API • Fase 2 • atualizado em 08/11/2026 • código b5cc28f0fc35

@@ -1,0 +1,59 @@
+Qualidade e testes	Testar com cobertura minima de 80 por cento	﻿2026-11-08T14:28:25.4905432Z ##[group]Run python -m pytest
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:25.4905617Z [36;1mpython -m pytest[0m
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:25.4920127Z shell: /usr/bin/bash -e {0}
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:25.4920259Z env:
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:25.4920407Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:25.4920644Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:25.4920876Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:25.4921086Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:25.4921297Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:25.4921520Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:25.4921697Z ##[endgroup]
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:26.5421459Z ============================= test session starts ==============================
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:26.5421768Z platform linux -- Python 3.12.16, pytest-9.2.0, pluggy-1.7.0
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:26.5422026Z rootdir: /home/runner/work/devops-taskflow/devops-taskflow
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:26.5422273Z configfile: pyproject.toml
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:26.5422412Z testpaths: tests
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:26.5422543Z plugins: anyio-4.16.0, cov-7.1.0
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:26.5422691Z collected 33 items
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:26.5422768Z 
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:26.5655122Z tests/test_demonstracao_bloqueio.py F                                    [  3%]
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:26.6406478Z tests/test_health.py .....                                               [ 18%]
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1180260Z tests/test_tasks.py ...........................                          [100%]
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1180541Z 
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1180990Z =================================== FAILURES ===================================
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1181241Z ______________________ test_ci_bloqueia_falha_controlada _______________________
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1181392Z 
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1181467Z     def test_ci_bloqueia_falha_controlada():
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1181701Z >       assert 1 == 0, "Demonstracao controlada: o CI deve bloquear esta alteracao."
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1182008Z E       AssertionError: Demonstracao controlada: o CI deve bloquear esta alteracao.
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1182229Z E       assert 1 == 0
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1182312Z 
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1182392Z tests/test_demonstracao_bloqueio.py:5: AssertionError
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1182599Z =============================== warnings summary ===============================
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1182908Z ../../../../../opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/fastapi/testclient.py:1
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1183530Z   /opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1184044Z     from starlette.testclient import TestClient as TestClient  # noqa
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1184204Z 
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1184345Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1184673Z - generated xml file: /home/runner/work/devops-taskflow/devops-taskflow/reports/junit.xml -
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1185190Z ================================ tests coverage ================================
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1185432Z _______________ coverage: platform linux, python 3.12.16-final-0 _______________
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1185586Z 
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1185677Z Name              Stmts   Miss Branch BrPart    Cover   Missing
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1185888Z ---------------------------------------------------------------
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1186089Z app/database.py      33      0      2      0  100.00%
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1186281Z app/main.py          40      0      2      0  100.00%
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1186458Z app/models.py        16      0      0      0  100.00%
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1186646Z ---------------------------------------------------------------
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1186833Z TOTAL                89      0      4      0  100.00%
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1186942Z 
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1187198Z 1 empty file skipped.
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1187339Z Coverage HTML written to dir reports/htmlcov
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1187519Z Coverage XML written to file reports/coverage.xml
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1187731Z Required test coverage of 80% reached. Total coverage: 100.00%
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1187947Z =========================== short test summary info ============================
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1188470Z FAILED tests/test_demonstracao_bloqueio.py::test_ci_bloqueia_falha_controlada - AssertionError: Demonstracao controlada: o CI deve bloquear esta alteracao.
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1188823Z assert 1 == 0
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1188990Z =================== 1 failed, 32 passed, 1 warning in 0.62s ====================
+Qualidade e testes	Testar com cobertura minima de 80 por cento	2026-11-08T14:28:27.1680076Z ##[error]Process completed with exit code 1.

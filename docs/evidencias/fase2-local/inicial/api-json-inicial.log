@@ -1,0 +1,11 @@
+INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+{"timestamp":"2026-11-08T14:21:32.423290+00:00","event":"http_request","method":"GET","route":"/health","status_code":200,"duration_seconds":0.019057}
+{"timestamp":"2026-11-08T14:21:39.473307+00:00","event":"http_request","method":"GET","route":"/health","status_code":200,"duration_seconds":0.001428}
+{"timestamp":"2026-11-08T14:21:39.485336+00:00","event":"http_request","method":"POST","route":"/tasks","status_code":201,"duration_seconds":0.006306}
+{"timestamp":"2026-11-08T14:21:39.489273+00:00","event":"http_request","method":"GET","route":"/tasks","status_code":200,"duration_seconds":0.002107}
+{"timestamp":"2026-11-08T14:21:39.498475+00:00","event":"http_request","method":"PATCH","route":"/tasks/{task_id}","status_code":200,"duration_seconds":0.005189}
+{"timestamp":"2026-11-08T14:21:39.503371+00:00","event":"http_request","method":"GET","route":"/metrics","status_code":200,"duration_seconds":0.002442}
+{"timestamp":"2026-11-08T14:21:40.202251+00:00","event":"http_request","method":"GET","route":"/metrics","status_code":200,"duration_seconds":0.002651}

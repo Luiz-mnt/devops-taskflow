@@ -1,4 +1,4 @@
-name: CI - TaskFlow API
+name: CI/CD - TaskFlow API
 
 on:
   push:
@@ -46,6 +46,11 @@ jobs:
       - name: Testar com cobertura minima de 80 por cento
         run: python -m pytest
 
+      - name: Auditar dependencias de producao e desenvolvimento
+        run: |
+          mkdir -p reports/security
+          python -m pip_audit --requirement requirements-dev.txt --strict --no-deps --disable-pip --format json --output reports/security/pip-audit.json
+
       - name: Publicar relatorios de testes e cobertura
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
@@ -54,6 +59,7 @@ jobs:
           path: reports/
           if-no-files-found: warn
           retention-days: 14
+          overwrite: true
 
   terraform:
     name: Terraform
@@ -146,3 +152,263 @@ jobs:
           path: reports/infra/
           if-no-files-found: warn
           retention-days: 14
+          overwrite: true
+
+  build-scan:
+    name: Build e seguranca da imagem
+    needs: [quality, terraform]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      LOCAL_IMAGE: taskflow-api:sha-${{ github.sha }}
+    steps:
+      - name: Obter codigo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Construir uma unica imagem Linux amd64
+        shell: bash
+        run: |
+          mkdir -p reports/security
+          docker build --platform linux/amd64 \
+            --label "org.opencontainers.image.source=https://github.com/${GITHUB_REPOSITORY}" \
+            --label "org.opencontainers.image.revision=${GITHUB_SHA}" \
+            --tag "$LOCAL_IMAGE" .
+          docker image inspect --format '{{.Id}}' "$LOCAL_IMAGE" > reports/security/docker-image-id.txt
+
+      - name: Salvar uma unica imagem para analisar e publicar
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/taskflow-image"
+          docker save --output "$RUNNER_TEMP/taskflow-image/image.tar" "$LOCAL_IMAGE"
+          python3 scripts/image_config_id.py "$RUNNER_TEMP/taskflow-image/image.tar" \
+            --repo-tag "$LOCAL_IMAGE" > "$RUNNER_TEMP/taskflow-image/image-config-id.txt"
+          cp "$RUNNER_TEMP/taskflow-image/image-config-id.txt" reports/security/image-config-id.txt
+          cp reports/security/docker-image-id.txt "$RUNNER_TEMP/taskflow-image/docker-image-id.txt"
+          cd "$RUNNER_TEMP/taskflow-image"
+          sha256sum image.tar > image.tar.sha256
+          cp image.tar.sha256 "$GITHUB_WORKSPACE/reports/security/image.tar.sha256"
+
+      - name: Analisar vulnerabilidades da imagem completa
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          version: v0.76.2
+          input: ${{ runner.temp }}/taskflow-image/image.tar
+          scan-type: image
+          scanners: vuln
+          vuln-type: os,library
+          severity: UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
+          ignore-unfixed: false
+          list-all-pkgs: true
+          format: json
+          output: reports/security/trivy.json
+          # Esta etapa gera o inventario completo; o gate obrigatorio vem abaixo.
+          exit-code: "0"
+          timeout: 10m
+        env:
+          TRIVY_IGNOREFILE: /dev/null
+
+      - name: Bloquear HIGH e CRITICAL com correcao disponivel
+        shell: bash
+        run: |
+          (cd "$RUNNER_TEMP/taskflow-image" && sha256sum --check --strict image.tar.sha256)
+          python3 scripts/check_image_security.py reports/security/trivy.json \
+            --expected-config-id "$(cat reports/security/image-config-id.txt)" \
+            --output reports/security/image-policy.json
+
+      - name: Disponibilizar imagem aprovada entre jobs
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: imagem-aprovada-${{ github.sha }}
+          path: ${{ runner.temp }}/taskflow-image/
+          compression-level: 1
+          retention-days: 7
+          if-no-files-found: error
+          overwrite: true
+
+      - name: Publicar relatorios de seguranca mesmo em falha
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: seguranca-imagem-${{ github.sha }}
+          path: reports/security/
+          if-no-files-found: warn
+          retention-days: 14
+          overwrite: true
+
+  publish:
+    name: Publicar imagem aprovada no GHCR
+    needs: [build-scan, infra-smoke]
+    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      image_ref: ${{ steps.publish.outputs.image_ref }}
+      image_digest: ${{ steps.publish.outputs.image_digest }}
+      image_repository: ${{ steps.publish.outputs.image_repository }}
+    steps:
+      - name: Obter verificador do mesmo commit aprovado
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Recuperar somente a imagem ja aprovada
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: imagem-aprovada-${{ github.sha }}
+          path: ${{ runner.temp }}/taskflow-image/
+
+      - name: Verificar integridade e carregar sem reconstruir
+        shell: bash
+        run: |
+          (cd "$RUNNER_TEMP/taskflow-image" && sha256sum --check --strict image.tar.sha256)
+          expected_config_id="$(cat "$RUNNER_TEMP/taskflow-image/image-config-id.txt")"
+          archive_config_id="$(python3 scripts/image_config_id.py "$RUNNER_TEMP/taskflow-image/image.tar" --repo-tag "taskflow-api:sha-${GITHUB_SHA}")"
+          [[ "$archive_config_id" == "$expected_config_id" ]]
+          docker load --input "$RUNNER_TEMP/taskflow-image/image.tar"
+          docker save --output "$RUNNER_TEMP/taskflow-image/loaded-image.tar" "taskflow-api:sha-${GITHUB_SHA}"
+          loaded_config_id="$(python3 scripts/image_config_id.py "$RUNNER_TEMP/taskflow-image/loaded-image.tar" --repo-tag "taskflow-api:sha-${GITHUB_SHA}")"
+          [[ "$loaded_config_id" == "$expected_config_id" ]]
+
+      - name: Autenticar no GHCR com permissao de publicacao
+        uses: docker/login-action@8aa5831fb8d48d8f76594c7ddde61ae58019f550 # v4.8.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publicar artefato validado e registrar digest real
+        id: publish
+        shell: bash
+        run: |
+          mkdir -p reports/publish
+          repository="ghcr.io/${GITHUB_REPOSITORY,,}"
+          reference="${repository}:sha-${GITHUB_SHA}"
+          docker tag "taskflow-api:sha-${GITHUB_SHA}" "$reference"
+          docker push "$reference" | tee reports/publish/push.log
+          digest="$(sed -n 's/^.*digest: \(sha256:[a-f0-9]\{64\}\).*$/\1/p' reports/publish/push.log | tail -n 1)"
+          [[ "$digest" =~ ^sha256:[a-f0-9]{64}$ ]]
+          immutable_ref="${repository}@${digest}"
+          docker pull "$immutable_ref" | tee reports/publish/pull-verificacao.log
+          expected_config_id="$(cat "$RUNNER_TEMP/taskflow-image/image-config-id.txt")"
+          docker_id="$(docker image inspect --format '{{.Id}}' "$immutable_ref")"
+          docker save --output "$RUNNER_TEMP/taskflow-image/published-image.tar" "$docker_id"
+          published_config_id="$(python3 scripts/image_config_id.py "$RUNNER_TEMP/taskflow-image/published-image.tar")"
+          [[ "$published_config_id" == "$expected_config_id" ]]
+          printf 'image_ref=%s\nimage_digest=%s\nimage_repository=%s\n' \
+            "$immutable_ref" "$digest" "$repository" >> "$GITHUB_OUTPUT"
+          printf '{"commit":"%s","tag":"%s","image_ref":"%s","image_digest":"%s","image_config_id":"%s","docker_image_id":"%s"}\n' \
+            "$GITHUB_SHA" "$reference" "$immutable_ref" "$digest" "$published_config_id" "$docker_id" > reports/publish/image.json
+
+      - name: Publicar comprovantes do registry
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: publicacao-${{ github.sha }}
+          path: reports/publish/
+          if-no-files-found: warn
+          retention-days: 14
+          overwrite: true
+
+  deploy-demo:
+    name: Deploy temporario e smoke tests
+    needs: publish
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      packages: read
+    env:
+      IMAGE_REF: ${{ needs.publish.outputs.image_ref }}
+      IMAGE_PULL_POLICY: always
+      TASKFLOW_RESOURCE_PREFIX: taskflow-ci-${{ github.run_id }}-${{ github.run_attempt }}
+      TF_VAR_resource_prefix: taskflow-ci-${{ github.run_id }}-${{ github.run_attempt }}
+      COMPOSE_PROJECT_NAME: taskflow-demo-${{ github.run_id }}-${{ github.run_attempt }}
+      TF_IN_AUTOMATION: "true"
+      API_PORT: "8000"
+      PROMETHEUS_PORT: "9090"
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Obter codigo e scripts do mesmo commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Configurar Terraform
+        uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e # v4.0.1
+        with:
+          terraform_version: "1.17.1"
+          terraform_wrapper: false
+
+      - name: Autenticar para leitura inclusive de pacote privado
+        uses: docker/login-action@8aa5831fb8d48d8f76594c7ddde61ae58019f550 # v4.8.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Inicializar estado exclusivo deste runner
+        id: init
+        run: |
+          mkdir -p reports/deploy
+          terraform -chdir=infra init -backend=false -lockfile=readonly -input=false -no-color | tee reports/deploy/init.log
+
+      - name: Provisionar rede e volume do deploy temporario
+        run: |
+          terraform -chdir=infra plan -input=false -no-color -out="$RUNNER_TEMP/deploy-demo.tfplan" | tee reports/deploy/plan.log
+          terraform -chdir=infra apply -input=false -no-color "$RUNNER_TEMP/deploy-demo.tfplan" | tee reports/deploy/apply.log
+          terraform -chdir=infra output -json > reports/deploy/terraform-outputs.json
+
+      - name: Implantar exclusivamente pelo digest publicado
+        run: |
+          [[ "$IMAGE_REF" =~ @sha256:[a-f0-9]{64}$ ]]
+          bash scripts/deploy.sh | tee reports/deploy/deploy.log
+
+      - name: Validar saude CRUD e Prometheus UP
+        run: bash scripts/smoke.sh | tee reports/deploy/smoke.log
+
+      - name: Coletar evidencias antes da limpeza inclusive em falha
+        if: always() && steps.init.outcome == 'success'
+        run: |
+          collection_status=0
+          docker compose ps --all --format json > reports/deploy/compose-ps.json || collection_status=1
+          docker compose logs --no-color --timestamps > reports/deploy/containers.log 2>&1 || collection_status=1
+          mapfile -t container_ids < <(docker compose ps --all --quiet)
+          if (( ${#container_ids[@]} > 0 )); then
+            docker inspect "${container_ids[@]}" > reports/deploy/containers-inspect.json || collection_status=1
+          fi
+          docker image inspect "$IMAGE_REF" > reports/deploy/image-inspect.json || collection_status=1
+          docker network inspect "${TASKFLOW_RESOURCE_PREFIX}-net" > reports/deploy/network.json || collection_status=1
+          docker volume inspect "${TASKFLOW_RESOURCE_PREFIX}-data" > reports/deploy/volume.json || collection_status=1
+          curl --fail --silent --show-error --max-time 10 "http://127.0.0.1:${API_PORT}/health" > reports/deploy/health.json || collection_status=1
+          curl --fail --silent --show-error --max-time 10 "http://127.0.0.1:${API_PORT}/metrics" > reports/deploy/metrics.prom || collection_status=1
+          curl --fail --silent --show-error --max-time 10 "http://127.0.0.1:${PROMETHEUS_PORT}/api/v1/targets" > reports/deploy/prometheus-targets.json || collection_status=1
+          exit "$collection_status"
+
+      - name: Limpar somente containers e recursos efemeros deste job
+        if: always() && steps.init.outcome == 'success'
+        run: |
+          expected_prefix="taskflow-ci-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          [[ "$TASKFLOW_RESOURCE_PREFIX" == "$expected_prefix" && "$TF_VAR_resource_prefix" == "$expected_prefix" ]]
+          set +e
+          docker compose down --remove-orphans --timeout 20 2>&1 | tee reports/deploy/compose-down.log
+          compose_status="${PIPESTATUS[0]}"
+          terraform -chdir=infra destroy -auto-approve -input=false -no-color 2>&1 | tee reports/deploy/destroy.log
+          terraform_status="${PIPESTATUS[0]}"
+          [[ "$compose_status" -eq 0 && "$terraform_status" -eq 0 ]]
+
+      - name: Publicar logs saude metricas e resultados do deploy
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: deploy-demonstracao-${{ github.sha }}
+          path: reports/deploy/
+          if-no-files-found: warn
+          retention-days: 14
+          overwrite: true

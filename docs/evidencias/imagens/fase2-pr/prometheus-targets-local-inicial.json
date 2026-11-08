@@ -1,0 +1,13 @@
+{
+  "file": "prometheus-targets-local-inicial.png",
+  "source_url": "http://127.0.0.1:9090/targets",
+  "started_at_utc": "2026-11-08T14:28:05.791264+00:00",
+  "captured_at_utc": "2026-11-08T14:28:12.780334+00:00",
+  "dimensions": [
+    1600,
+    1100
+  ],
+  "sha256": "53bc29038c63be08df3b5968ea51a84b8569385f5ffb77f44e893093dad7004b",
+  "kind": "Captura real de interface com Chrome headless, perfil isolado e sem autenticação pessoal",
+  "context": "Laboratorio local com imagem inicial, anterior a publicacao no registro."
+}

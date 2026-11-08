@@ -1,0 +1,13 @@
+{
+  "file": "github-ci-pr-aprovado.png",
+  "source_url": "https://github.com/Luiz-mnt/devops-taskflow/actions/runs/42511228720",
+  "started_at_utc": "2026-11-08T18:55:31.717979+00:00",
+  "captured_at_utc": "2026-11-08T18:55:36.178066+00:00",
+  "dimensions": [
+    1600,
+    1100
+  ],
+  "sha256": "9b9fc539186432bec23f4204e4df35d39b3782f07fbde6e552e00663a5f4d936",
+  "kind": "Captura real de interface com Chrome headless, perfil isolado e sem autenticação pessoal",
+  "context": "CI do PR 1 aprovado no commit b5cc28f0fc3538779ac3f432d2c4c5aaf548619d. Usuário optou por não integrar em main; captura não comprova publicação ou CD."
+}

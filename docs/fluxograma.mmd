@@ -1,21 +1,37 @@
-flowchart TD
-    A[Alteracao em branch e commit] --> B[Push ou PR para main]
-    B --> C[Checkout e Python 3.12]
-    B --> D[Terraform fmt, init e validate]
-    C --> E[Ruff e pytest: cobertura minima 80%]
-    E --> F{Checks aprovados?}
-    D --> F
-    F -- Nao --> G[Interromper e corrigir codigo]
-    G --> A
-    E --> R[Publicar relatorios em always]
-    F -- Sim --> H{Push em main ou execucao manual?}
-    H -- PR --> I[CI aprovado para revisao]
-    H -- Sim --> J[Docker no runner: plan e apply]
-    J --> K[Inspecionar rede e volume]
-    K --> L[Segundo plan sem alteracoes]
-    L --> M[Coletar logs e outputs]
-    J --> N[Limpeza em always: somente runner]
-    M --> N
-    N --> O[Publicar evidencias]
-    P[Laboratorio local independente] --> Q[Docker local + Terraform apply]
-    Q --> S[Inspect e segundo plan; sem destroy automatico]
+flowchart TB
+  subgraph CI["GitHub Actions: CI e aprovação"]
+    START["PR para main / push em main / manual"] --> Q["Qualidade: Ruff, pytest, cobertura >= 80%, pip-audit"]
+    START --> T["Terraform: fmt, init, validate"]
+    Q --> G{"Ambos aprovados?"}
+    T --> G
+    G -- "Não" --> FAIL["Relatórios de falha / corrigir na branch"]
+    FAIL --> START
+    G -- "Sim" --> BUILD["Build único Linux amd64"]
+    BUILD --> SCAN["Trivy: inventário + gate HIGH/CRITICAL corrigíveis"]
+    SCAN --> SG{"Scan e integridade aprovados?"}
+    SG -- "Não" --> FAIL
+    SG -- "Sim" --> ART["Preservar imagem aprovada + checksum + config ID"]
+    ART --> EVENT{"Contexto main autorizado?"}
+    EVENT -- "PR: não publicar" --> PREND["PR validado: revisão e merge"]
+    PREND --> START
+  end
+  subgraph CD["GitHub Actions: entrega e demonstração temporária"]
+    G -- "Sim e main" --> IAC["Prova IaC: apply, inspect, plan sem mudanças e cleanup"]
+    EVENT -- "Main: sim" --> PUB["GHCR: carregar mesma imagem, verificar, push e digest"]
+    IAC --> PUB
+    PUB --> DT["Runner independente: Terraform cria rede e volume exclusivos"]
+    DT --> DP["Compose: pull por digest e up --wait sem build"]
+    DP --> SM["Smoke: saúde, CRUD, métricas e Prometheus UP"]
+    SM --> COL["Coletar logs, relatórios e inspect"]
+    DT -. "Inclusive em falha" .-> COL
+    DP -. "Inclusive em falha" .-> COL
+    COL --> CLEAN["Always: down + destroy somente do runner"]
+    CLEAN --> END["Resultado do CD + evidências permanentes"]
+  end
+  subgraph LOCAL["Laboratório persistente no WSL2"]
+    PUB --> LD["Baixar imagem aprovada por digest"]
+    LT["Terraform: estado ativo, rede e volume preservados"] --> LC["Compose: API sem root + Prometheus"]
+    LD --> LC
+    LC --> LS["Smoke, logs JSON, métricas e persistência após recriar API"]
+    LS --> RB["Rollback para digest anterior compatível: banco preservado"]
+  end

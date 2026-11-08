@@ -1,0 +1,20 @@
+ Container taskflow-api-1 Creating 
+ api Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap. 
+ Container taskflow-api-1 Created 
+ Container taskflow-prometheus-1 Creating 
+ prometheus Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap. 
+ Container taskflow-prometheus-1 Created 
+ Container taskflow-api-1 Starting 
+ Container taskflow-api-1 Started 
+ Container taskflow-api-1 Waiting 
+ Container taskflow-api-1 Healthy 
+ Container taskflow-prometheus-1 Starting 
+ Container taskflow-prometheus-1 Started 
+ Container taskflow-api-1 Waiting 
+ Container taskflow-prometheus-1 Waiting 
+ Container taskflow-api-1 Healthy 
+ Container taskflow-prometheus-1 Healthy 
+NAME                    IMAGE                                                                                             COMMAND                  SERVICE      CREATED          STATUS                    PORTS
+taskflow-api-1          taskflow-local:phase2-inicial                                                                     "python -m uvicorn a…"   api          13 seconds ago   Up 12 seconds (healthy)   127.0.0.1:8000->8000/tcp
+taskflow-prometheus-1   prom/prometheus:v3.16.0@sha256:89c1a644817e9ad70fa2af76c84898e327c1de7063735f962e8313b1e28672c3   "/bin/prometheus --c…"   prometheus   13 seconds ago   Up 6 seconds (healthy)    127.0.0.1:9090->9090/tcp
+Deploy concluído. Execute bash scripts/smoke.sh para verificar API e Prometheus.
